@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
     const searchInput = document.getElementById('searchInput');
     const searchCategory = document.getElementById('searchCategory');
     const searchResults = document.getElementById('searchResults');
@@ -134,4 +134,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial load
     performSearch();
-});
+})();

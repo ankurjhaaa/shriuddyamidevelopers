@@ -31,7 +31,7 @@ include __DIR__ . '/includes/header.php';
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
     const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     const loadingEl = document.getElementById('favorites-loading');
     const emptyEl = document.getElementById('favorites-empty');
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadingEl.innerHTML = '<p class="text-red-500">Error loading favorites.</p>';
         });
     }
-});
+})();
 </script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

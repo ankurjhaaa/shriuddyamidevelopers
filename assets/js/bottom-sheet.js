@@ -1,10 +1,12 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initBottomSheet() {
     const sheet = document.getElementById('priceLockSheet');
     const content = document.getElementById('priceLockContent');
     const closeBtn = document.getElementById('closePriceLock');
     const form = document.getElementById('priceLockForm');
     const productIdInput = document.getElementById('pl_product_id');
     let currentPriceContainer = null;
+
+    if (!sheet) return;
 
     // Check if user is already unlocked
     const isUnlocked = localStorage.getItem('price_unlocked') === 'true';
@@ -22,10 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Setup unlock button
                     const btn = container.querySelector('.btn-unlock-price');
                     if (btn) {
-                        btn.addEventListener('click', (e) => {
+                        btn.onclick = (e) => {
                             e.preventDefault();
                             openSheet(container.dataset.productId, container);
-                        });
+                        };
                     }
                 }
             }
@@ -45,31 +47,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // trigger reflow
         void sheet.offsetWidth;
         sheet.classList.remove('opacity-0');
-        content.classList.remove('translate-y-full');
+        content.classList.remove('translate-y-full', 'md:scale-95', 'md:opacity-0');
     }
 
     function closeSheet() {
         sheet.classList.add('opacity-0');
-        content.classList.add('translate-y-full');
+        content.classList.add('translate-y-full', 'md:scale-95', 'md:opacity-0');
         setTimeout(() => {
             sheet.classList.add('hidden');
         }, 300);
     }
 
     if(closeBtn) {
-        closeBtn.addEventListener('click', closeSheet);
+        closeBtn.onclick = closeSheet;
     }
 
     if(sheet) {
-        sheet.addEventListener('click', (e) => {
+        sheet.onclick = (e) => {
             if (e.target === sheet) {
                 closeSheet();
             }
-        });
+        };
     }
 
     if(form) {
-        form.addEventListener('submit', async (e) => {
+        form.onsubmit = async (e) => {
             e.preventDefault();
             
             const submitBtn = form.querySelector('button[type="submit"]');
@@ -82,6 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: document.getElementById('pl_name').value,
                 phone: document.getElementById('pl_phone').value
             };
+
+            if (!/^\d{10}$/.test(payload.phone)) {
+                alert("Please enter exactly 10 digits for your mobile number.");
+                submitBtn.innerHTML = originalBtnHtml;
+                submitBtn.disabled = false;
+                return;
+            }
 
             try {
                 const response = await fetch('/ajax/unlock_price.php', {
@@ -102,8 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         currentPriceContainer.innerHTML = `<span class="font-bold text-gray-900">${result.formatted_price}</span>`;
                     }
                     
-                    // Update all others silently
-                    window.location.reload(); // Quickest way to refresh all prices
+                    // Close the sheet and unlock all other prices instantly without reload!
+                    closeSheet();
+                    processPriceContainers();
                 } else {
                     alert('Error: ' + result.error);
                 }
@@ -114,6 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.innerHTML = originalBtnHtml;
                 submitBtn.disabled = false;
             }
-        });
+        };
     }
-});
+}
+
+document.addEventListener('turbo:load', initBottomSheet);
+if (document.readyState !== 'loading') {
+    initBottomSheet();
+} else {
+    document.addEventListener('DOMContentLoaded', initBottomSheet);
+}

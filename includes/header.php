@@ -49,6 +49,14 @@
 
     <!-- Custom CSS -->
     <link href="/assets/css/app.css" rel="stylesheet">
+    
+    <!-- SPA Router (Turbo) -->
+    <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.4/dist/turbo.es2017-umd.js"></script>
+    
+    <!-- Global Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
+    <script src="/assets/js/bottom-sheet.js" defer></script>
 </head>
 
 <body class="bg-white text-gray-800 antialiased font-sans pb-16 md:pb-0">

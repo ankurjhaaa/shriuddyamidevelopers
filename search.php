@@ -66,7 +66,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
 
 <script>
     // Category pill click handler
-    document.addEventListener('DOMContentLoaded', () => {
+    (function() {
         const categoryBtns = document.querySelectorAll('.category-filter-btn');
         const searchCategoryInput = document.getElementById('searchCategory');
         const searchInput = document.getElementById('searchInput');
@@ -88,7 +88,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 searchInput.dispatchEvent(new Event('input'));
             });
         });
-    });
+    })();
 </script>
 
 <!-- Search Logic is handled in app.js and search.js -->
