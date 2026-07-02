@@ -11,42 +11,41 @@ $categoryId = $_GET['category'] ?? '';
 $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
 ?>
 
-<div class="bg-primary text-white pt-4 pb-6 px-6 rounded-b-lg mb-6">
-    <div class="max-w-7xl mx-auto">
+<div class="bg-white min-h-screen pb-10">
+    <div class="bg-primary pt-6 pb-14 px-6 text-center text-white rounded-b-lg relative z-10">
         <h1 class="text-2xl font-bold mb-1">All Products</h1>
         <p class="text-blue-100 text-xs">Search and filter to find the perfect machine</p>
     </div>
-</div>
 
-<div class="px-4 sm:px-6 lg:px-8 pb-8 bg-white min-h-screen">
-    <div class="max-w-7xl mx-auto">
+    <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+        <div class="max-w-7xl mx-auto">
 
-        <!-- Search Bar -->
-        <div class="sticky top-14 bg-white pt-2 pb-4 z-40 border-b border-gray-100 mb-6">
-            <div class="relative max-w-3xl">
-                <input type="text" id="searchInput" placeholder="Search for products, machines, tools..." class="w-full bg-gray-50 text-gray-900 px-10 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-white text-sm font-medium">
+            <!-- Search Bar -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 sticky top-14 z-40">
+                <div class="relative max-w-3xl mx-auto">
+                    <input type="text" id="searchInput" placeholder="Search for products, machines, tools..." class="w-full bg-gray-50 text-gray-900 px-10 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-white text-sm font-medium">
                 <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
                 <button id="clearSearch" class="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hidden hover:text-red-500 transition">
                     <i class="fa-solid fa-circle-xmark text-xl"></i>
                 </button>
             </div>
             
-            <!-- Category Filter Pills -->
-            <div class="flex overflow-x-auto no-scrollbar gap-2 mt-4 pb-2">
-                <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId === '' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'; ?>" data-id="">
-                    All Categories
-                </button>
-                <?php foreach ($categories as $cat): ?>
-                    <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId == $cat['id'] ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'; ?>" data-id="<?php echo $cat['id']; ?>">
-                        <?php echo htmlspecialchars($cat['name']); ?>
+                <!-- Category Filter Pills -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 mt-4 pb-1 max-w-3xl mx-auto">
+                    <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId === '' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'; ?>" data-id="">
+                        All Categories
                     </button>
-                <?php endforeach; ?>
+                    <?php foreach ($categories as $cat): ?>
+                        <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId == $cat['id'] ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'; ?>" data-id="<?php echo $cat['id']; ?>">
+                            <?php echo htmlspecialchars($cat['name']); ?>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+                <input type="hidden" id="searchCategory" value="<?php echo htmlspecialchars($categoryId); ?>">
             </div>
-            <input type="hidden" id="searchCategory" value="<?php echo htmlspecialchars($categoryId); ?>">
-        </div>
-        
-        <!-- Search Results Container -->
-        <div id="searchResults" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+            
+            <!-- Search Results Container -->
+            <div id="searchResults" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-2">
             <!-- Results will be injected here via JS -->
         </div>
         

@@ -6,16 +6,21 @@ $pageTitle = 'Favorites';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="px-4 sm:px-6 lg:px-8 py-8 bg-white min-h-[80vh]">
-    <div class="max-w-7xl mx-auto">
-        <h1 class="text-2xl font-bold text-gray-900 mb-6">My Favorites</h1>
+<div class="bg-white min-h-screen pb-10">
+    <div class="bg-primary pt-6 pb-14 px-6 text-center text-white rounded-b-lg relative z-10">
+        <h1 class="text-2xl font-bold mb-1">My Favorites</h1>
+        <p class="text-blue-100 text-xs">Your saved machines and tools</p>
+    </div>
+
+    <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+        <div class="max-w-7xl mx-auto">
         
-        <div id="favorites-loading" class="flex flex-col items-center justify-center py-12">
+        <div id="favorites-loading" class="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm border border-gray-100 p-8">
             <i class="fa-solid fa-spinner fa-spin text-4xl text-primary mb-4"></i>
             <p class="text-gray-500">Loading your favorites...</p>
         </div>
 
-        <div id="favorites-empty" class="hidden flex-col items-center justify-center text-center py-12">
+        <div id="favorites-empty" class="hidden flex-col items-center justify-center text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100 p-8">
             <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-4xl mb-4">
                 <i class="fa-regular fa-heart"></i>
             </div>

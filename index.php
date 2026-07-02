@@ -29,19 +29,21 @@ $latestProducts = $pdo->query("
 ")->fetchAll();
 ?>
 
-<!-- Modern Hero Banner -->
-<div>
-    <div class="relative bg-primary rounded-b-lg overflow-hidden flex items-center justify-center">
+<div class="bg-white min-h-screen pb-10">
+    <!-- Modern Hero Banner -->
+    <div class="relative bg-primary rounded-b-lg overflow-hidden flex flex-col items-center justify-center pb-12 z-10">
         <!-- Desktop Banner (hidden on small screens) -->
         <img src="/assets/images/desktop_banner.png" alt="Sri Udyami Developers Banner" class="w-full h-auto object-cover hidden md:block">
         <!-- Mobile Banner (hidden on medium/large screens) -->
         <img src="/assets/images/mobile_banner.png" alt="Sri Udyami Developers Banner" class="w-full h-auto object-cover md:hidden">
     </div>
-</div>
 
-<!-- Categories Slider -->
-<?php if (!empty($categories)): ?>
-<div class="px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Main Content Overlapping Banner -->
+    <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 max-w-7xl mx-auto space-y-6">
+        
+        <!-- Categories Slider -->
+        <?php if (!empty($categories)): ?>
+        <div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
     <div class="flex justify-between items-end mb-4">
         <div>
             <h3 class="text-xl font-bold text-gray-900 tracking-tight">Browse Categories</h3>
@@ -65,12 +67,12 @@ $latestProducts = $pdo->query("
             </a>
         <?php endforeach; ?>
     </div>
-</div>
-<?php endif; ?>
+        </div>
+        <?php endif; ?>
 
-<!-- Featured Products -->
-<?php if (!empty($featuredProducts)): ?>
-<div class="px-4 sm:px-6 lg:px-8 pb-8 bg-white">
+        <!-- Featured Products -->
+        <?php if (!empty($featuredProducts)): ?>
+        <div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
     <div class="mb-4">
         <h3 class="text-xl font-bold text-gray-900 tracking-tight">All Products</h3>
         <p class="text-gray-500 text-xs mt-1">Explore our complete range of machines</p>
@@ -126,8 +128,10 @@ $latestProducts = $pdo->query("
             </div>
         <?php endforeach; ?>
     </div>
+        </div>
+        <?php endif; ?>
+    </div>
 </div>
-<?php endif; ?>
 
 <!-- Floating WhatsApp Button -->
 <a href="<?php echo getWhatsappLink(); ?>" target="_blank" class="fixed bottom-24 md:bottom-8 right-6 z-40 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">

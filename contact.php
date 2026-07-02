@@ -54,6 +54,31 @@ $settings = getAllSettings();
             </div>
         </div>
 
+        <!-- Helpful Links -->
+        <div class="pt-6 pb-2">
+            <h3 class="text-xs font-bold text-gray-500 mb-3 px-1 uppercase tracking-wider">Helpful Links</h3>
+            <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-100 overflow-hidden shadow-sm">
+                <a href="/about.php" class="flex items-center justify-between p-4 hover:bg-gray-50 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <i class="fa-solid fa-building text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700">About Us</span>
+                    </div>
+                    <i class="fa-solid fa-angle-right text-gray-400 text-xs"></i>
+                </a>
+                <a href="/faq.php" class="flex items-center justify-between p-4 hover:bg-gray-50 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <i class="fa-solid fa-circle-question text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700">FAQs</span>
+                    </div>
+                    <i class="fa-solid fa-angle-right text-gray-400 text-xs"></i>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 

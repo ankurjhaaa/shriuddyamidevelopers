@@ -6,14 +6,16 @@ $pageTitle = 'FAQ';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Hero Section -->
-<div class="bg-primary rounded-b-lg text-center py-10 md:py-14 mb-10">
-    <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Frequently Asked Questions</h1>
-    <p class="text-blue-100 max-w-xl mx-auto text-sm">Find answers to the most common questions about our products, shipping, and services.</p>
-</div>
+<div class="bg-white min-h-screen pb-10">
+    <!-- Hero Section -->
+    <div class="bg-primary pt-6 pb-14 px-6 text-center text-white rounded-b-lg relative z-10">
+        <h1 class="text-2xl font-bold mb-1">Frequently Asked Questions</h1>
+        <p class="text-blue-100 text-xs">Find answers to the most common questions about our products, shipping, and services.</p>
+    </div>
 
-<!-- FAQ Content -->
-<div class="px-4 sm:px-6 lg:px-8 pb-12 max-w-4xl mx-auto bg-white min-h-[50vh]">
+    <!-- FAQ Content -->
+    <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 max-w-4xl mx-auto space-y-4">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4">
     <div class="space-y-4">
         
         <details class="group border border-gray-200 bg-white rounded-lg open:bg-gray-50">
@@ -64,6 +66,7 @@ include __DIR__ . '/includes/header.php';
             </div>
         </details>
 
+        </div>
     </div>
 </div>
 
