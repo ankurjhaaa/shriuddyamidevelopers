@@ -59,19 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     const card = `
-                        <div class="bg-white border border-gray-100 rounded-xl p-3 shadow-sm hover:shadow-md transition group relative flex flex-col h-full">
-                            <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block relative aspect-square bg-gray-50 rounded-lg overflow-hidden mb-3">
+                        <div class="bg-white border border-gray-100 rounded-md shadow-sm hover:shadow-lg transition-all duration-300 group relative flex flex-col h-full hover:-translate-y-1">
+                            <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block relative aspect-square bg-gray-50 rounded-t-md overflow-hidden border-b border-gray-50">
                                 ${product.primary_image 
-                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">`
-                                    : `<div class="w-full h-full flex items-center justify-center text-gray-400"><i class="fa-solid fa-image text-3xl"></i></div>`
+                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">`
+                                    : `<div class="w-full h-full flex items-center justify-center text-gray-300"><i class="fa-solid fa-image text-4xl"></i></div>`
                                 }
                             </a>
-                            <div class="flex-grow flex flex-col">
-                                <p class="text-xs text-primary font-medium mb-1 truncate">${product.category_name || 'Uncategorized'}</p>
-                                <a href="/product.php?slug=${encodeURIComponent(product.slug)}">
-                                    <h4 class="text-sm font-semibold text-gray-800 leading-tight mb-2 line-clamp-2">${product.name}</h4>
+                            <div class="p-4 flex-grow flex flex-col">
+                                <p class="text-xs text-secondary font-semibold mb-1 uppercase tracking-wider truncate">${product.category_name || 'Uncategorized'}</p>
+                                <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block group-hover:text-primary transition">
+                                    <h4 class="text-base font-bold text-gray-900 leading-snug mb-3 line-clamp-2">${product.name}</h4>
                                 </a>
-                                <div class="mt-auto flex items-center justify-between">
+                                <div class="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between">
                                     <div class="price-container" data-product-id="${product.id}" data-price="${product.price}" data-visibility="${product.price_visibility}">
                                         ${priceHtml}
                                     </div>

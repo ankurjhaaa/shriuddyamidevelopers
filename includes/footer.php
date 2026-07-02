@@ -28,8 +28,9 @@
                 <div>
                     <h4 class="font-semibold text-gray-900 mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/categories.php" class="text-gray-500 hover:text-primary transition">Categories</a></li>
-                        <li><a href="/search.php" class="text-gray-500 hover:text-primary transition">Search Products</a></li>
+                        <li><a href="/about.php" class="text-gray-500 hover:text-primary transition">About Us</a></li>
+                        <li><a href="/search.php" class="text-gray-500 hover:text-primary transition">Shop</a></li>
+                        <li><a href="/faq.php" class="text-gray-500 hover:text-primary transition">FAQs</a></li>
                         <li><a href="/contact.php" class="text-gray-500 hover:text-primary transition">Contact Us</a></li>
                     </ul>
                 </div>
@@ -39,7 +40,7 @@
                     <ul class="space-y-3 text-sm">
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-phone text-accent mt-0.5"></i>
-                            <span class="text-gray-500"><?php echo htmlspecialchars(getSetting('whatsapp_number')); ?></span>
+                            <span class="text-gray-500"><?php echo htmlspecialchars(getSetting('whatsapp')); ?></span>
                         </li>
                     </ul>
                 </div>
@@ -48,8 +49,8 @@
             <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-xs text-gray-400">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(getSetting('store_name')); ?>. All rights reserved.</p>
                 <div class="flex gap-4 text-xs text-gray-400">
-                    <a href="#" class="hover:text-primary transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-primary transition">Terms of Service</a>
+                    <a href="/privacy.php" class="hover:text-primary transition">Privacy Policy</a>
+                    <a href="/terms.php" class="hover:text-primary transition">Terms of Service</a>
                 </div>
             </div>
         </div>
