@@ -9,36 +9,38 @@ include __DIR__ . '/includes/header.php';
 $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
 ?>
 
-<div class="px-4 py-6 bg-white min-h-screen">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">All Categories</h2>
-    
-    <?php if (empty($categories)): ?>
-        <div class="text-center py-10">
-            <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3"></i>
-            <p class="text-gray-500">No categories found.</p>
-        </div>
-    <?php else: ?>
-        <div class="grid grid-cols-2 gap-4">
-            <?php foreach ($categories as $cat): ?>
-                <a href="/search.php?category=<?php echo urlencode($cat['id']); ?>" class="bg-gray-50 border border-gray-100 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition group">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm overflow-hidden group-hover:scale-110 transition duration-300">
-                        <?php if($cat['image']): ?>
-                            <img src="/<?php echo htmlspecialchars($cat['image']); ?>" class="w-full h-full object-cover">
-                        <?php else: ?>
-                            <i class="fa-solid fa-layer-group text-primary text-2xl"></i>
-                        <?php endif; ?>
-                    </div>
-                    <h3 class="font-semibold text-gray-800 leading-tight"><?php echo htmlspecialchars($cat['name']); ?></h3>
-                    <?php 
-                        $stmt = $pdo->prepare("SELECT COUNT(*) FROM products WHERE category_id = ? AND status = 'active'");
-                        $stmt->execute([$cat['id']]);
-                        $count = $stmt->fetchColumn();
-                    ?>
-                    <p class="text-xs text-gray-500 mt-1"><?php echo $count; ?> Products</p>
-                </a>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+<div class="px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 animate-fade-in">All Categories</h2>
+        
+        <?php if (empty($categories)): ?>
+            <div class="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100 animate-slide-up">
+                <i class="fa-solid fa-folder-open text-6xl text-gray-200 mb-4"></i>
+                <p class="text-gray-500 font-medium">No categories found.</p>
+            </div>
+        <?php else: ?>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 animate-slide-up">
+                <?php foreach ($categories as $cat): ?>
+                    <a href="/search.php?category=<?php echo urlencode($cat['id']); ?>" class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-full flex items-center justify-center mb-4 shadow-sm overflow-hidden group-hover:scale-110 transition-transform duration-300 border border-gray-100">
+                            <?php if($cat['image']): ?>
+                                <img src="/<?php echo htmlspecialchars($cat['image']); ?>" class="w-full h-full object-cover">
+                            <?php else: ?>
+                                <i class="fa-solid fa-layer-group text-primary text-3xl"></i>
+                            <?php endif; ?>
+                        </div>
+                        <h3 class="font-bold text-gray-900 leading-tight group-hover:text-primary transition"><?php echo htmlspecialchars($cat['name']); ?></h3>
+                        <?php 
+                            $stmt = $pdo->prepare("SELECT COUNT(*) FROM products WHERE category_id = ? AND status = 'active'");
+                            $stmt->execute([$cat['id']]);
+                            $count = $stmt->fetchColumn();
+                        ?>
+                        <p class="text-xs text-gray-500 mt-2 font-medium bg-gray-50 px-3 py-1 rounded-full"><?php echo $count; ?> Products</p>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

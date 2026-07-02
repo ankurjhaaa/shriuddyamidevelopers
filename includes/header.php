@@ -36,16 +36,28 @@
     <!-- Custom CSS -->
     <link href="/assets/css/app.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased font-sans pb-16">
+<body class="bg-gray-50 text-gray-800 antialiased font-sans pb-16 md:pb-0">
     
     <!-- Top App Bar -->
     <header class="bg-primary text-white sticky top-0 z-50 shadow-sm">
-        <div class="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-2">
-                <i class="fa-solid fa-tractor text-accent text-xl"></i>
-                <span class="font-semibold text-lg tracking-tight truncate"><?php echo htmlspecialchars(getSetting('store_name')); ?></span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <i class="fa-solid fa-tractor text-accent text-2xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-bold text-xl tracking-tight truncate"><?php echo htmlspecialchars(getSetting('store_name')); ?></span>
             </a>
-            <div class="flex gap-4">
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex gap-8 items-center font-medium">
+                <a href="/" class="hover:text-accent transition">Home</a>
+                <a href="/categories.php" class="hover:text-accent transition">Categories</a>
+                <a href="/contact.php" class="hover:text-accent transition">Contact</a>
+                <a href="/search.php" class="text-white hover:text-accent transition ml-2">
+                    <i class="fa-solid fa-search text-xl"></i>
+                </a>
+            </nav>
+
+            <!-- Mobile Actions -->
+            <div class="flex md:hidden gap-4">
                 <a href="/search.php" class="text-white hover:text-accent transition">
                     <i class="fa-solid fa-search text-xl"></i>
                 </a>
@@ -53,5 +65,5 @@
         </div>
     </header>
     
-    <!-- Main Content Area (Restricted to mobile width for app feel) -->
-    <main class="max-w-md mx-auto bg-white min-h-screen shadow-sm relative">
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto bg-white min-h-screen shadow-sm relative sm:rounded-b-lg">

@@ -1,5 +1,60 @@
     </main>
     
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 mt-12 pb-20 md:pb-8 pt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="/" class="flex items-center gap-2 mb-4 group">
+                        <i class="fa-solid fa-tractor text-accent text-xl group-hover:scale-110 transition-transform"></i>
+                        <span class="font-bold text-lg text-primary tracking-tight"><?php echo htmlspecialchars(getSetting('store_name')); ?></span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-sm mb-4">
+                        Premium quality agriculture and industrial machines designed for durability and performance. Experience modern farming.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                            <i class="fa-brands fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                            <i class="fa-brands fa-twitter text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/categories.php" class="text-gray-500 hover:text-primary transition">Categories</a></li>
+                        <li><a href="/search.php" class="text-gray-500 hover:text-primary transition">Search Products</a></li>
+                        <li><a href="/contact.php" class="text-gray-500 hover:text-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Contact</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-accent mt-0.5"></i>
+                            <span class="text-gray-500"><?php echo htmlspecialchars(getSetting('whatsapp_number')); ?></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-400">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(getSetting('store_name')); ?>. All rights reserved.</p>
+                <div class="flex gap-4 text-xs text-gray-400">
+                    <a href="#" class="hover:text-primary transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <?php include __DIR__ . '/bottom-nav.php'; ?>
 
     <!-- Price Lock Bottom Sheet Modal -->

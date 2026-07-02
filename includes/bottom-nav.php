@@ -2,7 +2,7 @@
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!-- Sticky Bottom Navigation -->
-<nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 z-50">
+<nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 z-50 md:hidden animate-slide-up">
     <div class="max-w-md mx-auto flex justify-between items-center h-16 px-6">
         <a href="/" class="flex flex-col items-center justify-center w-full h-full text-xs <?php echo ($currentPage === 'index.php' || $currentPage === '') ? 'text-primary font-semibold' : 'text-gray-500 hover:text-primary'; ?>">
             <i class="fa-solid fa-house mb-1 text-lg"></i>
