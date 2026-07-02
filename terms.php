@@ -6,11 +6,12 @@ $pageTitle = 'Terms of Service';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="px-4 sm:px-6 lg:px-8 py-12 max-w-4xl mx-auto bg-white min-h-screen animate-fade-in">
-    <div class="mb-10 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
-        <p class="text-gray-500">Last updated: <?php echo date('F d, Y'); ?></p>
-    </div>
+<div class="bg-primary rounded-b-lg text-center py-8 mb-10">
+    <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Terms of Service</h1>
+    <p class="text-blue-100 text-xs">Last updated: <?php echo date('F d, Y'); ?></p>
+</div>
+
+<div class="px-4 sm:px-6 lg:px-8 pb-12 max-w-4xl mx-auto bg-white min-h-screen">
 
     <div class="prose prose-blue max-w-none text-gray-600">
         <h2 class="text-xl font-bold text-gray-900 mt-8 mb-4">1. Acceptance of Terms</h2>

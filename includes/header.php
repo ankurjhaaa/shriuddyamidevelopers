@@ -10,7 +10,7 @@
     </title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Icons (FontAwesome via CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,7 +30,7 @@
                         accent: '#F59E0B', // Amber
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Poppins', 'sans-serif'],
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
@@ -54,12 +54,11 @@
 <body class="bg-white text-gray-800 antialiased font-sans pb-16 md:pb-0">
 
     <!-- Top App Bar -->
-    <header class="bg-primary text-white sticky top-0 z-50 shadow-sm">
+    <header class="bg-primary text-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3 group">
-                <i class="fa-solid fa-tractor text-accent text-2xl group-hover:scale-110 transition-transform"></i>
-                <span
-                    class="font-bold text-xl tracking-tight truncate"><?php echo htmlspecialchars(getSetting('store_name')); ?></span>
+            <a href="/" class="flex items-center gap-2 group">
+                <!-- <i class="fa-solid fa-tractor text-accent text-xl"></i> -->
+                <span class="font-bold text-lg tracking-tight truncate"><?php echo htmlspecialchars(getSetting('store_name')); ?></span>
             </a>
 
             <!-- Desktop Navigation -->

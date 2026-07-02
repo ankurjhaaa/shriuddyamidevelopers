@@ -42,39 +42,61 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     let priceHtml = '';
                     if (product.price_visibility === 'public') {
-                        priceHtml = `<span class="font-bold text-gray-900">${product.formatted_price}</span>`;
+                        priceHtml = `<span class="font-bold text-sm sm:text-base text-gray-900">${product.formatted_price}</span>`;
                     } else if (product.price_visibility === 'locked') {
                         if (isUnlocked) {
-                            priceHtml = `<span class="font-bold text-gray-900">₹ ${parseFloat(product.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
+                            priceHtml = `<span class="font-bold text-sm sm:text-base text-gray-900">₹ ${parseFloat(product.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
                         } else {
                             priceHtml = `
-                                <button class="btn-unlock-price flex items-center gap-1 text-primary font-semibold text-sm bg-blue-50 px-2 py-1 rounded">
+                                <button class="btn-unlock-price flex items-center gap-1 text-primary font-medium text-[10px] sm:text-xs bg-blue-50 px-2 py-1 rounded w-fit">
                                     <span>₹ *****</span>
-                                    <i class="fa-regular fa-eye"></i>
+                                    <i class="fa-solid fa-lock text-[9px]"></i>
                                 </button>
+                                <span class="real-price hidden font-bold text-sm sm:text-base text-gray-900"></span>
                             `;
                         }
                     } else {
-                        priceHtml = `<a href="${product.whatsapp_link}" target="_blank" class="text-xs text-primary font-medium">Ask Price</a>`;
+                        priceHtml = `<a href="${product.whatsapp_link}" target="_blank" class="text-[10px] sm:text-xs text-primary font-medium">Ask Price</a>`;
                     }
 
+                    const escapeHtml = (unsafe) => {
+                        return (unsafe || '').toString()
+                             .replace(/&/g, "&amp;")
+                             .replace(/</g, "&lt;")
+                             .replace(/>/g, "&gt;")
+                             .replace(/"/g, "&quot;")
+                             .replace(/'/g, "&#039;");
+                    };
+
                     const card = `
-                        <div class="bg-white border border-gray-100 rounded-md shadow-sm hover:shadow-lg transition-all duration-300 group relative flex flex-col h-full hover:-translate-y-1">
-                            <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block relative aspect-square bg-gray-50 rounded-t-md overflow-hidden border-b border-gray-50">
+                        <div class="bg-white border border-gray-200 rounded-lg flex flex-row sm:flex-col relative shadow-sm h-full wishlist-card" data-product-id="${product.id}">
+                            <button class="absolute top-2 right-2 w-7 h-7 bg-gray-50 sm:bg-white/80 sm:backdrop-blur rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm text-xs" data-id="${product.id}">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            
+                            <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
                                 ${product.primary_image 
-                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">`
-                                    : `<div class="w-full h-full flex items-center justify-center text-gray-300"><i class="fa-solid fa-image text-4xl"></i></div>`
+                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-cover" loading="lazy">`
+                                    : `<div class="w-full h-full flex items-center justify-center text-gray-300"><i class="fa-solid fa-image text-3xl"></i></div>`
                                 }
                             </a>
-                            <div class="p-4 flex-grow flex flex-col">
-                                <p class="text-xs text-secondary font-semibold mb-1 uppercase tracking-wider truncate">${product.category_name || 'Uncategorized'}</p>
-                                <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block group-hover:text-primary transition">
-                                    <h4 class="text-base font-bold text-gray-900 leading-snug mb-3 line-clamp-2">${product.name}</h4>
-                                </a>
-                                <div class="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between">
+                            
+                            <div class="p-3 flex-grow flex flex-col justify-between w-3/5 sm:w-full">
+                                <div>
+                                    <p class="text-[9px] sm:text-[10px] text-gray-500 font-medium mb-0.5 uppercase tracking-wider truncate pr-6">${escapeHtml(product.category_name || '')}</p>
+                                    <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block pr-6 sm:pr-0">
+                                        <h4 class="text-xs sm:text-sm font-semibold text-gray-900 leading-snug mb-1 line-clamp-2">${escapeHtml(product.name)}</h4>
+                                    </a>
+                                </div>
+                                
+                                <div class="mt-2 pt-2 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-0">
                                     <div class="price-container" data-product-id="${product.id}" data-price="${product.price}" data-visibility="${product.price_visibility}">
                                         ${priceHtml}
                                     </div>
+                                    
+                                    <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
+                                        View Details <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -82,9 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     searchResults.insertAdjacentHTML('beforeend', card);
                 });
 
-                // Re-initialize price logic for newly injected DOM
+                // Re-initialize logic for newly injected DOM
                 if (window.processPriceContainers) {
                     window.processPriceContainers();
+                }
+                
+                if (typeof initWishlist === 'function') {
+                    initWishlist();
                 }
 
             } else {
