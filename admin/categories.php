@@ -33,187 +33,129 @@ if (isset($_GET['delete'])) {
 }
 
 $categories = $pdo->query("SELECT * FROM categories ORDER BY id DESC")->fetchAll();
+
+$pageTitle = 'Categories';
+include __DIR__ . '/includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories - Admin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AlpineJS for modal state -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-gray-50 font-sans text-gray-800 antialiased overflow-hidden flex h-screen" x-data="{ modalOpen: false, modalMode: 'add', currentId: '', currentName: '' }">
 
-    <!-- Mobile Sidebar Backdrop -->
-    <div id="sidebarBackdrop" class="fixed inset-0 bg-gray-900/50 z-40 hidden md:hidden transition-opacity opacity-0"></div>
+<div class="mb-6 animate-fade-in">
+    <p class="text-gray-500 text-sm">Manage product categories for your store.</p>
+</div>
 
-    <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-        <div class="h-16 flex items-center justify-between px-6 border-b border-gray-100">
-            <a href="/" class="flex items-center gap-2 text-primary">
-                <i class="fa-solid fa-tractor text-xl"></i>
-                <span class="text-xl font-bold tracking-tight text-gray-900">AdminPanel</span>
-            </a>
-            <button id="closeSidebar" class="md:hidden text-gray-400 hover:text-gray-600">
-                <i class="fa-solid fa-xmark text-lg"></i>
+<?php if (isset($_GET['msg'])): ?>
+    <div class="bg-green-50 text-green-700 p-4 rounded-xl mb-6 border border-green-200 flex items-center gap-3 animate-fade-in">
+        <i class="fa-solid fa-circle-check text-xl text-green-500"></i>
+        <span class="font-medium">
+            <?php 
+                if($_GET['msg'] === 'added') echo "Category added successfully.";
+                elseif($_GET['msg'] === 'updated') echo "Category updated successfully.";
+                elseif($_GET['msg'] === 'deleted') echo "Category deleted successfully.";
+            ?>
+        </span>
+    </div>
+<?php endif; ?>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-slide-up">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-max">
+            <thead>
+                <tr class="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
+                    <th class="px-6 py-4 font-semibold">ID</th>
+                    <th class="px-6 py-4 font-semibold">Name</th>
+                    <th class="px-6 py-4 font-semibold">Slug</th>
+                    <th class="px-6 py-4 font-semibold text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm divide-y divide-gray-50">
+                <?php if (empty($categories)): ?>
+                    <tr>
+                        <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                            <i class="fa-solid fa-folder-open text-4xl mb-3 text-gray-200"></i>
+                            <p class="font-medium text-gray-600">No categories found.</p>
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($categories as $cat): ?>
+                        <tr class="hover:bg-gray-50/80 transition duration-150">
+                            <td class="px-6 py-4 text-gray-500 font-medium">#<?php echo $cat['id']; ?></td>
+                            <td class="px-6 py-4 font-bold text-gray-900"><?php echo htmlspecialchars($cat['name']); ?></td>
+                            <td class="px-6 py-4 text-gray-500"><code class="bg-gray-100 px-2 py-1 rounded text-xs"><?php echo htmlspecialchars($cat['slug']); ?></code></td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button onclick="editCategory(<?php echo $cat['id']; ?>, '<?php echo htmlspecialchars(addslashes($cat['name'])); ?>')" class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 flex items-center justify-center transition shadow-sm border border-blue-100">
+                                        <i class="fa-solid fa-pen text-xs"></i>
+                                    </button>
+                                    <a href="?delete=<?php echo $cat['id']; ?>" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 flex items-center justify-center transition shadow-sm border border-red-100" onclick="return confirm('Are you sure you want to delete this category?');">
+                                        <i class="fa-solid fa-trash text-xs"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div id="addModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+            <h3 class="text-lg font-bold text-gray-900">Add New Category</h3>
+            <button onclick="document.getElementById('addModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
             </button>
         </div>
-        <nav class="flex-grow py-6 px-4 space-y-1 overflow-y-auto no-scrollbar">
-            <p class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Main Menu</p>
-            <a href="/admin/index.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
-                <i class="fa-solid fa-chart-pie mr-3 w-5 text-center text-gray-400 group-hover:text-gray-600"></i> Dashboard
-            </a>
-            <a href="/admin/categories.php" class="bg-blue-50 text-primary group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg">
-                <i class="fa-solid fa-layer-group mr-3 w-5 text-center text-primary"></i> Categories
-            </a>
-            <a href="/admin/products.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
-                <i class="fa-solid fa-box-open mr-3 w-5 text-center text-gray-400 group-hover:text-gray-600"></i> Products
-            </a>
-            <a href="/admin/leads.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
-                <i class="fa-solid fa-address-book mr-3 w-5 text-center text-gray-400 group-hover:text-gray-600"></i> Leads
-            </a>
-            <a href="/admin/settings.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
-                <i class="fa-solid fa-gear mr-3 w-5 text-center text-gray-400 group-hover:text-gray-600"></i> Settings
-            </a>
-        </nav>
-        <div class="p-4 border-t border-gray-100">
-            <a href="/admin_logout.php" class="text-red-600 hover:bg-red-50 hover:text-red-700 flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
-                <i class="fa-solid fa-arrow-right-from-bracket mr-3 w-5 text-center"></i> Logout
-            </a>
-        </div>
-    </aside>
-
-    <!-- Main Content wrapper -->
-    <div class="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50/50">
-        <!-- Top Navbar -->
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-30 shadow-[0_4px_24px_rgba(0,0,0,0.02)] sticky top-0">
-            <div class="flex items-center">
-                <button id="openSidebar" class="md:hidden mr-4 text-gray-500 hover:text-gray-700 focus:outline-none">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-                <h1 class="text-xl font-semibold text-gray-800">Categories</h1>
+        <form action="" method="POST" class="p-6">
+            <input type="hidden" name="action" value="add">
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Category Name</label>
+                <input type="text" name="name" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm transition">
             </div>
-            <div class="flex items-center gap-4">
-                <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    A
-                </div>
+            <div class="flex justify-end gap-3">
+                <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition shadow-sm">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition shadow-sm">Save Category</button>
             </div>
-        </header>
-
-        <!-- Main Scrollable Area -->
-        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 animate-fade-in">
-                    <p class="text-gray-500 text-sm">Manage your product categories here.</p>
-                    <button @click="modalOpen = true; modalMode = 'add'; currentName = ''; currentId = '';" class="bg-primary text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition text-sm font-semibold flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-plus"></i> Add Category
-                    </button>
-                </div>
-                
-                <?php if (isset($_GET['msg'])): ?>
-                    <div class="bg-green-50 text-green-700 p-4 rounded-xl mb-6 border border-green-200 flex items-center gap-3 animate-fade-in">
-                        <i class="fa-solid fa-circle-check text-xl text-green-500"></i>
-                        <span class="font-medium">Action completed successfully.</span>
-                    </div>
-                <?php endif; ?>
-
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-slide-up">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-50/50 text-gray-500 text-xs uppercase tracking-wider border-b border-gray-100">
-                                    <th class="px-6 py-4 font-medium">ID</th>
-                                    <th class="px-6 py-4 font-medium">Name</th>
-                                    <th class="px-6 py-4 font-medium">Slug</th>
-                                    <th class="px-6 py-4 font-medium text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm divide-y divide-gray-50">
-                                <?php if (empty($categories)): ?>
-                                    <tr>
-                                        <td colspan="4" class="px-6 py-8 text-center text-gray-500">No categories found.</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($categories as $cat): ?>
-                                        <tr class="hover:bg-gray-50/50 transition duration-150 group">
-                                            <td class="px-6 py-4 text-gray-500">#<?php echo $cat['id']; ?></td>
-                                            <td class="px-6 py-4 font-medium text-gray-900"><?php echo htmlspecialchars($cat['name']); ?></td>
-                                            <td class="px-6 py-4 text-gray-500 font-mono text-xs"><?php echo htmlspecialchars($cat['slug']); ?></td>
-                                            <td class="px-6 py-4 text-right">
-                                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button @click="modalOpen = true; modalMode = 'edit'; currentId = '<?php echo $cat['id']; ?>'; currentName = '<?php echo addslashes($cat['name']); ?>';" class="w-8 h-8 rounded-lg bg-blue-50 text-primary hover:bg-blue-100 flex items-center justify-center transition">
-                                                        <i class="fa-solid fa-pen text-xs"></i>
-                                                    </button>
-                                                    <a href="?delete=<?php echo $cat['id']; ?>" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition" onclick="return confirm('Delete this category?');">
-                                                        <i class="fa-solid fa-trash text-xs"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
+        </form>
     </div>
+</div>
 
-    <!-- Modal Form -->
-    <div x-show="modalOpen" class="fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div x-show="modalOpen" x-transition.opacity class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity" @click="modalOpen = false"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div x-show="modalOpen" x-transition class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-100">
-                <form method="POST" action="">
-                    <input type="hidden" name="action" x-bind:value="modalMode">
-                    <input type="hidden" name="id" x-bind:value="currentId">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                                <h3 class="text-xl leading-6 font-bold text-gray-900 mb-6" id="modal-title" x-text="modalMode === 'add' ? 'Add Category' : 'Edit Category'"></h3>
-                                <div class="mt-2">
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Category Name</label>
-                                    <input type="text" name="name" x-model="currentName" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition duration-200">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50/50 px-4 py-4 sm:px-6 flex flex-col sm:flex-row-reverse gap-3 border-t border-gray-100">
-                        <button type="submit" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-5 py-2.5 bg-primary text-sm font-semibold text-white hover:bg-blue-800 focus:outline-none transition sm:w-auto">
-                            Save
-                        </button>
-                        <button type="button" @click="modalOpen = false" class="w-full inline-flex justify-center rounded-lg border border-gray-200 px-5 py-2.5 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none transition sm:w-auto">
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
+<!-- Edit Modal -->
+<div id="editModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
+        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+            <h3 class="text-lg font-bold text-gray-900">Edit Category</h3>
+            <button onclick="document.getElementById('editModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
         </div>
+        <form action="" method="POST" class="p-6">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="id" id="edit_id">
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Category Name</label>
+                <input type="text" name="name" id="edit_name" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm transition">
+            </div>
+            <div class="flex justify-end gap-3">
+                <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition shadow-sm">Cancel</button>
+                <button type="submit" class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition shadow-sm">Update Category</button>
+            </div>
+        </form>
     </div>
-    
-    <script>
-        // Simple sidebar toggle
-        const sidebar = document.getElementById('sidebar');
-        const openBtn = document.getElementById('openSidebar');
-        const closeBtn = document.getElementById('closeSidebar');
-        const backdrop = document.getElementById('sidebarBackdrop');
+</div>
 
-        function toggleSidebar() {
-            sidebar.classList.toggle('-translate-x-full');
-            backdrop.classList.toggle('hidden');
-            setTimeout(() => {
-                backdrop.classList.toggle('opacity-0');
-            }, 10);
-        }
+<script>
+function editCategory(id, name) {
+    document.getElementById('edit_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('editModal').classList.remove('hidden');
+}
+</script>
 
-        openBtn.addEventListener('click', toggleSidebar);
-        closeBtn.addEventListener('click', toggleSidebar);
-        backdrop.addEventListener('click', toggleSidebar);
-    </script>
-</body>
-</html>
+<!-- Floating Action Button -->
+<button onclick="document.getElementById('addModal').classList.remove('hidden')" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center hover:bg-blue-700 transition shadow-lg z-30 group hover:scale-105" title="Add Category">
+    <i class="fa-solid fa-plus text-xl transition-transform"></i>
+</button>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
