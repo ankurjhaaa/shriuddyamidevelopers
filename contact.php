@@ -79,6 +79,12 @@ $settings = getAllSettings();
             </div>
         </div>
 
+        <!-- Admin Login Link for Mobile -->
+        <div class="mt-8 mb-4 text-center md:hidden">
+            <a href="/admin_login.php" class="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-gray-600 transition">
+                <i class="fa-solid fa-lock"></i> Admin Login
+            </a>
+        </div>
     </div>
 </div>
 

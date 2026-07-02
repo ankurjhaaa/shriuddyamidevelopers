@@ -51,6 +51,7 @@
                 <div class="flex gap-4 text-xs text-gray-400">
                     <a href="/privacy.php" class="hover:text-primary transition">Privacy Policy</a>
                     <a href="/terms.php" class="hover:text-primary transition">Terms of Service</a>
+                    <a href="/admin_login.php" class="hover:text-primary transition font-semibold"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Admin</a>
                 </div>
             </div>
         </div>
