@@ -34,7 +34,7 @@ $latestProducts = $pdo->query("
 
 <div class="bg-white min-h-screen pb-10">
     <!-- Modern Hero Banner -->
-    <div class="relative bg-primary rounded-b-lg overflow-hidden flex flex-col items-center justify-center pb-12 z-10">
+    <div class="relative w-full overflow-hidden flex flex-col items-center justify-center z-10">
         <!-- Desktop Banner (hidden on small screens) -->
         <img src="/assets/images/desktop_banner.png" alt="Purnea Machine Baazar Banner" class="w-full h-auto object-cover hidden md:block">
         <!-- Mobile Banner (hidden on medium/large screens) -->
@@ -42,7 +42,7 @@ $latestProducts = $pdo->query("
     </div>
 
     <!-- Main Content Overlapping Banner -->
-    <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 max-w-7xl mx-auto space-y-6">
+    <div class="px-4 sm:px-6 lg:px-8 mt-6 relative z-20 max-w-7xl mx-auto space-y-6">
         
         <!-- Categories Slider -->
         <?php if (!empty($categories)): ?>

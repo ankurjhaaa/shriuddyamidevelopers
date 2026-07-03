@@ -10,9 +10,9 @@ $settings = getAllSettings();
 
 <div class="bg-white min-h-screen pb-10">
     <!-- Header Area -->
-    <div class="bg-primary pt-6 pb-14 px-6 text-center text-white rounded-b-lg relative z-10">
+    <div class="bg-gray-50 pt-10 pb-16 px-6 text-center border-b border-blue-50 relative z-10">
         <h1 class="text-2xl font-bold mb-1">Get in Touch</h1>
-        <p class="text-blue-100 text-xs">We are here to help and answer any question you might have.</p>
+        <p class="text-gray-500 text-xs">We are here to help and answer any question you might have.</p>
     </div>
 
     <!-- Contact Cards -->

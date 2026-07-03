@@ -59,11 +59,11 @@ include __DIR__ . '/includes/header.php';
 
 <div class="bg-white min-h-screen pb-12">
     <!-- Dynamic Hero Section -->
-    <div class="bg-primary text-white py-16 px-6 text-center rounded-b-xl relative overflow-hidden z-10 shadow-lg">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+    <div class="bg-gray-50 py-12 px-6 text-center border-b border-gray-100 relative overflow-hidden z-10">
+        <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
         <div class="max-w-4xl mx-auto relative z-20 animate-fade-in">
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">Serving Farmers and Businesses in <span class="text-accent"><?php echo htmlspecialchars($currentPlace); ?></span></h1>
-            <p class="text-blue-100 md:text-lg mb-8 max-w-2xl mx-auto">Get the best deals on top-quality agriculture and industrial machinery delivered and serviced right here in <?php echo htmlspecialchars($currentPlace); ?>.</p>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">Serving Farmers and Businesses in <span class="text-primary"><?php echo htmlspecialchars($currentPlace); ?></span></h1>
+            <p class="text-gray-600 md:text-lg mb-8 max-w-2xl mx-auto">Get the best deals on top-quality agriculture and industrial machinery delivered and serviced right here in <?php echo htmlspecialchars($currentPlace); ?>.</p>
             
             <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" class="inline-block bg-accent text-primary font-bold px-8 py-3 rounded-full shadow-lg hover:bg-yellow-400 hover:shadow-xl transition transform hover:-translate-y-1">
                 <i class="fa-solid fa-phone mr-2"></i> Call Us Now

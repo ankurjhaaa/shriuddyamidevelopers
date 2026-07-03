@@ -28,9 +28,9 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
 ?>
 
 <div class="bg-white min-h-screen pb-10">
-    <div class="bg-primary pt-6 pb-14 px-6 text-center text-white rounded-b-lg relative z-10">
+    <div class="bg-gray-50 pt-10 pb-16 px-6 text-center border-b border-blue-50 relative z-10">
         <h1 class="text-2xl font-bold mb-1">All Products</h1>
-        <p class="text-blue-100 text-xs">Search and filter to find the perfect machine</p>
+        <p class="text-gray-500 text-xs">Search and filter to find the perfect machine</p>
     </div>
 
     <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
@@ -48,11 +48,11 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
             
                 <!-- Category Filter Pills -->
                 <div class="flex overflow-x-auto no-scrollbar gap-2 mt-4 pb-1 max-w-3xl mx-auto">
-                    <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId === '' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'; ?>" data-id="">
+                    <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId === '' ? 'bg-primary text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>" data-id="">
                         All Categories
                     </button>
                     <?php foreach ($categories as $cat): ?>
-                        <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId == $cat['id'] ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600'; ?>" data-id="<?php echo $cat['id']; ?>">
+                        <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId == $cat['id'] ? 'bg-primary text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>" data-id="<?php echo $cat['id']; ?>">
                             <?php echo htmlspecialchars($cat['name']); ?>
                         </button>
                     <?php endforeach; ?>
@@ -90,11 +90,11 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
             btn.addEventListener('click', () => {
                 // Update active state
                 categoryBtns.forEach(b => {
-                    b.classList.remove('bg-primary', 'text-white');
+                    b.classList.remove('bg-primary', 'text-white', 'shadow-md');
                     b.classList.add('bg-gray-100', 'text-gray-600');
                 });
                 btn.classList.remove('bg-gray-100', 'text-gray-600');
-                btn.classList.add('bg-primary', 'text-white');
+                btn.classList.add('bg-primary', 'text-white', 'shadow-md');
 
                 // Update hidden input
                 searchCategoryInput.value = btn.dataset.id;

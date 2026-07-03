@@ -6,7 +6,7 @@ $pageTitle = 'Terms of Service';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="bg-primary rounded-b-lg text-center py-8 mb-10">
+<div class="bg-gray-50 pt-10 pb-12 text-center border-b border-blue-50 mb-10">
     <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Terms of Service</h1>
     <p class="text-blue-100 text-xs">Last updated: <?php echo date('F d, Y'); ?></p>
 </div>
