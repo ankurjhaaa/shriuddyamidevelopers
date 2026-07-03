@@ -38,7 +38,41 @@ $stmt = $pdo->prepare("
 $stmt->execute([$product['category_id'], $product['id']]);
 $relatedProducts = $stmt->fetchAll();
 
-$pageTitle = $product['name'];
+// Programmatic SEO setup
+$pageTitle = $product['name'] . ' in Purnea - Best Price';
+$baseDesc = $product['short_description'] ? $product['short_description'] : 'Buy ' . $product['name'] . ' in Purnea, Bihar at best prices. High-quality ' . strtolower($product['category_name']) . ' from Purnea Machine Baazar.';
+$pageDescription = $baseDesc . ' Contact us for latest price and specifications.';
+$pageKeywords = strtolower($product['name']) . ', buy ' . strtolower($product['name']) . ' in Purnea, ' . strtolower($product['category_name']) . ' in Purnea, Purnea Machine Baazar, agriculture machinery Purnea';
+
+// Product JSON-LD Schema
+$schemaImage = !empty($images) ? 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/' . $images[0] : '';
+$schemaProduct = [
+    "@context" => "https://schema.org",
+    "@type" => "Product",
+    "name" => $product['name'],
+    "image" => $schemaImage,
+    "description" => $baseDesc,
+    "sku" => "PRD-" . $product['id'],
+    "brand" => [
+        "@type" => "Brand",
+        "name" => getSetting('store_name')
+    ]
+];
+
+// Add Offers schema only if price is public
+if ($product['price_visibility'] === 'public' && $product['price'] > 0) {
+    $schemaProduct["offers"] = [
+        "@type" => "Offer",
+        "url" => 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+        "priceCurrency" => "INR",
+        "price" => $product['price'],
+        "itemCondition" => "https://schema.org/NewCondition",
+        "availability" => "https://schema.org/InStock"
+    ];
+}
+
+$customSchema = '<script type="application/ld+json">' . json_encode($schemaProduct, JSON_UNESCAPED_SLASHES) . '</script>';
+
 include __DIR__ . '/includes/header.php';
 ?>
 

@@ -2,7 +2,23 @@
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'Shop';
+$categoryId = $_GET['category'] ?? '';
+
+// Fetch category info for SEO
+$catName = 'All Products';
+if ($categoryId) {
+    $stmt = $pdo->prepare("SELECT name FROM categories WHERE id = ?");
+    $stmt->execute([$categoryId]);
+    $cat = $stmt->fetch();
+    if ($cat) {
+        $catName = $cat['name'];
+    }
+}
+
+$pageTitle = $categoryId ? "Best {$catName} in Purnea" : 'Shop Agriculture Machines in Purnea';
+$pageDescription = "Browse and buy {$catName} at the best price in Purnea. Purnea Machine Baazar offers top quality industrial and farming machinery.";
+$pageKeywords = strtolower($catName) . " in purnea, buy " . strtolower($catName) . ", purnea machine baazar, agriculture equipment purnea";
+
 include __DIR__ . '/includes/header.php';
 
 $categoryId = $_GET['category'] ?? '';

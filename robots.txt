@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /includes/
+
+# You should update this to your actual production domain later
+Sitemap: http://localhost:8000/sitemap.php

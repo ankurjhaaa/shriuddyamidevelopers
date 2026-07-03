@@ -46,6 +46,23 @@
                 </div>
             </div>
             
+            <div class="border-t border-gray-100 pt-8 pb-2 mb-4">
+                <h4 class="font-semibold text-gray-900 mb-4">Areas We Serve</h4>
+                <div class="flex flex-wrap items-center gap-2 text-xs">
+                    <?php 
+                    $footerLocations = require __DIR__ . '/locations.php';
+                    $totalLocs = count($footerLocations);
+                    foreach ($footerLocations as $index => $loc): 
+                        $locSlug = strtolower(str_replace(' ', '-', $loc));
+                    ?>
+                        <a href="/location.php?place=<?php echo urlencode($locSlug); ?>" class="text-gray-500 hover:text-primary hover:underline transition font-medium"><?php echo htmlspecialchars($loc); ?></a>
+                        <?php if($index < $totalLocs - 1): ?>
+                            <span class="text-gray-300">|</span>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            
             <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-xs text-gray-400">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(getSetting('store_name')); ?>. All rights reserved.</p>
                 <div class="flex gap-4 text-xs text-gray-400">

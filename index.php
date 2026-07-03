@@ -2,7 +2,10 @@
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'Home';
+$pageTitle = 'Home - Agriculture & Industrial Machines in Purnea';
+$pageDescription = 'Purnea Machine Baazar is the leading provider of agriculture, farming, and industrial machines in Purnea, Bihar. Get the best price on tractors, cultivators, and more.';
+$pageKeywords = 'purnea machine baazar, agriculture machines purnea, industrial machines purnea, tractors purnea, farming equipment bihar';
+
 include __DIR__ . '/includes/header.php';
 
 // Fetch categories
@@ -33,9 +36,9 @@ $latestProducts = $pdo->query("
     <!-- Modern Hero Banner -->
     <div class="relative bg-primary rounded-b-lg overflow-hidden flex flex-col items-center justify-center pb-12 z-10">
         <!-- Desktop Banner (hidden on small screens) -->
-        <img src="/assets/images/desktop_banner.png" alt="Sri Udyami Developers Banner" class="w-full h-auto object-cover hidden md:block">
+        <img src="/assets/images/desktop_banner.png" alt="Purnea Machine Baazar Banner" class="w-full h-auto object-cover hidden md:block">
         <!-- Mobile Banner (hidden on medium/large screens) -->
-        <img src="/assets/images/mobile_banner.png" alt="Sri Udyami Developers Banner" class="w-full h-auto object-cover md:hidden">
+        <img src="/assets/images/mobile_banner.png" alt="Purnea Machine Baazar Banner" class="w-full h-auto object-cover md:hidden">
     </div>
 
     <!-- Main Content Overlapping Banner -->
