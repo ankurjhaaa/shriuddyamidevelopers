@@ -58,12 +58,13 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <div class="bg-white min-h-screen pb-12">
-    <!-- Dynamic Hero Section -->
-    <div class="bg-gray-50 py-12 px-6 text-center border-b border-gray-100 relative overflow-hidden z-10">
-        <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+    <!-- Dynamic Industrial Hero Section -->
+    <div class="bg-secondary py-16 px-6 text-center border-b-4 border-primary relative overflow-hidden z-10">
+        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), repeating-linear-gradient(45deg, #000 25%, #1E293B 25%, #1E293B 75%, #000 75%, #000); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
         <div class="max-w-4xl mx-auto relative z-20 animate-fade-in">
-            <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">Serving Farmers and Businesses in <span class="text-primary"><?php echo htmlspecialchars($currentPlace); ?></span></h1>
-            <p class="text-gray-600 md:text-lg mb-8 max-w-2xl mx-auto">Get the best deals on top-quality agriculture and industrial machinery delivered and serviced right here in <?php echo htmlspecialchars($currentPlace); ?>.</p>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight uppercase tracking-tight">Machinery in <span class="text-accent"><?php echo htmlspecialchars($currentPlace); ?></span></h1>
+            <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+            <p class="text-gray-300 md:text-lg mb-8 max-w-2xl mx-auto font-medium">Get the best deals on heavy-duty agriculture and industrial machinery delivered right here in <?php echo htmlspecialchars($currentPlace); ?>.</p>
             
             <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" class="inline-block bg-accent text-primary font-bold px-8 py-3 rounded-full shadow-lg hover:bg-yellow-400 hover:shadow-xl transition transform hover:-translate-y-1">
                 <i class="fa-solid fa-phone mr-2"></i> Call Us Now

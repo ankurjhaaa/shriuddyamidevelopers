@@ -6,30 +6,31 @@ $pageTitle = 'Favorites';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="bg-white min-h-screen pb-10">
-    <div class="bg-gray-50 pt-10 pb-16 px-6 text-center border-b border-blue-50 relative z-10">
-        <h1 class="text-2xl font-bold mb-1">My Favorites</h1>
-        <p class="text-gray-500 text-xs">Your saved machines and tools</p>
+<div class="bg-gray-50 min-h-screen pb-16">
+    <!-- Clean Header Area -->
+    <div class="bg-primary pt-6 pb-20 px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">My Favorites</h1>
+        <p class="text-white/80 text-sm">Your saved products and machinery.</p>
     </div>
 
-    <div class="px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+    <div class="px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
         <div class="max-w-7xl mx-auto">
         
-        <div id="favorites-loading" class="flex flex-col items-center justify-center py-12 bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-            <i class="fa-solid fa-spinner fa-spin text-4xl text-primary mb-4"></i>
-            <p class="text-gray-500">Loading your favorites...</p>
+        <div id="favorites-loading" class="flex flex-col items-center justify-center py-12 bg-white rounded-sm shadow-sm border border-gray-200 p-8">
+            <i class="fa-solid fa-circle-notch fa-spin text-4xl text-primary mb-4"></i>
+            <p class="text-gray-500 font-medium">Loading your favorites...</p>
         </div>
 
-        <div id="favorites-empty" class="hidden flex-col items-center justify-center text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-            <div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-4xl mb-4">
+        <div id="favorites-empty" class="hidden flex-col items-center justify-center text-center py-16 bg-white rounded-sm shadow-sm border border-gray-200 p-8">
+            <div class="w-16 h-16 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center text-3xl mb-4">
                 <i class="fa-regular fa-heart"></i>
             </div>
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">No Favorites Yet</h2>
-            <p class="text-gray-500 max-w-[250px] mb-6 text-sm">Tap the heart icon on any product to save it here for later.</p>
-            <a href="/search.php" class="bg-primary text-white font-semibold py-3 px-8 rounded-lg shadow-sm hover:bg-blue-800 transition">Browse Products</a>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">No Favorites Yet</h2>
+            <p class="text-gray-500 max-w-[300px] mb-6 text-sm">Tap the heart icon on any product to save it here for later.</p>
+            <a href="/search.php" class="bg-primary text-white font-semibold py-2 px-6 rounded-sm shadow-sm hover:bg-secondary transition text-sm">Browse Products</a>
         </div>
 
-        <div id="favorites-grid" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div id="favorites-grid" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 mt-4">
             <!-- Products will be loaded here -->
         </div>
     </div>

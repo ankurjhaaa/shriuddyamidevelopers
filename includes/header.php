@@ -88,9 +88,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1E3A8A', // Deep Blue
-                        secondary: '#38BDF8', // Sky Blue
-                        accent: '#F59E0B', // Amber
+                        primary: '#00a699', // IndiaMART Teal
+                        secondary: '#008378', // Darker Teal
+                        accent: '#ff5722', // Action Orange
                     },
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
@@ -124,32 +124,46 @@
 
 <body class="bg-white text-gray-800 antialiased font-sans pb-16 md:pb-0">
 
-    <!-- Top App Bar -->
-    <header class="bg-white text-gray-800 sticky top-0 z-50 shadow-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-2 group">
-                <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo" class="h-12 md:h-14 w-auto object-contain">
-            </a>
+    <!-- Top App Bar (IndiaMART Style) -->
+    <header class="bg-primary text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-2 sm:px-4 h-14 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <a href="/" class="bg-white p-1 rounded-sm">
+                    <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo" class="h-8 md:h-10 w-auto object-contain">
+                </a>
+            </div>
+
+            <!-- Search Bar in Header -->
+            <div class="flex-grow max-w-2xl hidden md:block">
+                <form action="/search.php" method="GET" class="flex w-full bg-white rounded-sm overflow-hidden border border-transparent focus-within:border-accent">
+                    <input type="text" name="q" placeholder="Search machinery, products..." class="w-full px-3 py-1.5 text-sm text-gray-800 outline-none" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
+                    <button type="submit" class="bg-secondary text-white px-4 hover:bg-accent transition"><i class="fa-solid fa-search"></i></button>
+                </form>
+            </div>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden md:flex gap-8 items-center font-medium">
-                <a href="/" class="text-gray-600 hover:text-primary transition">Home</a>
-                <a href="/search.php" class="text-gray-600 hover:text-primary transition">Shop</a>
-                <a href="/about.php" class="text-gray-600 hover:text-primary transition">About</a>
-                <a href="/contact.php" class="text-gray-600 hover:text-primary transition">Contact</a>
-                <a href="/search.php" class="text-gray-600 hover:text-primary transition ml-2">
-                    <i class="fa-solid fa-search text-xl"></i>
-                </a>
+            <nav class="hidden md:flex gap-6 items-center text-xs font-medium">
+                <a href="/" class="hover:text-accent transition flex flex-col items-center leading-tight"><i class="fa-solid fa-house mb-0.5 text-sm"></i>Home</a>
+                <a href="/favorites.php" class="hover:text-accent transition flex flex-col items-center leading-tight"><i class="fa-solid fa-heart mb-0.5 text-sm"></i>Favorites</a>
+                <a href="/contact.php" class="hover:text-accent transition flex flex-col items-center leading-tight"><i class="fa-solid fa-envelope mb-0.5 text-sm"></i>Contact</a>
             </nav>
 
             <!-- Mobile Actions -->
-            <div class="flex md:hidden gap-4">
-                <a href="/search.php" class="text-gray-600 hover:text-primary transition">
-                    <i class="fa-solid fa-search text-xl"></i>
+            <div class="flex md:hidden gap-3 items-center">
+                <a href="/favorites.php" class="text-white hover:text-accent transition p-2">
+                    <i class="fa-solid fa-heart text-lg"></i>
                 </a>
             </div>
+        </div>
+        
+        <!-- Mobile Search Bar (Visible only on mobile) -->
+        <div class="md:hidden px-2 pb-2">
+            <form action="/search.php" method="GET" class="flex w-full bg-white rounded-sm overflow-hidden shadow-sm">
+                <input type="text" name="q" placeholder="Search..." class="w-full px-2 py-1.5 text-sm text-gray-800 outline-none" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
+                <button type="submit" class="bg-secondary text-white px-3"><i class="fa-solid fa-search"></i></button>
+            </form>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="max-w-7xl mx-auto bg-white min-h-screen relative sm:rounded-b-lg">
+    <main class="w-full bg-white min-h-screen relative">
