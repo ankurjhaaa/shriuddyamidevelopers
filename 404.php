@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/functions.php';
+
 $pageTitle = 'Page Not Found';
 include __DIR__ . '/includes/header.php';
 ?>

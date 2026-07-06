@@ -89,7 +89,7 @@ include __DIR__ . '/includes/header.php';
                     </button>
                     
                     <!-- Image -->
-                    <a href="/product.php?slug=<?php echo urlencode($product['slug']); ?>" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
+                    <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
                         <?php if($product['primary_image']): ?>
                             <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-cover" loading="lazy">
                         <?php else: ?>
@@ -103,7 +103,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="p-3 flex-grow flex flex-col justify-between w-3/5 sm:w-full">
                         <div>
                             <p class="text-[9px] sm:text-[10px] text-gray-500 font-medium mb-0.5 uppercase tracking-wider truncate pr-6"><?php echo htmlspecialchars($product['category_name']); ?></p>
-                            <a href="/product.php?slug=<?php echo urlencode($product['slug']); ?>" class="block pr-6 sm:pr-0">
+                            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block pr-6 sm:pr-0">
                                 <h4 class="text-xs sm:text-sm font-semibold text-gray-900 leading-snug mb-1 line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
                             </a>
                         </div>
@@ -124,7 +124,7 @@ include __DIR__ . '/includes/header.php';
                                 <?php endif; ?>
                             </div>
                             
-                            <a href="/product.php?slug=<?php echo urlencode($product['slug']); ?>" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
+                            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
                                 View Details <i class="fa-solid fa-arrow-right text-[9px]"></i>
                             </a>
                         </div>

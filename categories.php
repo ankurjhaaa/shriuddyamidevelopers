@@ -21,7 +21,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
         <?php else: ?>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 animate-slide-up">
                 <?php foreach ($categories as $cat): ?>
-                    <a href="/search.php?category=<?php echo urlencode($cat['id']); ?>" class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                    <a href="/category/<?php echo urlencode($cat['slug']); ?>" class="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
                         <div class="w-20 h-20 md:w-24 md:h-24 bg-gray-50 rounded-full flex items-center justify-center mb-4 shadow-sm overflow-hidden group-hover:scale-110 transition-transform duration-300 border border-gray-100">
                             <?php if($cat['image']): ?>
                                 <img src="/<?php echo htmlspecialchars($cat['image']); ?>" class="w-full h-full object-cover">

@@ -58,7 +58,7 @@ $latestProducts = $pdo->query("
     </div>
     <div class="flex overflow-x-auto no-scrollbar gap-3 md:gap-4 pb-2">
         <?php foreach ($categories as $cat): ?>
-            <a href="/search.php?category=<?php echo urlencode($cat['id']); ?>" class="flex-shrink-0 w-20 md:w-24 flex flex-col items-center">
+            <a href="/category/<?php echo urlencode($cat['slug']); ?>" class="flex-shrink-0 w-20 md:w-24 flex flex-col items-center">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-white rounded-lg flex items-center justify-center mb-2 border border-gray-200 overflow-hidden">
                     <?php if($cat['image']): ?>
                         <img src="/<?php echo htmlspecialchars($cat['image']); ?>" class="w-full h-full object-cover">
@@ -88,7 +88,7 @@ $latestProducts = $pdo->query("
                 </button>
                 
                 <!-- Image -->
-                <a href="/product.php?slug=<?php echo urlencode($product['slug']); ?>" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
+                <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
                     <?php if($product['primary_image']): ?>
                         <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-cover" loading="lazy">
                     <?php else: ?>
@@ -102,7 +102,7 @@ $latestProducts = $pdo->query("
                 <div class="p-3 flex-grow flex flex-col justify-between w-3/5 sm:w-full">
                     <div>
                         <p class="text-[9px] sm:text-[10px] text-gray-500 font-medium mb-0.5 uppercase tracking-wider truncate pr-6"><?php echo htmlspecialchars($product['category_name']); ?></p>
-                        <a href="/product.php?slug=<?php echo urlencode($product['slug']); ?>" class="block pr-6 sm:pr-0">
+                        <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block pr-6 sm:pr-0">
                             <h4 class="text-xs sm:text-sm font-semibold text-gray-900 leading-snug mb-1 line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
                         </a>
                     </div>
@@ -123,7 +123,7 @@ $latestProducts = $pdo->query("
                             <?php endif; ?>
                         </div>
                         
-                        <a href="/product.php?slug=<?php echo urlencode($product['slug']); ?>" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
+                        <a href="/products/<?php echo urlencode($product['slug']); ?>" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
                             View Details <i class="fa-solid fa-arrow-right text-[9px]"></i>
                         </a>
                     </div>

@@ -55,7 +55,7 @@
                     foreach ($footerLocations as $index => $loc): 
                         $locSlug = strtolower(str_replace(' ', '-', $loc));
                     ?>
-                        <a href="/location.php?place=<?php echo urlencode($locSlug); ?>" class="text-gray-500 hover:text-primary hover:underline transition font-medium"><?php echo htmlspecialchars($loc); ?></a>
+                        <a href="/location/<?php echo urlencode($locSlug); ?>" class="text-gray-500 hover:text-primary hover:underline transition font-medium"><?php echo htmlspecialchars($loc); ?></a>
                         <?php if($index < $totalLocs - 1): ?>
                             <span class="text-gray-300">|</span>
                         <?php endif; ?>
@@ -64,7 +64,10 @@
             </div>
             
             <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-xs text-gray-400">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(getSetting('store_name')); ?>. All rights reserved.</p>
+                <div class="text-center md:text-left">
+                    <p class="text-xs text-gray-400">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(getSetting('store_name')); ?>. All rights reserved.</p>
+                    <p class="text-xs text-gray-500 mt-1">An industrial machinery venture by <span class="font-bold text-gray-700 tracking-wide">SRI UDYAMI DEVELOPERS</span></p>
+                </div>
                 <div class="flex gap-4 text-xs text-gray-400">
                     <a href="/privacy.php" class="hover:text-primary transition">Privacy Policy</a>
                     <a href="/terms.php" class="hover:text-primary transition">Terms of Service</a>

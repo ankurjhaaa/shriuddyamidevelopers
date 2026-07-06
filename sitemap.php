@@ -26,14 +26,14 @@ addUrl($baseUrl . '/search.php', date('Y-m-d'), 'daily', '0.9');
 // 2. Category Pages
 $categories = $pdo->query("SELECT id FROM categories")->fetchAll();
 foreach ($categories as $cat) {
-    addUrl($baseUrl . '/search.php?category=' . $cat['id'], date('Y-m-d'), 'weekly', '0.8');
+    addUrl($baseUrl . '/category/' . $cat['id'], date('Y-m-d'), 'weekly', '0.8');
 }
 
 // 3. Location Pages (Programmatic SEO)
 $locations = require __DIR__ . '/includes/locations.php';
 foreach ($locations as $loc) {
     $locSlug = strtolower(str_replace(' ', '-', $loc));
-    addUrl($baseUrl . '/location.php?place=' . urlencode($locSlug), date('Y-m-d'), 'weekly', '0.7');
+    addUrl($baseUrl . '/location/' . urlencode($locSlug), date('Y-m-d'), 'weekly', '0.7');
 }
 
 // 4. Product Pages
@@ -41,7 +41,7 @@ $products = $pdo->query("SELECT slug, created_at FROM products WHERE status = 'a
 foreach ($products as $prod) {
     // Format date as YYYY-MM-DD
     $date = date('Y-m-d', strtotime($prod['created_at']));
-    addUrl($baseUrl . '/product.php?slug=' . urlencode($prod['slug']), $date, 'weekly', '0.8');
+    addUrl($baseUrl . '/products/' . urlencode($prod['slug']), $date, 'weekly', '0.8');
 }
 
 echo '</urlset>';

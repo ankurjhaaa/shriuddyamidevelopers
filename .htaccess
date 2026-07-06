@@ -1,0 +1,28 @@
+RewriteEngine On
+RewriteBase /
+
+# Force trailing slash to be removed (optional but good for SEO)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# 1. Location Rule: /location/kasba -> location.php?place=kasba
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^location/([^/]+)$ location.php?place=$1 [QSA,L]
+
+# 2. Category Rule: /category/1 -> search.php?category=1
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^category/([^/]+)$ search.php?category=$1 [QSA,L]
+
+# 3. Product Slug Rule: /garud-cultivator -> product.php?slug=garud-cultivator
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php !-f
+RewriteRule ^products/([^/]+)$ product.php?slug=$1 [QSA,L]
+
+# 4. Standard Pages (Clean URLs for about, contact, etc.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+RewriteRule ^([^/]+)$ $1.php [L]

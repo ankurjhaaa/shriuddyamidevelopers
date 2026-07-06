@@ -2,12 +2,12 @@
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$categoryId = $_GET['category'] ?? '';
+$categoryId = $_GET['category'] ?? ''; // This is now a slug
 
 // Fetch category info for SEO
 $catName = 'All Products';
 if ($categoryId) {
-    $stmt = $pdo->prepare("SELECT name FROM categories WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT name FROM categories WHERE slug = ?");
     $stmt->execute([$categoryId]);
     $cat = $stmt->fetch();
     if ($cat) {
@@ -52,7 +52,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                         All Categories
                     </button>
                     <?php foreach ($categories as $cat): ?>
-                        <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId == $cat['id'] ? 'bg-primary text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>" data-id="<?php echo $cat['id']; ?>">
+                        <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold <?php echo $categoryId == $cat['slug'] ? 'bg-primary text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
                             <?php echo htmlspecialchars($cat['name']); ?>
                         </button>
                     <?php endforeach; ?>

@@ -22,6 +22,14 @@
 
         // Always show all products if query is empty on search page, handled by backend
         
+        // Update URL state
+        let newPath = categoryId ? `/category/${categoryId}` : '/search.php';
+        let newUrl = new URL(newPath, window.location.origin);
+        if (query) {
+            newUrl.searchParams.set('q', query);
+        }
+        window.history.replaceState({}, '', newUrl);
+        
         searchResults.innerHTML = '';
         searchResults.classList.add('hidden');
         searchEmpty.classList.add('hidden');
@@ -74,7 +82,7 @@
                                 <i class="fa-regular fa-heart"></i>
                             </button>
                             
-                            <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
+                            <a href="/products/${encodeURIComponent(product.slug)}" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
                                 ${product.primary_image 
                                     ? `<img src="/${product.primary_image}" class="w-full h-full object-cover" loading="lazy">`
                                     : `<div class="w-full h-full flex items-center justify-center text-gray-300"><i class="fa-solid fa-image text-3xl"></i></div>`
@@ -84,7 +92,7 @@
                             <div class="p-3 flex-grow flex flex-col justify-between w-3/5 sm:w-full">
                                 <div>
                                     <p class="text-[9px] sm:text-[10px] text-gray-500 font-medium mb-0.5 uppercase tracking-wider truncate pr-6">${escapeHtml(product.category_name || '')}</p>
-                                    <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="block pr-6 sm:pr-0">
+                                    <a href="/products/${encodeURIComponent(product.slug)}" class="block pr-6 sm:pr-0">
                                         <h4 class="text-xs sm:text-sm font-semibold text-gray-900 leading-snug mb-1 line-clamp-2">${escapeHtml(product.name)}</h4>
                                     </a>
                                 </div>
@@ -94,7 +102,7 @@
                                         ${priceHtml}
                                     </div>
                                     
-                                    <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
+                                    <a href="/products/${encodeURIComponent(product.slug)}" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
                                         View Details <i class="fa-solid fa-arrow-right text-[9px]"></i>
                                     </a>
                                 </div>
@@ -133,5 +141,9 @@
     });
 
     // Initial load
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('q')) {
+        searchInput.value = urlParams.get('q');
+    }
     performSearch();
 })();

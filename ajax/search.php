@@ -24,7 +24,7 @@ if ($query !== '') {
 }
 
 if ($categoryId !== '') {
-    $sql .= " AND p.category_id = ?";
+    $sql .= " AND c.slug = ?";
     $params[] = $categoryId;
 }
 
