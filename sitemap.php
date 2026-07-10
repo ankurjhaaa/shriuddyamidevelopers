@@ -24,9 +24,9 @@ addUrl($baseUrl . '/contact.php', date('Y-m-d'), 'monthly', '0.6');
 addUrl($baseUrl . '/search.php', date('Y-m-d'), 'daily', '0.9');
 
 // 2. Category Pages
-$categories = $pdo->query("SELECT id FROM categories")->fetchAll();
+$categories = $pdo->query("SELECT slug FROM categories")->fetchAll();
 foreach ($categories as $cat) {
-    addUrl($baseUrl . '/category/' . $cat['id'], date('Y-m-d'), 'weekly', '0.8');
+    addUrl($baseUrl . '/category/' . $cat['slug'], date('Y-m-d'), 'weekly', '0.8');
 }
 
 // 3. Location Pages (Programmatic SEO)

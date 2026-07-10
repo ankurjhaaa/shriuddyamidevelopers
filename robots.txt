@@ -1,7 +1,7 @@
 User-agent: *
-Allow: /
 Disallow: /admin/
 Disallow: /includes/
+Disallow: /database/
+Disallow: /test.php
 
-# You should update this to your actual production domain later
-Sitemap: http://localhost:8000/sitemap.php
+Sitemap: https://purneamachinebaazar.com/sitemap.xml

@@ -5,6 +5,9 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
+# 0. Sitemap Rule
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 # 1. Location Rule: /location/kasba -> location.php?place=kasba
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

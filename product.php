@@ -105,6 +105,10 @@ if ($product['price_visibility'] === 'public' && $product['price'] > 0) {
 
 $customSchema = '<script type="application/ld+json">' . json_encode($schemaProduct, JSON_UNESCAPED_SLASHES) . '</script>';
 
+$ogImage = $schemaImage;
+$ogType = 'product';
+$canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/products/' . urlencode($product['slug']);
+
 include __DIR__ . '/includes/header.php';
 ?>
 

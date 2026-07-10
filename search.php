@@ -19,6 +19,13 @@ $pageTitle = $categoryId ? "Best {$catName} in Purnea" : 'Shop Agriculture Machi
 $pageDescription = "Browse and buy {$catName} at the best price in Purnea. Purnea Machine Baazar offers top quality industrial and farming machinery.";
 $pageKeywords = strtolower($catName) . " in purnea, buy " . strtolower($catName) . ", purnea machine baazar, agriculture equipment purnea";
 
+$canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'];
+if ($categoryId) {
+    $canonicalUrl .= '/category/' . urlencode($categoryId);
+} else {
+    $canonicalUrl .= '/search.php';
+}
+
 include __DIR__ . '/includes/header.php';
 
 $categoryId = $_GET['category'] ?? '';

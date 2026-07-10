@@ -19,14 +19,25 @@
     <meta name="author" content="<?php echo htmlspecialchars(getSetting('store_name')); ?>">
     
     <!-- Open Graph / Social Media Meta Tags -->
+    <?php 
+    $seoImage = isset($ogImage) ? $ogImage : 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/assets/images/desktop_banner.png';
+    $seoUrl = isset($canonicalUrl) ? $canonicalUrl : 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI"], '?');
+    ?>
     <meta property="og:title" content="<?php echo $seoTitle; ?>">
     <meta property="og:description" content="<?php echo $seoDescription; ?>">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="<?php echo isset($ogType) ? $ogType : 'website'; ?>">
     <meta property="og:site_name" content="<?php echo htmlspecialchars(getSetting('store_name')); ?>">
-    <meta property="og:image" content="/assets/images/desktop_banner.png">
+    <meta property="og:image" content="<?php echo $seoImage; ?>">
+    <meta property="og:url" content="<?php echo $seoUrl; ?>">
     
-    <!-- Canonical URL (Basic Implementation) -->
-    <link rel="canonical" href="<?php echo 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"; ?>">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo $seoTitle; ?>">
+    <meta name="twitter:description" content="<?php echo $seoDescription; ?>">
+    <meta name="twitter:image" content="<?php echo $seoImage; ?>">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo $seoUrl; ?>">
 
     <!-- JSON-LD Structured Data (Local Business) -->
     <script type="application/ld+json">

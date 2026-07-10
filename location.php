@@ -54,79 +54,65 @@ $schemaLocalBusiness = [
 ];
 $customSchema = '<script type="application/ld+json">' . json_encode($schemaLocalBusiness, JSON_UNESCAPED_SLASHES) . '</script>';
 
+$canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/location/' . urlencode($placeSlug);
+
 include __DIR__ . '/includes/header.php';
 ?>
-
-<div class="bg-white min-h-screen pb-12">
-    <!-- Dynamic Industrial Hero Section -->
-    <div class="bg-secondary py-16 px-6 text-center border-b-4 border-primary relative overflow-hidden z-10">
-        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), repeating-linear-gradient(45deg, #000 25%, #1E293B 25%, #1E293B 75%, #000 75%, #000); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
-        <div class="max-w-4xl mx-auto relative z-20 animate-fade-in">
-            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight uppercase tracking-tight">Machinery in <span class="text-accent"><?php echo htmlspecialchars($currentPlace); ?></span></h1>
-            <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
-            <p class="text-gray-300 md:text-lg mb-8 max-w-2xl mx-auto font-medium">Get the best deals on heavy-duty agriculture and industrial machinery delivered right here in <?php echo htmlspecialchars($currentPlace); ?>.</p>
-            
-            <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" class="inline-block bg-accent text-primary font-bold px-8 py-3 rounded-full shadow-lg hover:bg-yellow-400 hover:shadow-xl transition transform hover:-translate-y-1">
-                <i class="fa-solid fa-phone mr-2"></i> Call Us Now
-            </a>
+<div class="bg-gray-100 min-h-screen pb-16">
+    <!-- Clean Header -->
+    <div class="bg-white border-b border-gray-200 py-6 px-4 mb-6">
+        <div class="max-w-[1440px] mx-auto">
+            <nav class="text-xs text-gray-500 mb-2 font-medium">
+                <a href="/" class="hover:text-primary">Home</a> &gt; 
+                <span class="text-gray-800">Available in <?php echo htmlspecialchars($currentPlace); ?></span>
+            </nav>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Agriculture & Industrial Machinery in <?php echo htmlspecialchars($currentPlace); ?></h1>
+            <p class="text-sm text-gray-600 max-w-3xl">Get the best deals on heavy-duty equipment delivered directly to <?php echo htmlspecialchars($currentPlace); ?>. Contact our suppliers for the latest price and catalog.</p>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        
-        <div class="mb-8 flex items-end justify-between">
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight mb-2">Available Equipment in <?php echo htmlspecialchars($currentPlace); ?></h2>
-                <p class="text-gray-500">Explore our top-selling machinery and tools.</p>
-            </div>
-            <a href="/search.php" class="hidden sm:inline-flex items-center gap-2 text-primary font-bold hover:underline">View All <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="max-w-[1440px] mx-auto px-2 md:px-4">
+        <!-- Products Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
             <?php foreach ($products as $product): ?>
-                <div class="bg-white border border-gray-200 rounded-lg flex flex-row sm:flex-col relative shadow-sm h-full wishlist-card" data-product-id="<?php echo $product['id']; ?>">
-                    <button class="absolute top-2 right-2 w-7 h-7 bg-gray-50 sm:bg-white/80 sm:backdrop-blur rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm text-xs" data-id="<?php echo $product['id']; ?>">
-                        <i class="fa-regular fa-heart"></i>
-                    </button>
+                <div class="bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden" data-product-id="<?php echo $product['id']; ?>">
                     
                     <!-- Image -->
-                    <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-2/5 sm:w-full aspect-square bg-white rounded-l-lg sm:rounded-t-lg sm:rounded-bl-none overflow-hidden border-r sm:border-r-0 sm:border-b border-gray-200 shrink-0">
+                    <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-full aspect-square bg-white border-b border-gray-100 p-2">
                         <?php if($product['primary_image']): ?>
-                            <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-cover" loading="lazy">
+                            <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-contain mix-blend-multiply" loading="lazy">
                         <?php else: ?>
-                            <div class="w-full h-full flex items-center justify-center text-gray-300">
+                            <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50">
                                 <i class="fa-solid fa-image text-3xl"></i>
                             </div>
                         <?php endif; ?>
                     </a>
                     
                     <!-- Content -->
-                    <div class="p-3 flex-grow flex flex-col justify-between w-3/5 sm:w-full">
-                        <div>
-                            <p class="text-[9px] sm:text-[10px] text-gray-500 font-medium mb-0.5 uppercase tracking-wider truncate pr-6"><?php echo htmlspecialchars($product['category_name']); ?></p>
-                            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block pr-6 sm:pr-0">
-                                <h4 class="text-xs sm:text-sm font-semibold text-gray-900 leading-snug mb-1 line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
-                            </a>
-                        </div>
+                    <div class="flex-grow flex flex-col p-2 md:p-3">
+                        <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2">
+                            <h4 class="text-xs md:text-sm font-medium text-blue-700 hover:underline leading-snug line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
+                        </a>
                         
-                        <div class="mt-2 pt-2 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-0">
-                            <!-- Price Logic -->
-                            <div class="price-container" data-product-id="<?php echo $product['id']; ?>" data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
-                                <?php if ($product['price_visibility'] === 'public'): ?>
-                                    <span class="font-bold text-sm sm:text-base text-gray-900"><?php echo formatPrice($product['price']); ?></span>
-                                <?php elseif ($product['price_visibility'] === 'locked'): ?>
-                                    <button class="btn-unlock-price flex items-center gap-1 text-primary font-medium text-[10px] sm:text-xs bg-blue-50 px-2 py-1 rounded w-fit">
-                                        <span>₹ *****</span>
-                                        <i class="fa-solid fa-lock text-[9px]"></i>
-                                    </button>
-                                    <span class="real-price hidden font-bold text-sm sm:text-base text-gray-900"></span>
-                                <?php else: ?>
-                                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" class="text-[10px] sm:text-xs text-primary font-medium">Ask Price</a>
-                                <?php endif; ?>
-                            </div>
+                        <div class="price-container mb-2" data-product-id="<?php echo $product['id']; ?>" data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
+                            <?php if ($product['price_visibility'] === 'public'): ?>
+                                <span class="font-bold text-base md:text-lg text-gray-900"><?php echo formatPrice($product['price']); ?></span>
+                            <?php elseif ($product['price_visibility'] === 'locked'): ?>
+                                <button class="btn-unlock-price text-accent font-semibold text-[10px] md:text-xs hover:underline flex items-center gap-1">
+                                    Unlock Price <i class="fa-solid fa-lock text-[9px]"></i>
+                                </button>
+                            <?php else: ?>
+                                <button class="btn-unlock-price text-gray-500 text-[10px] md:text-xs font-semibold hover:underline flex items-center gap-1">
+                                    Get Latest Price
+                                </button>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="mt-auto">
+                            <p class="text-[10px] md:text-[11px] text-gray-500 mb-2 truncate flex items-center gap-1"><i class="fa-solid fa-location-dot text-gray-400"></i> <?php echo htmlspecialchars($currentPlace); ?>, Bihar</p>
                             
-                            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] text-primary font-bold hover:underline w-fit">
-                                View Details <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                            <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" class="w-full text-center bg-primary text-white hover:bg-secondary transition px-2 py-1.5 rounded-sm text-[11px] md:text-xs font-semibold flex justify-center items-center gap-1">
+                                Contact Supplier
                             </a>
                         </div>
                     </div>
@@ -134,9 +120,19 @@ include __DIR__ . '/includes/header.php';
             <?php endforeach; ?>
         </div>
         
-        <div class="mt-6 text-center sm:hidden">
-            <a href="/search.php" class="inline-block border border-gray-200 text-gray-700 font-bold px-6 py-2.5 rounded-lg w-full text-sm">View All Products</a>
+        <?php if (empty($products)): ?>
+            <div class="flex flex-col items-center justify-center py-16 bg-white rounded-sm border border-gray-200">
+                <i class="fa-solid fa-box-open text-4xl text-gray-300 mb-3"></i>
+                <h3 class="text-base font-semibold text-gray-800 mb-1">No products found</h3>
+                <p class="text-xs text-gray-500">Check back later for equipment in <?php echo htmlspecialchars($currentPlace); ?>.</p>
+            </div>
+        <?php endif; ?>
+        
+        <?php if (!empty($products)): ?>
+        <div class="mt-8 text-center">
+            <a href="/search.php" class="inline-block bg-white border border-gray-300 text-primary font-bold px-8 py-2.5 rounded-sm shadow-sm hover:bg-gray-50 transition text-sm">View All Products in Bihar</a>
         </div>
+        <?php endif; ?>
     </div>
 </div>
 
