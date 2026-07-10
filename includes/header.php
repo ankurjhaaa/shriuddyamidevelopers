@@ -129,16 +129,24 @@
         <!-- Desktop Header -->
         <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[60px] items-center justify-between gap-6">
             <!-- Logo -->
-            <a href="/" class="flex-shrink-0 bg-white p-1 rounded-sm">
+            <a href="/" class="flex-shrink-0">
                 <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo" class="h-10 w-auto object-contain">
             </a>
 
             <!-- Massive Central Search Bar -->
             <div class="flex-grow max-w-4xl flex items-center bg-white rounded-sm h-10 shadow-sm border-2 border-transparent focus-within:border-accent transition-colors overflow-hidden">
                 <form action="/search.php" method="GET" class="flex w-full h-full">
-                    <select class="hidden lg:block bg-gray-100 text-gray-700 text-sm px-3 h-full border-r border-gray-200 outline-none cursor-pointer">
-                        <option>Products</option>
-                        <option>Suppliers</option>
+                    <select name="category" class="hidden lg:block w-36 truncate bg-gray-100 text-gray-700 text-sm px-3 h-full border-r border-gray-200 outline-none cursor-pointer">
+                        <option value="">All Categories</option>
+                        <?php 
+                        if (isset($pdo)) {
+                            $navCats = $pdo->query("SELECT slug, name FROM categories ORDER BY name ASC")->fetchAll();
+                            foreach ($navCats as $nc) {
+                                $selected = (isset($_GET['category']) && $_GET['category'] === $nc['slug']) ? 'selected' : '';
+                                echo '<option value="' . htmlspecialchars($nc['slug']) . '" ' . $selected . '>' . htmlspecialchars($nc['name']) . '</option>';
+                            }
+                        }
+                        ?>
                     </select>
                     <input type="text" name="q" placeholder="Enter product / service to search" class="flex-grow px-4 text-sm text-gray-800 outline-none" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
                     <button type="submit" class="bg-secondary text-white px-6 h-full hover:bg-accent transition font-semibold text-sm flex items-center gap-2">
@@ -171,8 +179,7 @@
             <!-- Top Row: Hamburger, Logo, User -->
             <div class="flex items-center justify-between px-3 h-14 border-b border-white/20">
                 <div class="flex items-center gap-3">
-                    <button class="text-white text-xl p-1"><i class="fa-solid fa-bars"></i></button>
-                    <a href="/" class="bg-white p-1 rounded-sm flex items-center">
+                    <a href="/" class="flex items-center">
                         <img src="/assets/images/logo.png" alt="Logo" class="h-6 w-auto object-contain">
                     </a>
                 </div>

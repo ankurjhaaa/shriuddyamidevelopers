@@ -53,7 +53,7 @@ foreach ($categoriesWithProducts as $cat) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     
     <!-- IndiaMART Style Full-Width Banner -->
-    <div class="relative w-full z-10 bg-gray-100 border-b border-gray-200 hidden md:block">
+    <div class="relative w-full z-10 bg-gray-100 border-b border-gray-200">
         <div class="swiper heroSwiper w-full h-[300px] md:h-[350px]">
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
@@ -146,7 +146,9 @@ foreach ($categoriesWithProducts as $cat) {
                                             Unlock Price <i class="fa-solid fa-lock text-[9px]"></i>
                                         </button>
                                     <?php else: ?>
-                                        <span class="text-gray-500 text-[10px] md:text-xs font-semibold">Price on Request</span>
+                                        <button class="btn-unlock-price text-gray-500 text-[10px] md:text-xs font-semibold hover:underline flex items-center gap-1">
+                                            Get Latest Price
+                                        </button>
                                     <?php endif; ?>
                                 </div>
 

@@ -27,15 +27,17 @@ try {
     $stmt->execute([$productId, $name, $phone]);
     
     // Fetch real price
-    $stmt = $pdo->prepare("SELECT price FROM products WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT price, price_visibility FROM products WHERE id = ?");
     $stmt->execute([$productId]);
-    $price = $stmt->fetchColumn();
+    $productRow = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if ($price !== false) {
+    if ($productRow !== false) {
+        $formattedPrice = formatPrice($productRow['price']);
+        
         echo json_encode([
             'success' => true, 
-            'formatted_price' => formatPrice($price),
-            'raw_price' => $price
+            'formatted_price' => $formattedPrice,
+            'raw_price' => $productRow['price']
         ]);
     } else {
         echo json_encode(['success' => false, 'error' => 'Product not found']);

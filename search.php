@@ -55,13 +55,6 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                             </li>
                         <?php endforeach; ?>
                     </ul>
-
-                    <h3 class="font-bold text-gray-800 text-sm border-b border-gray-200 pb-2 mb-3 mt-6">Business Type</h3>
-                    <ul class="space-y-2">
-                        <li><label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" class="accent-primary"> Manufacturer</label></li>
-                        <li><label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" class="accent-primary"> Wholesaler</label></li>
-                        <li><label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" class="accent-primary"> Retailer</label></li>
-                    </ul>
                 </div>
             </div>
 
@@ -101,10 +94,10 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                     <h1 class="text-lg font-bold text-gray-800"><?php echo $catName; ?> <span class="text-xs text-gray-500 font-normal ml-2" id="resultsCount"></span></h1>
                     <div class="flex items-center gap-2 text-xs">
                         <span class="text-gray-500">Sort by:</span>
-                        <select class="border border-gray-300 rounded-sm px-2 py-1 outline-none focus:border-primary">
-                            <option>Relevance</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
+                        <select id="sortSelectDesktop" class="border border-gray-300 rounded-sm px-2 py-1 outline-none focus:border-primary">
+                            <option value="">Relevance</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
                         </select>
                     </div>
                 </div>

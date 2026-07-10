@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 
 $query = $_GET['q'] ?? '';
 $categoryId = $_GET['category'] ?? '';
+$sort = $_GET['sort'] ?? '';
 
 $sql = "
     SELECT p.*, c.name as category_name, 
@@ -28,7 +29,13 @@ if ($categoryId !== '') {
     $params[] = $categoryId;
 }
 
-$sql .= " ORDER BY p.id DESC LIMIT 20";
+if ($sort === 'price_asc') {
+    $sql .= " ORDER BY p.price ASC LIMIT 20";
+} else if ($sort === 'price_desc') {
+    $sql .= " ORDER BY p.price DESC LIMIT 20";
+} else {
+    $sql .= " ORDER BY p.id DESC LIMIT 20";
+}
 
 try {
     $stmt = $pdo->prepare($sql);

@@ -126,7 +126,9 @@ include __DIR__ . '/includes/header.php';
                                 </button>
                                 <span class="real-price hidden font-bold text-gray-900"></span>
                             <?php else: ?>
-                                <span class="text-gray-500 text-sm font-medium">Get Latest Price on Request</span>
+                                <button class="btn-unlock-price flex items-center gap-2 text-gray-500 font-bold hover:underline transition text-sm">
+                                    Get Latest Price
+                                </button>
                             <?php endif; ?>
                         </div>
                         
@@ -189,17 +191,17 @@ include __DIR__ . '/includes/header.php';
                 <!-- Company Details Block (Mimicking IndiaMART) -->
                 <div class="border border-gray-200 rounded-sm overflow-hidden">
                     <h2 class="bg-gray-100 px-4 py-2 border-b border-gray-200 font-bold text-gray-800 text-sm">Company Details</h2>
-                    <div class="p-4 flex gap-4 items-start">
-                        <div class="w-16 h-16 bg-gray-100 border border-gray-200 rounded-sm flex-shrink-0 flex items-center justify-center">
-                            <i class="fa-solid fa-building text-gray-400 text-2xl"></i>
+                    <a href="/company.php" class="p-4 flex gap-4 items-start block hover:bg-gray-50 transition cursor-pointer group">
+                        <div class="w-16 h-16 bg-white border border-gray-200 rounded-sm flex-shrink-0 flex items-center justify-center overflow-hidden">
+                            <img src="/assets/images/logo.png" alt="Company Logo" class="max-w-full max-h-full object-contain p-1">
                         </div>
                         <div>
-                            <h3 class="font-bold text-blue-700 text-lg hover:underline cursor-pointer mb-1"><?php echo htmlspecialchars(getSetting('store_name')); ?></h3>
+                            <h3 class="font-bold text-blue-700 text-lg group-hover:underline mb-1">Shri Uddyami Developers</h3>
                             <p class="text-xs text-gray-600 mb-1"><i class="fa-solid fa-location-dot text-gray-400 w-4"></i> <?php echo htmlspecialchars(getSetting('address')); ?></p>
                             <p class="text-xs text-gray-600 mb-2"><i class="fa-solid fa-shield-check text-green-600 w-4"></i> TrustSEAL Verified</p>
-                            <a href="/contact.php" class="text-xs text-primary font-bold hover:underline">View Company Profile</a>
+                            <span class="text-xs text-primary font-bold group-hover:underline">View Company Profile <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i></span>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 
             </div>
@@ -242,7 +244,9 @@ include __DIR__ . '/includes/header.php';
                                     Unlock Price <i class="fa-solid fa-lock text-[10px]"></i>
                                 </button>
                             <?php else: ?>
-                                <span class="text-gray-500 text-xs font-semibold">Price on Request</span>
+                                <button class="btn-unlock-price text-gray-500 text-[10px] md:text-xs font-semibold hover:underline flex items-center gap-1">
+                                    Get Latest Price
+                                </button>
                             <?php endif; ?>
                         </div>
 

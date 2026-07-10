@@ -13,6 +13,8 @@
     const performSearch = async () => {
         const query = searchInput.value.trim();
         const categoryId = searchCategory ? searchCategory.value : '';
+        const sortSelect = document.getElementById('sortSelectDesktop');
+        const sortValue = sortSelect ? sortSelect.value : '';
         
         if (query.length > 0) {
             clearSearch.classList.remove('hidden');
@@ -36,7 +38,7 @@
         searchLoading.classList.remove('hidden');
 
         try {
-            const response = await fetch(`/ajax/search.php?q=${encodeURIComponent(query)}&category=${categoryId}`);
+            const response = await fetch(`/ajax/search.php?q=${encodeURIComponent(query)}&category=${categoryId}&sort=${encodeURIComponent(sortValue)}`);
             const result = await response.json();
 
             searchLoading.classList.add('hidden');
@@ -67,7 +69,11 @@
                             `;
                         }
                     } else {
-                        priceHtml = `<span class="text-gray-500 text-xs font-semibold">Price on Request</span>`;
+                        priceHtml = `
+                            <button class="btn-unlock-price text-gray-500 text-xs font-semibold hover:underline flex items-center gap-1">
+                                Get Latest Price
+                            </button>
+                        `;
                     }
 
                     const escapeHtml = (unsafe) => {
@@ -139,6 +145,11 @@
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(performSearch, 300);
     });
+
+    const sortSelect = document.getElementById('sortSelectDesktop');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', performSearch);
+    }
 
     clearSearch.addEventListener('click', () => {
         searchInput.value = '';

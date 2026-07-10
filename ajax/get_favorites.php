@@ -56,7 +56,9 @@ if (!empty($products)) {
                             Unlock Price <i class="fa-solid fa-lock text-[10px]"></i>
                         </button>
                     <?php else: ?>
-                        <span class="text-gray-500 text-xs font-semibold">Price on Request</span>
+                        <button class="btn-unlock-price text-gray-500 text-xs font-semibold hover:underline flex items-center gap-1">
+                            Get Latest Price
+                        </button>
                     <?php endif; ?>
                 </div>
 

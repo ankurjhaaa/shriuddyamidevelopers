@@ -234,8 +234,8 @@ if ($pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn() == 0) {
         [
             'cat' => 'Rice Mill Machine',
             'name' => 'Combined Mini Rice Mill',
-            'price' => null,
-            'price_visibility' => 'hidden',
+            'price' => 35000,
+            'price_visibility' => 'locked',
             'short' => 'Standard combined mini rice mill machine.',
             'desc' => 'High quality combined mini rice mill. Contact us for pricing and further technical details.',
             'specs' => '{"Type":"Combined Mini Rice Mill"}'
@@ -263,8 +263,8 @@ if ($pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn() == 0) {
         [
             'cat' => 'Destoner Machine',
             'name' => '4 TPH De Stoning Machine',
-            'price' => null,
-            'price_visibility' => 'hidden',
+            'price' => 125000,
+            'price_visibility' => 'locked',
             'short' => 'Industrial 4 Tons Per Hour (TPH) de-stoning machine.',
             'desc' => 'High-capacity industrial destoner capable of handling 4 tons per hour. Ideal for large-scale processing plants.',
             'specs' => '{"Capacity":"4 TPH (Tons Per Hour)", "Application":"Industrial Processing"}'

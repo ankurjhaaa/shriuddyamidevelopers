@@ -79,38 +79,43 @@
 
     <?php include __DIR__ . '/bottom-nav.php'; ?>
 
-    <!-- Price Lock Bottom Sheet Modal -->
-    <div id="priceLockSheet" class="fixed inset-0 z-[60] bg-black bg-opacity-50 hidden transition-opacity duration-300 opacity-0 flex items-end md:items-center justify-center md:p-4">
+    <!-- Price Lock Bottom Sheet Modal / Get Latest Price -->
+    <div id="priceLockSheet" class="fixed inset-0 z-[60] bg-black bg-opacity-60 hidden transition-opacity duration-300 opacity-0 flex items-center justify-center p-4">
         <!-- Sheet Content -->
-        <div class="bg-white w-full max-w-md rounded-t-2xl md:rounded-2xl transform translate-y-full md:translate-y-0 md:scale-95 md:opacity-0 transition-all duration-300 shadow-xl" id="priceLockContent">
-            <div class="p-6 relative">
-                <!-- Drag Handle -->
-                <div class="md:hidden w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-6"></div>
-                
-                <button type="button" id="closePriceLock" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+        <div class="bg-white w-full max-w-[400px] rounded-md md:rounded-lg transform scale-95 md:scale-95 md:opacity-0 transition-all duration-300 shadow-2xl overflow-hidden" id="priceLockContent">
+            
+            <!-- Header -->
+            <div class="bg-[#00a699] text-white px-5 py-4 flex justify-between items-center relative">
+                <h3 class="text-lg font-bold">Get Latest Price</h3>
+                <button type="button" id="closePriceLock" class="text-white hover:text-gray-200 transition-colors">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
-                
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Unlock Price</h3>
-                <p class="text-gray-500 text-sm mb-6">Please enter your details to view the price for this product.</p>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-6">
+                <p class="text-gray-600 text-sm mb-5">Please enter your details to view the latest price and offers for this product.</p>
                 
                 <form id="priceLockForm">
                     <input type="hidden" id="pl_product_id" name="product_id" value="">
                     
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                        <input type="text" id="pl_name" name="name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="Your Name">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Name</label>
+                        <input type="text" id="pl_name" name="name" required class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded focus:ring-1 focus:ring-[#00a699] focus:border-[#00a699] outline-none transition text-sm" placeholder="Enter your full name">
                     </div>
                     
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
-                        <input type="tel" id="pl_phone" name="phone" pattern="[0-9]{10}" maxlength="10" title="Please enter exactly 10 digits" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" placeholder="10-digit Mobile Number">
+                    <div class="mb-5">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Mobile Number</label>
+                        <div class="flex">
+                            <span class="inline-flex items-center px-3 text-sm text-gray-500 bg-gray-50 border border-r-0 border-gray-300 rounded-l">+91</span>
+                            <input type="tel" id="pl_phone" name="phone" pattern="[0-9]{10}" maxlength="10" title="Please enter exactly 10 digits" required class="flex-1 min-w-0 w-full px-3 py-2.5 bg-white border border-gray-300 rounded-r focus:ring-1 focus:ring-[#00a699] focus:border-[#00a699] outline-none transition text-sm" placeholder="10-digit mobile number">
+                        </div>
                     </div>
                     
-                    <button type="submit" class="w-full bg-primary text-white py-3.5 rounded-lg hover:bg-blue-800 transition font-semibold text-lg flex justify-center items-center gap-2 shadow-md">
-                        <span>Unlock Now</span>
-                        <i class="fa-solid fa-unlock-keyhole"></i>
+                    <button type="submit" class="w-full bg-[#ff7b00] hover:bg-[#e66f00] text-white py-3 rounded transition font-bold text-base flex justify-center items-center shadow-sm">
+                        Submit & View Price
                     </button>
+                    <p class="text-center text-[10px] text-gray-400 mt-3"><i class="fa-solid fa-lock mr-1"></i> Your information is safe with us.</p>
                 </form>
             </div>
         </div>

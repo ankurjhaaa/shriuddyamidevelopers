@@ -15,11 +15,11 @@ function initBottomSheet() {
     const processPriceContainers = () => {
         document.querySelectorAll('.price-container').forEach(container => {
             const visibility = container.dataset.visibility;
-            if (visibility === 'locked') {
+            if (visibility === 'locked' || visibility === 'hidden') {
                 if (isUnlocked) {
-                    // Show real price immediately
                     const rawPrice = container.dataset.price;
-                    container.innerHTML = `<span class="font-bold text-gray-900">₹ ${parseFloat(rawPrice).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
+                    const priceValue = parseFloat(rawPrice) || 0;
+                    container.innerHTML = `<span class="font-bold text-gray-900">₹ ${priceValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
                 } else {
                     // Setup unlock button
                     const btn = container.querySelector('.btn-unlock-price');
@@ -47,22 +47,24 @@ function initBottomSheet() {
         // trigger reflow
         void sheet.offsetWidth;
         sheet.classList.remove('opacity-0');
-        content.classList.remove('translate-y-full', 'md:scale-95', 'md:opacity-0');
+        content.classList.remove('scale-95', 'md:scale-95', 'md:opacity-0', 'translate-y-full');
+        content.classList.add('scale-100', 'opacity-100');
     }
 
     function closeSheet() {
         sheet.classList.add('opacity-0');
-        content.classList.add('translate-y-full', 'md:scale-95', 'md:opacity-0');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'md:scale-95', 'md:opacity-0', 'translate-y-full');
         setTimeout(() => {
             sheet.classList.add('hidden');
         }, 300);
     }
 
-    if(closeBtn) {
+    if (closeBtn) {
         closeBtn.onclick = closeSheet;
     }
 
-    if(sheet) {
+    if (sheet) {
         sheet.onclick = (e) => {
             if (e.target === sheet) {
                 closeSheet();
@@ -70,10 +72,10 @@ function initBottomSheet() {
         };
     }
 
-    if(form) {
+    if (form) {
         form.onsubmit = async (e) => {
             e.preventDefault();
-            
+
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnHtml = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Unlocking...';
@@ -105,12 +107,12 @@ function initBottomSheet() {
                     localStorage.setItem('price_unlocked', 'true');
                     localStorage.setItem('lead_name', payload.name);
                     localStorage.setItem('lead_phone', payload.phone);
-                    
+
                     // Update current container
                     if (currentPriceContainer) {
                         currentPriceContainer.innerHTML = `<span class="font-bold text-gray-900">${result.formatted_price}</span>`;
                     }
-                    
+
                     // Close the sheet and unlock all other prices instantly without reload!
                     closeSheet();
                     processPriceContainers();
