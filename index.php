@@ -1,4 +1,14 @@
 <?php
+// Fix for local PHP development server (php -S) when router.php is not specified
+if (php_sapi_name() === 'cli-server' && !defined('ROUTER_LOADED')) {
+    define('ROUTER_LOADED', true);
+    $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    if ($uri !== '/' && $uri !== '/index.php') {
+        require __DIR__ . '/router.php';
+        exit;
+    }
+}
+
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
@@ -8,37 +18,43 @@ $pageKeywords = 'purnea machine baazar, agriculture machines purnea, industrial 
 
 include __DIR__ . '/includes/header.php';
 
-// Fetch categories
-$categories = $pdo->query("SELECT * FROM categories ORDER BY id DESC LIMIT 5")->fetchAll();
 
-// Fetch featured products (Now acting as All Products on Home)
-$featuredProducts = $pdo->query("
-    SELECT p.*, c.name as category_name, 
-           (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
-    FROM products p
-    LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.status = 'active'
-    ORDER BY p.id DESC LIMIT 12
+
+// Fetch products grouped by category for the horizontal strips
+$categoriesWithProducts = $pdo->query("
+    SELECT c.* FROM categories c
+    WHERE EXISTS (SELECT 1 FROM products p WHERE p.category_id = c.id AND p.status = 'active')
+    ORDER BY c.id ASC
 ")->fetchAll();
 
-// Fetch latest products
-$latestProducts = $pdo->query("
-    SELECT p.*, c.name as category_name, 
-           (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
-    FROM products p
-    LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.status = 'active'
-    ORDER BY p.id DESC LIMIT 6
-")->fetchAll();
+$categoryStrips = [];
+foreach ($categoriesWithProducts as $cat) {
+    $stmt = $pdo->prepare("
+        SELECT p.*, ? as category_name, 
+               (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
+        FROM products p
+        WHERE p.category_id = ? AND p.status = 'active'
+        ORDER BY p.id DESC LIMIT 10
+    ");
+    $stmt->execute([$cat['name'], $cat['id']]);
+    $prods = $stmt->fetchAll();
+    
+    if (!empty($prods)) {
+        $categoryStrips[] = [
+            'category' => $cat,
+            'products' => $prods
+        ];
+    }
+}
 ?>
 
 <div class="bg-white min-h-screen pb-10">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     
-    <!-- IndiaMART Style Compact Banner -->
+    <!-- IndiaMART Style Full-Width Banner -->
     <div class="relative w-full z-10 bg-gray-100 border-b border-gray-200 hidden md:block">
-        <div class="swiper heroSwiper w-full h-[200px] md:h-[250px] max-w-7xl mx-auto">
+        <div class="swiper heroSwiper w-full h-[300px] md:h-[350px]">
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="swiper-slide relative">
@@ -89,92 +105,79 @@ $latestProducts = $pdo->query("
         });
     </script>
 
-    <!-- Main Content Overlapping Banner -->
-    <div class="px-4 sm:px-6 lg:px-8 mt-6 relative z-20 max-w-7xl mx-auto space-y-6">
-        
-        <!-- Categories Slider -->
-        <?php if (!empty($categories)): ?>
-        <div class="bg-white p-4 md:p-5 rounded-sm shadow-sm border border-gray-200">
-    <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">Browse Categories</h3>
-        <a href="/search.php" class="text-primary text-sm font-medium hover:underline">View All</a>
-    </div>
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-        <?php foreach ($categories as $cat): ?>
-            <a href="/category/<?php echo urlencode($cat['slug']); ?>" class="flex flex-col items-center group p-2 border border-transparent hover:border-gray-200 rounded-sm hover:shadow-sm transition bg-white">
-                <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-50 flex items-center justify-center mb-2 overflow-hidden">
-                    <?php if($cat['image']): ?>
-                        <img src="/<?php echo htmlspecialchars($cat['image']); ?>" class="w-full h-full object-contain p-2 group-hover:scale-105 transition">
-                    <?php else: ?>
-                        <i class="fa-solid fa-layer-group text-gray-400 text-xl group-hover:text-primary transition"></i>
-                    <?php endif; ?>
-                </div>
-                <span class="text-[11px] md:text-xs font-medium text-gray-700 text-center leading-tight line-clamp-2"><?php echo htmlspecialchars($cat['name']); ?></span>
-            </a>
-        <?php endforeach; ?>
-    </div>
-        </div>
-        <?php endif; ?>
 
-        <!-- Featured Products -->
-        <?php if (!empty($featuredProducts)): ?>
-        <div class="bg-white p-4 md:p-5 rounded-sm shadow-sm border border-gray-200 mt-4">
-    <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">Featured Machinery</h3>
-        <a href="/search.php" class="text-primary text-sm font-medium hover:underline">View All</a>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
-        <?php foreach ($featuredProducts as $product): ?>
-            <div class="bg-white border border-gray-200 hover:border-gray-300 rounded-sm flex flex-col relative hover:shadow-md transition-all h-full group p-2 pb-3 wishlist-card" data-product-id="<?php echo $product['id']; ?>">
-                <button class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center text-gray-300 hover:text-accent z-10 wishlist-btn shadow-sm" data-id="<?php echo $product['id']; ?>">
-                    <i class="fa-regular fa-heart text-xs"></i>
-                </button>
+
+    <!-- IndiaMART Style Horizontal Product Strips (Category Wise) -->
+    <?php foreach ($categoryStrips as $index => $strip): ?>
+    <div class="bg-gray-100 <?php echo $index === 0 ? 'py-4 md:py-6' : 'pb-4 md:pb-6'; ?>">
+        <div class="max-w-[1440px] mx-auto px-2 md:px-4">
+            <div class="bg-white p-3 md:p-4 rounded-sm shadow-sm border border-gray-200">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800"><?php echo htmlspecialchars($strip['category']['name']); ?></h3>
+                    <a href="/category/<?php echo urlencode($strip['category']['slug']); ?>" class="text-primary text-sm font-semibold hover:underline">View All</a>
+                </div>
                 
-                <!-- Image -->
-                <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-full aspect-square bg-white mb-2">
-                    <?php if($product['primary_image']): ?>
-                        <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-contain" loading="lazy">
-                    <?php else: ?>
-                        <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50 border border-gray-100">
-                            <i class="fa-solid fa-image text-2xl"></i>
+                <div class="flex overflow-x-auto gap-3 md:gap-4 hide-scrollbar pb-2 snap-x">
+                    <?php foreach ($strip['products'] as $product): ?>
+                        <div class="w-[160px] md:w-[220px] flex-shrink-0 bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden snap-start" data-product-id="<?php echo $product['id']; ?>">
+                            
+                            <!-- Image -->
+                            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-full aspect-square bg-white border-b border-gray-100 p-2">
+                                <?php if($product['primary_image']): ?>
+                                    <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-contain mix-blend-multiply" loading="lazy">
+                                <?php else: ?>
+                                    <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50">
+                                        <i class="fa-solid fa-image text-3xl"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </a>
+                            
+                            <!-- Content -->
+                            <div class="flex-grow flex flex-col p-2 md:p-3">
+                                <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2">
+                                    <h4 class="text-xs md:text-sm font-medium text-blue-700 hover:underline leading-snug line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
+                                </a>
+                                
+                                <div class="price-container mb-2" data-product-id="<?php echo $product['id']; ?>" data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
+                                    <?php if ($product['price_visibility'] === 'public'): ?>
+                                        <span class="font-bold text-base md:text-lg text-gray-900"><?php echo formatPrice($product['price']); ?></span>
+                                    <?php elseif ($product['price_visibility'] === 'locked'): ?>
+                                        <button class="btn-unlock-price text-accent font-semibold text-[10px] md:text-xs hover:underline flex items-center gap-1">
+                                            Unlock Price <i class="fa-solid fa-lock text-[9px]"></i>
+                                        </button>
+                                    <?php else: ?>
+                                        <span class="text-gray-500 text-[10px] md:text-xs font-semibold">Price on Request</span>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="mt-auto">
+                                    <p class="text-[10px] md:text-[11px] text-gray-500 mb-2 truncate flex items-center gap-1"><i class="fa-solid fa-location-dot text-gray-400"></i> Purnea, Bihar</p>
+                                    
+                                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" class="w-full text-center bg-primary text-white hover:bg-secondary transition px-2 py-1.5 rounded-sm text-[11px] md:text-xs font-semibold flex justify-center items-center gap-1">
+                                        Contact Supplier
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    <?php endif; ?>
-                </a>
-                
-                <!-- Content -->
-                <div class="flex-grow flex flex-col justify-between">
-                    <div>
-                        <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block">
-                            <h4 class="text-xs font-medium text-blue-600 hover:underline leading-snug mb-1 line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
-                        </a>
-                        <p class="text-[10px] text-gray-500 mb-1 truncate"><?php echo htmlspecialchars($product['category_name']); ?></p>
-                    </div>
-                    
-                    <div class="mt-1 flex flex-col gap-1.5">
-                        <div class="price-container" data-product-id="<?php echo $product['id']; ?>" data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
-                            <?php if ($product['price_visibility'] === 'public'): ?>
-                                <span class="font-bold text-sm text-gray-900"><?php echo formatPrice($product['price']); ?></span>
-                            <?php elseif ($product['price_visibility'] === 'locked'): ?>
-                                <button class="btn-unlock-price text-accent font-semibold text-[11px] hover:underline flex items-center gap-1">
-                                    Unlock Price <i class="fa-solid fa-lock text-[9px]"></i>
-                                </button>
-                            <?php else: ?>
-                                <span class="text-gray-500 text-[11px]">Price on Request</span>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" class="w-full text-center bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-white transition px-2 py-1.5 rounded-sm text-[11px] font-medium mt-1">
-                            Contact Supplier
-                        </a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
         </div>
-        <?php endif; ?>
     </div>
+    <?php endforeach; ?>
 </div>
+
+<style>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>
 
 <!-- Floating WhatsApp Button -->
 <a href="<?php echo getWhatsappLink(); ?>" target="_blank" class="fixed bottom-24 md:bottom-8 right-6 z-40 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">

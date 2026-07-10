@@ -6,23 +6,27 @@ $pageTitle = 'Favorites';
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="bg-gray-50 min-h-screen pb-16">
-    <!-- Clean Header Area -->
-    <div class="bg-primary pt-6 pb-20 px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">My Favorites</h1>
-        <p class="text-white/80 text-sm">Your saved products and machinery.</p>
-    </div>
-
-    <div class="px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
-        <div class="max-w-7xl mx-auto">
+<div class="bg-gray-100 min-h-screen pb-16 pt-4">
+    <div class="max-w-[1440px] mx-auto px-2 md:px-4">
         
+        <!-- Breadcrumbs -->
+        <div class="text-[11px] text-gray-500 mb-4 hidden md:block">
+            <a href="/" class="hover:text-primary">Home</a> &rsaquo; 
+            <span class="text-gray-800 font-semibold">Favorites</span>
+        </div>
+        
+        <!-- Results Header -->
+        <div class="bg-white p-3 md:p-4 rounded-sm border border-gray-200 mb-4 flex justify-between items-center">
+            <h1 class="text-lg font-bold text-gray-800">My Favorites</h1>
+        </div>
+
         <div id="favorites-loading" class="flex flex-col items-center justify-center py-12 bg-white rounded-sm shadow-sm border border-gray-200 p-8">
             <i class="fa-solid fa-circle-notch fa-spin text-4xl text-primary mb-4"></i>
             <p class="text-gray-500 font-medium">Loading your favorites...</p>
         </div>
 
         <div id="favorites-empty" class="hidden flex-col items-center justify-center text-center py-16 bg-white rounded-sm shadow-sm border border-gray-200 p-8">
-            <div class="w-16 h-16 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center text-3xl mb-4">
+            <div class="w-16 h-16 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center text-3xl mb-4 border border-gray-200">
                 <i class="fa-regular fa-heart"></i>
             </div>
             <h2 class="text-xl font-semibold text-gray-800 mb-2">No Favorites Yet</h2>

@@ -27,83 +27,164 @@ $categoryId = $_GET['category'] ?? '';
 $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
 ?>
 
-<div class="bg-gray-50 min-h-screen pb-16">
-    <!-- Clean Header Area -->
-    <div class="bg-primary pt-6 pb-20 px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Find Equipment & Machinery</h1>
-        <p class="text-white/80 text-sm">Search from thousands of industrial and agriculture products.</p>
-    </div>
+<div class="bg-gray-100 min-h-screen pb-16 pt-4">
+    <div class="max-w-[1440px] mx-auto px-2 md:px-4">
+        
+        <!-- Breadcrumbs -->
+        <div class="text-[11px] text-gray-500 mb-4 hidden md:block">
+            <a href="/" class="hover:text-primary">Home</a> &rsaquo; 
+            <span class="text-gray-800 font-semibold"><?php echo $catName; ?></span>
+        </div>
 
-    <div class="px-2 sm:px-4 lg:px-8 -mt-14 relative z-20">
-        <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row gap-4">
+            <!-- Left Sidebar Filters (Desktop) -->
+            <div class="hidden lg:block w-[240px] flex-shrink-0">
+                <div class="bg-white border border-gray-200 rounded-sm p-4 sticky top-[70px]">
+                    <h3 class="font-bold text-gray-800 text-sm border-b border-gray-200 pb-2 mb-3">Categories</h3>
+                    <ul class="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
+                        <li>
+                            <button class="category-filter-btn text-left text-xs w-full hover:text-primary transition <?php echo $categoryId === '' ? 'text-primary font-bold' : 'text-gray-600'; ?>" data-id="">
+                                All Categories
+                            </button>
+                        </li>
+                        <?php foreach ($categories as $cat): ?>
+                            <li>
+                                <button class="category-filter-btn text-left text-xs w-full hover:text-primary transition <?php echo $categoryId == $cat['slug'] ? 'text-primary font-bold' : 'text-gray-600'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
+                                    <?php echo htmlspecialchars($cat['name']); ?>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
 
-            <!-- Search Bar & Filters -->
-            <div class="bg-white p-4 rounded-sm shadow-md border border-gray-200 mb-6 sticky top-[56px] z-40">
-                <div class="relative max-w-4xl mx-auto flex gap-2">
-                    <div class="relative flex-grow">
-                        <input type="text" id="searchInput" placeholder="Enter product name..." class="w-full bg-gray-50 text-gray-900 pl-10 pr-10 py-2.5 rounded-sm border border-gray-300 focus:outline-none focus:border-primary text-sm transition">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <button id="clearSearch" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hidden hover:text-red-500 transition">
-                            <i class="fa-solid fa-circle-xmark"></i>
+                    <h3 class="font-bold text-gray-800 text-sm border-b border-gray-200 pb-2 mb-3 mt-6">Business Type</h3>
+                    <ul class="space-y-2">
+                        <li><label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" class="accent-primary"> Manufacturer</label></li>
+                        <li><label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" class="accent-primary"> Wholesaler</label></li>
+                        <li><label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" class="accent-primary"> Retailer</label></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-grow">
+                <!-- Mobile / Tablet Top Bar -->
+                <div class="bg-white p-3 rounded-sm shadow-sm border border-gray-200 mb-4 sticky top-14 z-40 lg:hidden">
+                    <div class="relative w-full flex gap-2">
+                        <div class="relative flex-grow">
+                            <input type="text" id="searchInput" placeholder="Search products..." class="w-full bg-gray-50 text-gray-900 pl-8 pr-8 py-2 rounded-sm border border-gray-300 focus:outline-none focus:border-primary text-xs transition">
+                            <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                            <button id="clearSearch" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hidden hover:text-red-500 transition text-xs">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                
+                    <!-- Mobile Category Filter Pills -->
+                    <div class="flex overflow-x-auto hide-scrollbar gap-2 mt-3 w-full snap-x">
+                        <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-semibold border transition <?php echo $categoryId === '' ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="">
+                            All
                         </button>
+                        <?php foreach ($categories as $cat): ?>
+                            <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-semibold border transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
+                                <?php echo htmlspecialchars($cat['name']); ?>
+                            </button>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-            
-                <!-- Category Filter Pills -->
-                <div class="flex overflow-x-auto no-scrollbar gap-2 mt-4 max-w-4xl mx-auto">
-                    <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-sm text-[11px] font-semibold transition <?php echo $categoryId === '' ? 'bg-primary text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>" data-id="">
-                        All Categories
-                    </button>
-                    <?php foreach ($categories as $cat): ?>
-                        <button class="category-filter-btn whitespace-nowrap px-4 py-1.5 rounded-sm text-[11px] font-semibold transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
-                            <?php echo htmlspecialchars($cat['name']); ?>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
+
+                <!-- Hidden inputs for JS logic -->
                 <input type="hidden" id="searchCategory" value="<?php echo htmlspecialchars($categoryId); ?>">
-            </div>
+                <input type="hidden" id="searchInputDesktop" value="">
+                
+                <!-- Results Header -->
+                <div class="bg-white p-3 md:p-4 rounded-sm border border-gray-200 mb-4 hidden lg:flex justify-between items-center">
+                    <h1 class="text-lg font-bold text-gray-800"><?php echo $catName; ?> <span class="text-xs text-gray-500 font-normal ml-2" id="resultsCount"></span></h1>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="text-gray-500">Sort by:</span>
+                        <select class="border border-gray-300 rounded-sm px-2 py-1 outline-none focus:border-primary">
+                            <option>Relevance</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Search Results Container -->
+                <div id="searchResults" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                    <!-- Results will be injected here via JS -->
+                </div>
             
-            <!-- Search Results Container -->
-            <div id="searchResults" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 mt-4">
-            <!-- Results will be injected here via JS -->
-        </div>
-        
-        <!-- Loading State -->
-        <div id="searchLoading" class="hidden text-center py-20">
-            <i class="fa-solid fa-circle-notch fa-spin text-primary text-4xl"></i>
-        </div>
-        
-        <!-- Empty State -->
-        <div id="searchEmpty" class="hidden text-center py-16 bg-white rounded-sm shadow-sm border border-gray-200 mt-4">
-            <i class="fa-solid fa-box-open text-5xl text-gray-300 mb-4"></i>
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">No products found</h3>
-            <p class="text-sm text-gray-500">Try adjusting your search criteria.</p>
+                <!-- Loading State -->
+                <div id="searchLoading" class="hidden flex justify-center py-20">
+                    <i class="fa-solid fa-circle-notch fa-spin text-primary text-3xl"></i>
+                </div>
+                
+                <!-- Empty State -->
+                <div id="searchEmpty" class="hidden flex flex-col items-center justify-center py-16 bg-white rounded-sm border border-gray-200 mt-4">
+                    <i class="fa-solid fa-box-open text-4xl text-gray-300 mb-3"></i>
+                    <h3 class="text-base font-semibold text-gray-800 mb-1">No products found</h3>
+                    <p class="text-xs text-gray-500">Try adjusting your filters or search term.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<style>
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #aaa; }
+</style>
+
 <script>
-    // Category pill click handler
     (function() {
         const categoryBtns = document.querySelectorAll('.category-filter-btn');
         const searchCategoryInput = document.getElementById('searchCategory');
-        const searchInput = document.getElementById('searchInput');
+        
+        // Sync desktop input to mobile input object which JS listens to
+        const searchInputDesktop = document.querySelector('header input[name="q"]');
+        const searchInputMobile = document.getElementById('searchInput');
+
+        if(searchInputDesktop && searchInputMobile) {
+            searchInputDesktop.addEventListener('input', (e) => {
+                searchInputMobile.value = e.target.value;
+                searchInputMobile.dispatchEvent(new Event('input'));
+            });
+        }
 
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active state
+                // Update active state for all buttons matching this ID (desktop and mobile)
+                const clickedId = btn.dataset.id;
+                
                 categoryBtns.forEach(b => {
-                    b.classList.remove('bg-primary', 'text-white', 'shadow-sm');
-                    b.classList.add('bg-gray-100', 'text-gray-600');
+                    if(b.classList.contains('rounded-full')) {
+                        // Mobile pill
+                        b.classList.remove('bg-primary/10', 'text-primary', 'border-primary');
+                        b.classList.add('bg-white', 'text-gray-600', 'border-gray-300');
+                        if(b.dataset.id === clickedId) {
+                            b.classList.remove('bg-white', 'text-gray-600', 'border-gray-300');
+                            b.classList.add('bg-primary/10', 'text-primary', 'border-primary');
+                        }
+                    } else {
+                        // Desktop list item
+                        b.classList.remove('text-primary', 'font-bold');
+                        b.classList.add('text-gray-600');
+                        if(b.dataset.id === clickedId) {
+                            b.classList.remove('text-gray-600');
+                            b.classList.add('text-primary', 'font-bold');
+                        }
+                    }
                 });
-                btn.classList.remove('bg-gray-100', 'text-gray-600');
-                btn.classList.add('bg-primary', 'text-white', 'shadow-sm');
 
                 // Update hidden input
-                searchCategoryInput.value = btn.dataset.id;
+                searchCategoryInput.value = clickedId;
                 
                 // Trigger search
-                searchInput.dispatchEvent(new Event('input'));
+                if(searchInputMobile) searchInputMobile.dispatchEvent(new Event('input'));
             });
         });
     })();

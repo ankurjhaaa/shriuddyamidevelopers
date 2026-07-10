@@ -44,26 +44,30 @@
             if (result.success && result.data.length > 0) {
                 searchResults.classList.remove('hidden');
                 
+                const resultsCountEl = document.getElementById('resultsCount');
+                if(resultsCountEl) {
+                    resultsCountEl.textContent = `(${result.data.length} products)`;
+                }
+                
                 const isUnlocked = localStorage.getItem('price_unlocked') === 'true';
 
                 result.data.forEach(product => {
                     
                     let priceHtml = '';
                     if (product.price_visibility === 'public') {
-                        priceHtml = `<span class="font-bold text-sm text-gray-900">${product.formatted_price}</span>`;
+                        priceHtml = `<span class="font-bold text-lg text-gray-900">${product.formatted_price}</span>`;
                     } else if (product.price_visibility === 'locked') {
                         if (isUnlocked) {
-                            priceHtml = `<span class="font-bold text-sm text-gray-900">₹ ${parseFloat(product.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
+                            priceHtml = `<span class="font-bold text-lg text-gray-900">₹ ${parseFloat(product.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
                         } else {
                             priceHtml = `
-                                <button class="btn-unlock-price text-accent font-semibold text-[11px] hover:underline flex items-center gap-1">
-                                    Unlock Price <i class="fa-solid fa-lock text-[9px]"></i>
+                                <button class="btn-unlock-price text-accent font-semibold text-xs hover:underline flex items-center gap-1">
+                                    Unlock Price <i class="fa-solid fa-lock text-[10px]"></i>
                                 </button>
-                                <span class="real-price hidden font-bold text-sm text-gray-900"></span>
                             `;
                         }
                     } else {
-                        priceHtml = `<span class="text-gray-500 text-[11px]">Price on Request</span>`;
+                        priceHtml = `<span class="text-gray-500 text-xs font-semibold">Price on Request</span>`;
                     }
 
                     const escapeHtml = (unsafe) => {
@@ -76,32 +80,30 @@
                     };
 
                     const card = `
-                        <div class="bg-white border border-gray-200 hover:border-gray-300 rounded-sm flex flex-col relative hover:shadow-md transition-all h-full group p-2 pb-3 wishlist-card" data-product-id="${product.id}">
-                            <button class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center text-gray-300 hover:text-accent z-10 wishlist-btn shadow-sm" data-id="${product.id}">
-                                <i class="fa-regular fa-heart text-xs"></i>
-                            </button>
+                        <div class="bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden" data-product-id="${product.id}">
                             
-                            <a href="/products/${encodeURIComponent(product.slug)}" class="block relative w-full aspect-square bg-white mb-2">
+                            <!-- Image -->
+                            <a href="/products/${encodeURIComponent(product.slug)}" class="block relative w-full aspect-square bg-white border-b border-gray-100 p-2">
                                 ${product.primary_image 
-                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-contain" loading="lazy">`
-                                    : `<div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50 border border-gray-100"><i class="fa-solid fa-image text-2xl"></i></div>`
+                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-contain mix-blend-multiply" loading="lazy">`
+                                    : `<div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50"><i class="fa-solid fa-image text-4xl"></i></div>`
                                 }
                             </a>
                             
-                            <div class="flex-grow flex flex-col justify-between">
-                                <div>
-                                    <a href="/products/${encodeURIComponent(product.slug)}" class="block">
-                                        <h4 class="text-xs font-medium text-blue-600 hover:underline leading-snug mb-1 line-clamp-2">${escapeHtml(product.name)}</h4>
-                                    </a>
-                                    <p class="text-[10px] text-gray-500 mb-1 truncate">${escapeHtml(product.category_name || '')}</p>
-                                </div>
+                            <!-- Content -->
+                            <div class="flex-grow flex flex-col p-3">
+                                <a href="/products/${encodeURIComponent(product.slug)}" class="block mb-2">
+                                    <h4 class="text-sm font-medium text-blue-700 hover:underline leading-snug line-clamp-2">${escapeHtml(product.name)}</h4>
+                                </a>
                                 
-                                <div class="mt-1 flex flex-col gap-1.5">
-                                    <div class="price-container" data-product-id="${product.id}" data-price="${product.price}" data-visibility="${product.price_visibility}">
-                                        ${priceHtml}
-                                    </div>
+                                <div class="price-container mb-3" data-product-id="${product.id}" data-price="${product.price}" data-visibility="${product.price_visibility}">
+                                    ${priceHtml}
+                                </div>
+
+                                <div class="mt-auto">
+                                    <p class="text-[11px] text-gray-500 mb-3 truncate flex items-center gap-1"><i class="fa-solid fa-location-dot text-gray-400"></i> Purnea, Bihar</p>
                                     
-                                    <a href="${product.whatsapp_link}" target="_blank" class="w-full text-center bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-white transition px-2 py-1.5 rounded-sm text-[11px] font-medium mt-1">
+                                    <a href="${product.whatsapp_link}" target="_blank" class="w-full text-center bg-primary text-white hover:bg-secondary transition px-3 py-2 rounded-sm text-sm font-semibold flex justify-center items-center gap-2">
                                         Contact Supplier
                                     </a>
                                 </div>
@@ -122,6 +124,10 @@
 
             } else {
                 searchEmpty.classList.remove('hidden');
+                const resultsCountEl = document.getElementById('resultsCount');
+                if(resultsCountEl) {
+                    resultsCountEl.textContent = `(0 products)`;
+                }
             }
         } catch (err) {
             console.error(err);

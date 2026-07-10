@@ -29,49 +29,49 @@ ob_start();
 if (!empty($products)) {
     foreach ($products as $product) {
         ?>
-        <div class="bg-white border border-gray-200 hover:border-gray-300 rounded-sm flex flex-col relative hover:shadow-md transition-all h-full group p-2 pb-3 wishlist-card" data-product-id="<?php echo $product['id']; ?>">
-            <button class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center text-red-500 hover:text-gray-400 z-10 wishlist-btn shadow-sm" data-id="<?php echo $product['id']; ?>">
-                <i class="fa-solid fa-heart text-xs"></i>
-            </button>
+        <div class="bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden wishlist-card" data-product-id="<?php echo $product['id']; ?>">
             
             <!-- Image -->
-            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-full aspect-square bg-white mb-2">
+            <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block relative w-full aspect-square bg-white border-b border-gray-100 p-2">
                 <?php if($product['primary_image']): ?>
-                    <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-contain" loading="lazy">
+                    <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>" class="w-full h-full object-contain mix-blend-multiply" loading="lazy">
                 <?php else: ?>
-                    <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50 border border-gray-100">
-                        <i class="fa-solid fa-image text-2xl"></i>
+                    <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50">
+                        <i class="fa-solid fa-image text-4xl"></i>
                     </div>
                 <?php endif; ?>
             </a>
             
             <!-- Content -->
-            <div class="flex-grow flex flex-col justify-between">
-                <div>
-                    <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block">
-                        <h4 class="text-xs font-medium text-blue-600 hover:underline leading-snug mb-1 line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
-                    </a>
-                    <p class="text-[10px] text-gray-500 mb-1 truncate"><?php echo htmlspecialchars($product['category_name']); ?></p>
-                </div>
+            <div class="flex-grow flex flex-col p-3">
+                <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2">
+                    <h4 class="text-sm font-medium text-blue-700 hover:underline leading-snug line-clamp-2"><?php echo htmlspecialchars($product['name']); ?></h4>
+                </a>
                 
-                <div class="mt-1 flex flex-col gap-1.5">
-                    <div class="price-container" data-product-id="<?php echo $product['id']; ?>" data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
-                        <?php if ($product['price_visibility'] === 'public'): ?>
-                            <span class="font-bold text-sm text-gray-900"><?php echo formatPrice($product['price']); ?></span>
-                        <?php elseif ($product['price_visibility'] === 'locked'): ?>
-                            <button class="btn-unlock-price text-accent font-semibold text-[11px] hover:underline flex items-center gap-1">
-                                Unlock Price <i class="fa-solid fa-lock text-[9px]"></i>
-                            </button>
-                        <?php else: ?>
-                            <span class="text-gray-500 text-[11px]">Price on Request</span>
-                        <?php endif; ?>
-                    </div>
+                <div class="price-container mb-3" data-product-id="<?php echo $product['id']; ?>" data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
+                    <?php if ($product['price_visibility'] === 'public'): ?>
+                        <span class="font-bold text-lg text-gray-900"><?php echo formatPrice($product['price']); ?></span>
+                    <?php elseif ($product['price_visibility'] === 'locked'): ?>
+                        <button class="btn-unlock-price text-accent font-semibold text-xs hover:underline flex items-center gap-1">
+                            Unlock Price <i class="fa-solid fa-lock text-[10px]"></i>
+                        </button>
+                    <?php else: ?>
+                        <span class="text-gray-500 text-xs font-semibold">Price on Request</span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="mt-auto">
+                    <p class="text-[11px] text-gray-500 mb-3 truncate flex items-center gap-1"><i class="fa-solid fa-location-dot text-gray-400"></i> Purnea, Bihar</p>
                     
-                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" class="w-full text-center bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-white transition px-2 py-1.5 rounded-sm text-[11px] font-medium mt-1">
+                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" class="w-full text-center bg-primary text-white hover:bg-secondary transition px-3 py-2 rounded-sm text-sm font-semibold flex justify-center items-center gap-2">
                         Contact Supplier
                     </a>
                 </div>
             </div>
+            
+            <button class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center text-red-500 hover:text-gray-400 z-10 wishlist-btn shadow-sm" data-id="<?php echo $product['id']; ?>">
+                <i class="fa-solid fa-heart text-xs"></i>
+            </button>
         </div>
         <?php
     }
