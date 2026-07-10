@@ -38,6 +38,38 @@ $stmt = $pdo->prepare("
 $stmt->execute([$product['category_id'], $product['id']]);
 $relatedProducts = $stmt->fetchAll();
 
+// Build Story Playlist JSON
+$storyPlaylist = [];
+$storyPlaylist[] = [
+    'id' => $product['id'],
+    'name' => $product['name'],
+    'slug' => $product['slug'],
+    'price' => $product['price'],
+    'price_visibility' => $product['price_visibility'],
+    'images' => $images
+];
+
+foreach ($relatedProducts as $rp) {
+    $rpImgStmt = $pdo->prepare("SELECT image_path FROM product_images WHERE product_id = ? ORDER BY is_primary DESC, id ASC");
+    $rpImgStmt->execute([$rp['id']]);
+    $rpImages = $rpImgStmt->fetchAll(PDO::FETCH_COLUMN);
+    
+    if (empty($rpImages) && $rp['primary_image']) {
+        $rpImages = [$rp['primary_image']];
+    }
+    
+    if (!empty($rpImages)) {
+        $storyPlaylist[] = [
+            'id' => $rp['id'],
+            'name' => $rp['name'],
+            'slug' => $rp['slug'],
+            'price' => $rp['price'],
+            'price_visibility' => $rp['price_visibility'],
+            'images' => $rpImages
+        ];
+    }
+}
+
 // Programmatic SEO setup
 $pageTitle = $product['name'] . ' in Purnea - Best Price';
 $baseDesc = $product['short_description'] ? $product['short_description'] : 'Buy ' . $product['name'] . ' in Purnea, Bihar at best prices. High-quality ' . strtolower($product['category_name']) . ' from Purnea Machine Baazar.';
@@ -93,9 +125,9 @@ include __DIR__ . '/includes/header.php';
                 <?php if (!empty($images)): ?>
                     <div class="swiper product-gallery w-full aspect-square border border-gray-100 rounded-sm overflow-hidden mb-2">
                         <div class="swiper-wrapper">
-                            <?php foreach ($images as $img): ?>
+                            <?php foreach ($images as $index => $img): ?>
                                 <div class="swiper-slide flex items-center justify-center bg-white p-2">
-                                    <img src="/<?php echo htmlspecialchars($img); ?>" class="max-h-full max-w-full object-contain mix-blend-multiply">
+                                    <img src="/<?php echo htmlspecialchars($img); ?>" class="max-h-full max-w-full object-contain mix-blend-multiply cursor-pointer lb-trigger" data-index="<?php echo $index; ?>">
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -104,13 +136,13 @@ include __DIR__ . '/includes/header.php';
                     
                     <!-- Thumbnails -->
                     <?php if (count($images) > 1): ?>
-                    <div class="flex gap-2 overflow-x-auto mt-3 pb-1 scrollbar-hide product-thumbnails">
-                        <?php foreach ($images as $index => $img): ?>
-                            <div class="w-16 h-16 border border-gray-200 rounded-sm overflow-hidden flex-shrink-0 cursor-pointer hover:border-primary transition-colors thumbnail-item <?php echo $index === 0 ? 'border-primary border-2' : ''; ?>" data-index="<?php echo $index; ?>">
-                                <img src="/<?php echo htmlspecialchars($img); ?>" class="w-full h-full object-contain mix-blend-multiply p-1">
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                        <div class="flex gap-2 overflow-x-auto mt-3 pb-2">
+                            <?php foreach ($images as $index => $img): ?>
+                                <div class="w-16 h-16 border border-gray-200 rounded-sm overflow-hidden flex-shrink-0 cursor-pointer hover:border-primary transition-colors thumbnail-item <?php echo $index === 0 ? 'border-primary border-2' : ''; ?>" data-index="<?php echo $index; ?>">
+                                    <img src="/<?php echo htmlspecialchars($img); ?>" class="w-full h-full object-cover lb-trigger" data-index="<?php echo $index; ?>">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
 
                 <?php else: ?>
@@ -292,6 +324,78 @@ include __DIR__ . '/includes/header.php';
     </a>
 </div>
 
+<!-- Full Screen Image Lightbox -->
+<div id="productLightbox" class="fixed inset-0 z-[100] hidden flex-col md:flex-row bg-black/95 backdrop-blur-sm transition-opacity duration-300 opacity-0" style="display: none;">
+    
+    <!-- Left: Image Viewer Area -->
+    <div class="flex-grow h-[50vh] md:h-full relative flex items-center justify-center p-4">
+        <!-- Close Button -->
+        <button id="closeLightbox" class="absolute top-4 left-4 md:left-6 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+        
+        <!-- Navigation Arrows -->
+        <button id="lbPrevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/10 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors">
+            <i class="fa-solid fa-chevron-left text-xl"></i>
+        </button>
+        <button id="lbNextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/10 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors">
+            <i class="fa-solid fa-chevron-right text-xl"></i>
+        </button>
+
+        <!-- Main Image -->
+        <img id="lbMainImage" src="" alt="Product Image" class="max-h-full max-w-full object-contain drop-shadow-2xl select-none">
+        
+        <!-- Top Progress Bars (Story Style) -->
+        <div id="lbProgressContainer" class="absolute top-4 left-4 right-4 md:left-20 md:right-20 flex gap-1 z-20 h-1.5">
+            <!-- Progress bars will be injected here via JS -->
+        </div>
+    </div>
+
+    <!-- Right: Quick Requirement Form Panel -->
+    <div class="w-full md:w-[350px] lg:w-[400px] h-[50vh] md:h-full bg-white flex-shrink-0 flex flex-col overflow-y-auto transform md:translate-x-full transition-transform duration-300" id="lbSidebar">
+        <!-- Header -->
+        <div class="bg-primary text-white py-4 px-5 text-center font-bold text-lg sticky top-0 z-10 shadow-sm border-b border-primary-dark">
+            Quick Requirement Form
+        </div>
+        
+        <div class="p-6 flex flex-col gap-6 flex-grow">
+            <!-- Product Info -->
+            <div class="flex items-start gap-3">
+                <i class="fa-solid fa-arrow-up-right-from-square text-blue-700 mt-1.5"></i>
+                <div>
+                    <h3 id="lbProductName" class="font-semibold text-gray-900 text-lg leading-tight mb-2"><?php echo htmlspecialchars($product['name']); ?></h3>
+                    <div id="lbProductPrice" class="text-xl font-bold text-gray-800">
+                        <?php if ($product['price_visibility'] === 'public'): ?>
+                            <?php echo formatPrice($product['price']); ?>
+                        <?php else: ?>
+                            <span class="text-sm font-semibold text-primary">Price on Request</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Info Box -->
+            <div class="bg-gray-50 border border-gray-100 rounded-lg p-5">
+                <h4 class="font-medium text-gray-800 mb-1">Shri Uddyami Developers</h4>
+                <p class="text-sm text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i> Purnea, Bihar</p>
+                <div class="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-100/50 px-2.5 py-1.5 rounded inline-flex">
+                    <i class="fa-solid fa-shield-check"></i> TrustSEAL Verified
+                </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-col gap-3 mt-auto pt-4">
+                <a id="lbEnquireBtn" href="<?php echo getWhatsappLink('Hi, I am interested in ' . $product['name'] . '. Can you send me a quote?'); ?>" target="_blank" class="w-full bg-primary hover:bg-secondary text-white py-3.5 rounded-md transition font-bold text-base flex justify-center items-center shadow-md">
+                    Enquire Now
+                </a>
+                <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" class="w-full bg-white border-2 border-primary text-primary hover:bg-primary/5 py-3 rounded-md transition font-bold text-base flex justify-center items-center shadow-sm gap-2">
+                    <i class="fa-solid fa-phone"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Overwrite bottom nav spacing so it doesn't overlap the CTA on this page -->
 <style>
     body { padding-bottom: 0 !important; }
@@ -303,6 +407,7 @@ include __DIR__ . '/includes/header.php';
         id: <?php echo $product['id']; ?>,
         name: <?php echo json_encode($product['name']); ?>
     };
+    window.STORY_PLAYLIST = <?php echo json_encode($storyPlaylist); ?>;
 </script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
