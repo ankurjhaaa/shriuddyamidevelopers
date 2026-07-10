@@ -149,15 +149,30 @@ include __DIR__ . '/includes/header.php';
                 <!-- Product Specifications -->
                 <div class="border border-gray-200 rounded-sm overflow-hidden mb-8">
                     <h2 class="bg-gray-100 px-4 py-2 border-b border-gray-200 font-bold text-gray-800 text-sm">Product Specifications</h2>
-                    <div class="p-4">
-                        <?php if ($product['specifications']): ?>
-                            <div class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap font-medium">
+                    <?php if ($product['specifications']): 
+                        $specs = json_decode($product['specifications'], true);
+                    ?>
+                        <?php if (is_array($specs)): ?>
+                            <table class="w-full text-sm text-left border-collapse">
+                                <tbody>
+                                    <?php $isEven = false; foreach ($specs as $key => $value): ?>
+                                        <tr class="border-b border-gray-100 <?php echo $isEven ? 'bg-gray-50' : 'bg-white'; ?>">
+                                            <td class="py-3 px-4 text-gray-500 w-1/3 border-r border-gray-100"><?php echo htmlspecialchars($key); ?></td>
+                                            <td class="py-3 px-4 text-gray-800 font-medium"><?php echo htmlspecialchars($value); ?></td>
+                                        </tr>
+                                    <?php $isEven = !$isEven; endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <div class="p-4 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap font-medium">
                                 <?php echo htmlspecialchars($product['specifications']); ?>
                             </div>
-                        <?php else: ?>
-                            <p class="text-sm text-gray-500">No specifications provided.</p>
                         <?php endif; ?>
-                    </div>
+                    <?php else: ?>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-500">No specifications provided.</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Product Description -->
