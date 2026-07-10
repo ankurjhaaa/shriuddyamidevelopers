@@ -121,5 +121,32 @@
         </div>
     </div>
 
+    <!-- Auto-Popup Modal -->
+    <div id="waAutoPopup" class="fixed inset-0 z-[70] bg-black bg-opacity-60 hidden transition-opacity duration-300 opacity-0 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-[350px] rounded-lg transform scale-95 opacity-0 transition-all duration-300 shadow-2xl relative overflow-hidden" id="waPopupContent">
+            <!-- Header Pattern -->
+            <div class="bg-primary h-16 w-full absolute top-0 left-0 flex justify-end p-3">
+                <button type="button" id="closeWaPopup" class="text-white hover:text-gray-200 transition-colors z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black bg-opacity-20 hover:bg-opacity-30 cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="pt-8 pb-6 px-6 relative z-10 text-center flex flex-col items-center mt-2">
+                <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mb-4 border-4 border-white mt-1">
+                    <i class="fa-brands fa-whatsapp text-5xl text-[#25D366]"></i>
+                </div>
+                
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Need Expert Help?</h3>
+                <p class="text-gray-500 text-sm mb-6 px-2 leading-relaxed">
+                    Chat with our experts on WhatsApp for the best price, machine guidance, and technical support.
+                </p>
+                
+                <a href="<?php echo getWhatsappLink('Hi, I am looking for some machinery. Can you help me?'); ?>" target="_blank" class="w-full bg-[#ff7b00] hover:bg-[#e66f00] text-white py-3 rounded transition-colors font-bold text-base flex justify-center items-center shadow-md gap-2" id="waPopupBtn">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

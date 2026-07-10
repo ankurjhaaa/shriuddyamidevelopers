@@ -86,10 +86,10 @@ include __DIR__ . '/includes/header.php';
             <span class="text-gray-800 font-semibold"><?php echo htmlspecialchars($product['name']); ?></span>
         </div>
 
-        <div class="bg-white rounded-sm border border-gray-200 overflow-hidden flex flex-col lg:flex-row lg:items-start relative shadow-sm">
+        <div class="flex flex-col lg:flex-row gap-4 lg:items-start relative">
             
             <!-- Left: Sticky Image Gallery -->
-            <div class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 p-4 border-b lg:border-b-0 lg:border-r border-gray-200 lg:sticky lg:top-[70px]">
+            <div class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 bg-white rounded-sm border border-gray-200 shadow-sm p-4 lg:sticky lg:top-[70px]">
                 <?php if (!empty($images)): ?>
                     <div class="swiper product-gallery w-full aspect-square border border-gray-100 rounded-sm overflow-hidden mb-2">
                         <div class="swiper-wrapper">
@@ -101,6 +101,18 @@ include __DIR__ . '/includes/header.php';
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
+                    
+                    <!-- Thumbnails -->
+                    <?php if (count($images) > 1): ?>
+                    <div class="flex gap-2 overflow-x-auto mt-3 pb-1 scrollbar-hide product-thumbnails">
+                        <?php foreach ($images as $index => $img): ?>
+                            <div class="w-16 h-16 border border-gray-200 rounded-sm overflow-hidden flex-shrink-0 cursor-pointer hover:border-primary transition-colors thumbnail-item <?php echo $index === 0 ? 'border-primary border-2' : ''; ?>" data-index="<?php echo $index; ?>">
+                                <img src="/<?php echo htmlspecialchars($img); ?>" class="w-full h-full object-contain mix-blend-multiply p-1">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+
                 <?php else: ?>
                     <div class="w-full aspect-square border border-gray-100 rounded-sm flex items-center justify-center text-gray-300 bg-gray-50 mb-2">
                         <i class="fa-solid fa-image text-5xl"></i>
@@ -109,7 +121,7 @@ include __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Right: Product Details & Specs -->
-            <div class="w-full p-4 md:p-6 lg:p-8 flex-grow">
+            <div class="w-full flex-grow bg-white rounded-sm border border-gray-200 shadow-sm p-4 md:p-6 lg:p-8">
                 <div class="mb-4">
                     <h1 class="text-xl md:text-2xl font-bold text-gray-900 leading-snug mb-2"><?php echo htmlspecialchars($product['name']); ?></h1>
                     
@@ -285,5 +297,12 @@ include __DIR__ . '/includes/header.php';
     body { padding-bottom: 0 !important; }
     nav.fixed.bottom-0 { display: none !important; }
 </style>
+
+<script>
+    window.PRODUCT_DATA = {
+        id: <?php echo $product['id']; ?>,
+        name: <?php echo json_encode($product['name']); ?>
+    };
+</script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
