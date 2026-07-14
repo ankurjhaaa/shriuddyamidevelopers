@@ -142,85 +142,79 @@
     <!-- Top App Bar (Flat White Theme) -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <!-- Desktop Header -->
-        <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[60px] items-center justify-between gap-6">
+        <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[70px] items-center justify-between gap-8">
             <!-- Logo -->
             <a href="/" class="flex-shrink-0">
                 <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo"
-                    class="h-10 w-auto object-contain">
+                    class="h-12 w-auto object-contain">
             </a>
 
-            <!-- Massive Central Search Bar -->
+            <!-- Sleek Central Search Bar -->
             <div
-                class="flex-grow max-w-4xl flex items-center bg-white rounded-md h-10 border border-gray-300 focus-within:border-primary transition-colors overflow-hidden">
+                class="flex-grow max-w-2xl bg-white rounded-md border border-gray-300 focus-within:border-primary transition-colors overflow-hidden h-10 shadow-sm">
                 <form action="/search.php" method="GET" class="flex w-full h-full">
-                    <select name="category"
-                        class="hidden lg:block w-36 truncate bg-white hover:bg-gray-50 text-gray-700 text-sm px-3 h-full border-r border-gray-300 outline-none cursor-pointer">
-                        <option value="">All Categories</option>
-                        <?php
-                        if (isset($pdo)) {
-                            $navCats = $pdo->query("SELECT slug, name FROM categories ORDER BY name ASC")->fetchAll();
-                            foreach ($navCats as $nc) {
-                                $selected = (isset($_GET['category']) && $_GET['category'] === $nc['slug']) ? 'selected' : '';
-                                echo '<option value="' . htmlspecialchars($nc['slug']) . '" ' . $selected . '>' . htmlspecialchars($nc['name']) . '</option>';
-                            }
-                        }
-                        ?>
-                    </select>
-                    <input type="text" name="q" placeholder="Enter product / service to search"
-                        class="flex-grow px-4 text-sm text-gray-800 outline-none"
+                    <input type="text" name="q" placeholder="Search for products, categories or brands..."
+                        class="flex-grow px-4 text-sm text-gray-800 outline-none w-full bg-transparent h-full"
                         value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
                     <button type="submit"
-                        class="bg-secondary text-white px-6 h-full hover:bg-accent transition font-semibold text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-search"></i> Search
+                        class="bg-gray-100 text-primary px-5 h-full hover:bg-gray-200 transition font-medium text-base flex items-center justify-center">
+                        <i class="fa-solid fa-search"></i>
                     </button>
                 </form>
             </div>
 
             <!-- Right Actions -->
             <div class="flex items-center gap-6 flex-shrink-0">
-                <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
-                    class="hidden lg:flex items-center gap-2 text-xs font-bold text-white bg-primary px-3 py-1.5 rounded-md hover:bg-secondary transition border border-primary">
-                    <i class="fa-solid fa-paper-plane text-accent"></i> Post Requirement
-                </a>
-                <nav class="flex gap-5 items-center text-[11px] font-semibold tracking-wide text-gray-600">
+                <nav class="flex gap-6 items-center text-gray-600">
                     <a href="/favorites.php" class="hover:text-primary transition flex flex-col items-center">
-                        <i class="fa-solid fa-heart text-xl mb-1"></i> Favorites
+                        <i class="fa-regular fa-heart text-xl"></i>
                     </a>
                     <a href="/contact.php" class="hover:text-primary transition flex flex-col items-center">
-                        <i class="fa-solid fa-comment-dots text-xl mb-1"></i> Messages
+                        <i class="fa-regular fa-comment-dots text-xl"></i>
                     </a>
                     <a href="#" class="hover:text-primary transition flex flex-col items-center">
-                        <i class="fa-solid fa-circle-user text-xl mb-1"></i> Sign In
+                        <i class="fa-regular fa-user text-xl"></i>
                     </a>
                 </nav>
+                <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
+                    class="hidden lg:flex items-center gap-2 text-sm font-semibold text-white bg-primary px-4 py-2 rounded-md hover:bg-secondary transition shadow-sm">
+                    Post Requirement
+                </a>
             </div>
         </div>
 
         <!-- Mobile Header -->
-        <div class="md:hidden">
-            <!-- Top Row: Hamburger, Logo, User -->
-            <div class="flex items-center justify-between px-3 h-14 border-b border-gray-200">
-                <div class="flex items-center gap-3">
-                    <a href="/" class="flex items-center">
-                        <img src="/assets/images/logo.png" alt="Logo" class="h-6 w-auto object-contain">
+        <div class="md:hidden relative">
+            <!-- Top Row: Logo, Actions -->
+            <div class="flex items-center justify-between px-4 h-16 border-b border-gray-200 bg-white relative z-50">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center py-2">
+                        <!-- Much larger logo for mobile -->
+                        <img src="/assets/images/logo.png" alt="Logo" class="h-10 w-auto object-contain">
                     </a>
                 </div>
-                <div class="flex items-center gap-4">
-                    <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
-                        class="text-gray-600 hover:text-primary"><i class="fa-solid fa-plus-circle text-lg"></i></a>
-                    <a href="/favorites.php" class="text-gray-600 hover:text-primary"><i class="fa-solid fa-heart text-lg"></i></a>
-                    <a href="#" class="text-gray-600 hover:text-primary"><i class="fa-solid fa-user text-lg"></i></a>
+                <div class="flex items-center gap-5">
+                    <button onclick="document.getElementById('mobile-search').classList.toggle('hidden')"
+                        class="text-gray-700 hover:text-primary transition">
+                        <i class="fa-solid fa-search text-[19px]"></i>
+                    </button>
+                    <a href="/favorites.php" class="text-gray-700 hover:text-primary transition"><i
+                            class="fa-regular fa-heart text-[19px]"></i></a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition"><i
+                            class="fa-regular fa-user text-[19px]"></i></a>
                 </div>
             </div>
 
-            <!-- Bottom Row: Search Bar -->
-            <div class="p-3 bg-white border-b border-gray-200">
+            <!-- Toggled Search Bar (Hidden by default) -->
+            <div id="mobile-search"
+                class="hidden p-3 bg-gray-50 border-b border-gray-200 absolute w-full left-0 z-40 shadow-lg top-16">
                 <form action="/search.php" method="GET"
-                    class="flex w-full bg-white border border-gray-300 rounded-md h-10 overflow-hidden focus-within:border-primary">
-                    <input type="text" name="q" placeholder="Search products & suppliers"
-                        class="w-full px-3 text-sm text-gray-800 outline-none bg-transparent"
+                    class="flex w-full bg-white border border-gray-300 rounded-md h-11 overflow-hidden focus-within:border-primary shadow-sm">
+                    <input type="text" name="q" placeholder="Search products..."
+                        class="w-full px-4 text-sm text-gray-800 outline-none bg-transparent h-full"
                         value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
-                    <button type="submit" class="bg-primary text-white px-4 flex items-center justify-center hover:bg-secondary"><i
+                    <button type="submit"
+                        class="bg-transparent text-primary px-5 h-full flex items-center justify-center hover:bg-gray-50 transition text-lg"><i
                             class="fa-solid fa-search"></i></button>
                 </form>
             </div>

@@ -112,11 +112,11 @@ $canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVE
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="bg-white min-h-screen pb-24 md:pb-12 pt-4">
-    <div class="max-w-[1440px] mx-auto px-2 md:px-4">
+<div class="bg-white min-h-screen pb-24 md:pb-12 pt-0 md:pt-4">
+    <div class="max-w-[1440px] mx-auto px-0 md:px-8">
 
         <!-- Breadcrumb -->
-        <div class="text-[11px] text-gray-500 mb-4 hidden md:block">
+        <div class="text-[11px] text-gray-500 mb-4 hidden md:block mt-4">
             <a href="/" class="hover:text-primary">Home</a> &rsaquo;
             <a href="/search.php?category=<?php echo htmlspecialchars($product['category_id']); ?>"
                 class="hover:text-primary"><?php echo htmlspecialchars($product['category_name']); ?></a> &rsaquo;
@@ -127,13 +127,20 @@ include __DIR__ . '/includes/header.php';
 
             <!-- Left: Sticky Image Gallery -->
             <div
-                class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 bg-white rounded-md border border-gray-200 p-4 lg:sticky lg:top-[70px]">
+                class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 bg-white md:rounded-md border-b md:border md:border-gray-200 p-0 md:p-4 lg:sticky lg:top-[70px] relative">
+                
+                <!-- Wishlist Button -->
+                <button
+                    class="absolute top-6 right-6 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm transition-colors"
+                    data-id="<?php echo $product['id']; ?>">
+                    <i class="fa-regular fa-heart text-lg"></i>
+                </button>
                 <?php if (!empty($images)): ?>
                     <div
-                        class="swiper product-gallery w-full aspect-square border border-gray-100 rounded-md overflow-hidden mb-2">
+                        class="swiper product-gallery w-full aspect-square md:border md:border-gray-100 md:rounded-md overflow-hidden mb-2 bg-gray-50 md:bg-white">
                         <div class="swiper-wrapper">
                             <?php foreach ($images as $index => $img): ?>
-                                <div class="swiper-slide flex items-center justify-center bg-white p-2">
+                                <div class="swiper-slide flex items-center justify-center p-0 md:p-2">
                                     <img src="/<?php echo htmlspecialchars($img); ?>"
                                         class="max-h-full max-w-full object-contain mix-blend-multiply cursor-pointer lb-trigger"
                                         data-index="<?php echo $index; ?>">
@@ -165,9 +172,9 @@ include __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Right: Product Details & Specs -->
-            <div class="w-full flex-grow bg-white rounded-md border border-gray-200 p-4 md:p-6 lg:p-8">
+            <div class="w-full flex-grow bg-white md:rounded-md md:border md:border-gray-200 p-4 md:p-6 lg:p-8">
                 <div class="mb-4">
-                    <h1 class="text-xl md:text-2xl font-bold text-gray-900 leading-snug mb-2">
+                    <h1 class="text-xl md:text-2xl font-bold text-gray-900 leading-snug mb-3">
                         <?php echo htmlspecialchars($product['name']); ?></h1>
 
                     <!-- Price Block -->
@@ -203,7 +210,7 @@ include __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- CTA Action Box -->
-                <div class="bg-white border border-gray-200 p-4 rounded-md flex flex-col sm:flex-row gap-3 mb-8">
+                <div class="hidden md:flex bg-white border border-gray-200 p-4 rounded-md flex-col sm:flex-row gap-3 mb-8">
                     <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
                         class="flex-1 bg-primary hover:bg-secondary text-white font-bold py-3 px-4 rounded-md flex items-center justify-center gap-2 text-sm md:text-base transition">
                         Contact Supplier
@@ -291,15 +298,15 @@ include __DIR__ . '/includes/header.php';
     </div>
 
     <!-- Related Products -->
-    <?php if (!empty($relatedProducts)): ?>
-        <div class="max-w-[1440px] mx-auto px-2 md:px-4 mt-8 mb-4">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 mt-6 md:mt-10 mb-10">
+        <?php if (!empty($relatedProducts)): ?>
             <div class="bg-white p-3 md:p-4 rounded-md shadow-sm border border-gray-200">
                 <div class="mb-4 flex justify-between items-center border-b border-gray-100 pb-2">
                     <h3 class="text-lg md:text-xl font-bold text-gray-800">You may also be interested in</h3>
                 </div>
                 <div class="flex overflow-x-auto gap-3 md:gap-4 hide-scrollbar pb-2 snap-x">
                     <?php foreach ($relatedProducts as $product): ?>
-                        <div class="w-[220px] md:w-[240px] flex-shrink-0 bg-white border border-gray-200 hover:border-primary/50 transition-colors h-full group flex flex-col rounded-md overflow-hidden snap-start"
+                        <div class="w-[220px] md:w-[240px] flex-shrink-0 bg-white border border-gray-200 hover:border-primary/50 transition-colors h-full group flex flex-col rounded-md overflow-hidden snap-start relative wishlist-card"
                             data-product-id="<?php echo $product['id']; ?>">
 
                             <!-- Image -->
@@ -352,9 +359,9 @@ include __DIR__ . '/includes/header.php';
                             </div>
 
                             <button
-                                class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-md flex items-center justify-center text-red-500 hover:text-gray-400 z-10 wishlist-btn shadow-sm"
+                                class="absolute top-2 right-2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm transition-colors"
                                 data-id="<?php echo $product['id']; ?>">
-                                <i class="fa-solid fa-heart text-xs"></i>
+                                <i class="fa-regular fa-heart text-sm"></i>
                             </button>
                         </div>
                     <?php endforeach; ?>

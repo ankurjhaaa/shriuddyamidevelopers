@@ -50,7 +50,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
 ?>
 
 <div class="bg-white min-h-screen pb-16 pt-4">
-    <div class="max-w-[1440px] mx-auto px-2 md:px-4">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8">
         
         <!-- Breadcrumbs -->
         <div class="text-[11px] text-gray-500 mb-4 hidden md:block">
@@ -58,74 +58,34 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
             <span class="text-gray-800 font-semibold"><?php echo $catName; ?></span>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-4">
-            <!-- Left Sidebar Filters (Desktop) -->
-            <div class="hidden lg:block w-[240px] flex-shrink-0">
-                <div class="bg-white border border-gray-200 rounded-sm p-4 sticky top-[70px]">
-                    <h3 class="font-bold text-gray-800 text-sm border-b border-gray-200 pb-2 mb-3">Categories</h3>
-                    <ul class="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar">
-                        <li>
-                            <button class="category-filter-btn text-left text-xs w-full hover:text-primary transition <?php echo $categoryId === '' ? 'text-primary font-bold' : 'text-gray-600'; ?>" data-id="">
-                                All Categories
-                            </button>
-                        </li>
-                        <?php foreach ($categories as $cat): ?>
-                            <li>
-                                <button class="category-filter-btn text-left text-xs w-full hover:text-primary transition <?php echo $categoryId == $cat['slug'] ? 'text-primary font-bold' : 'text-gray-600'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
-                                    <?php echo htmlspecialchars($cat['name']); ?>
-                                </button>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+        <div class="flex flex-col gap-6">
+            
+            <!-- Category Filter Pills Slider -->
+            <div class="pt-2 pb-1 bg-white">
+                <input type="hidden" id="searchInput" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
+                <!-- Category Filter Pills Slider -->
+                <div class="flex overflow-x-auto hide-scrollbar gap-2 md:gap-3 w-full snap-x pb-2">
+                    <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-4 py-1.5 rounded-md text-xs md:text-sm font-semibold border transition <?php echo $categoryId === '' ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'; ?>" data-id="">
+                        All
+                    </button>
+                    <?php foreach ($categories as $cat): ?>
+                        <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-4 py-1.5 rounded-md text-xs md:text-sm font-semibold border transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
+                            <?php echo htmlspecialchars($cat['name']); ?>
+                        </button>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
             <!-- Main Content -->
             <div class="flex-grow">
-                <!-- Mobile / Tablet Top Bar -->
-                <div class="bg-white p-3 rounded-sm shadow-sm border border-gray-200 mb-4 sticky top-14 z-40 lg:hidden">
-                    <div class="relative w-full flex gap-2">
-                        <div class="relative flex-grow">
-                            <input type="text" id="searchInput" placeholder="Search products..." class="w-full bg-gray-50 text-gray-900 pl-8 pr-8 py-2 rounded-sm border border-gray-300 focus:outline-none focus:border-primary text-xs transition">
-                            <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
-                            <button id="clearSearch" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hidden hover:text-red-500 transition text-xs">
-                                <i class="fa-solid fa-circle-xmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                
-                    <!-- Mobile Category Filter Pills -->
-                    <div class="flex overflow-x-auto hide-scrollbar gap-2 mt-3 w-full snap-x">
-                        <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-sm text-[10px] font-semibold border transition <?php echo $categoryId === '' ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="">
-                            All
-                        </button>
-                        <?php foreach ($categories as $cat): ?>
-                            <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-sm text-[10px] font-semibold border transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
-                                <?php echo htmlspecialchars($cat['name']); ?>
-                            </button>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
                 <!-- Hidden inputs for JS logic -->
                 <input type="hidden" id="searchCategory" value="<?php echo htmlspecialchars($categoryId); ?>">
                 <input type="hidden" id="searchInputDesktop" value="">
                 
-                <!-- Results Header -->
-                <div class="bg-white p-3 md:p-4 rounded-md border border-gray-200 mb-6 hidden lg:flex justify-between items-center shadow-sm">
-                    <h1 class="text-lg font-bold text-gray-800"><?php echo $catName; ?> <span class="text-xs text-gray-500 font-normal ml-2" id="resultsCount"></span></h1>
-                    <div class="flex items-center gap-2 text-xs">
-                        <span class="text-gray-500">Sort by:</span>
-                        <select id="sortSelectDesktop" class="border border-gray-300 rounded-sm px-2 py-1 outline-none focus:border-primary">
-                            <option value="">Relevance</option>
-                            <option value="price_asc">Price: Low to High</option>
-                            <option value="price_desc">Price: High to Low</option>
-                        </select>
-                    </div>
-                </div>
+
 
                 <!-- Search Results Container -->
-                <div id="searchResults" class="flex flex-wrap justify-center sm:justify-start gap-3 md:gap-4">
+                <div id="searchResults" class="w-full space-y-8">
                     <!-- Results will be injected here via JS -->
                 </div>
             

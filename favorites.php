@@ -7,7 +7,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <div class="bg-white min-h-screen pb-16 pt-4">
-    <div class="max-w-[1440px] mx-auto px-2 md:px-4">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8">
         
         <!-- Breadcrumbs -->
         <div class="text-[11px] text-gray-500 mb-4 hidden md:block">
@@ -34,7 +34,7 @@ include __DIR__ . '/includes/header.php';
             <a href="/search.php" class="bg-primary text-white font-semibold py-2 px-6 rounded-sm shadow-sm hover:bg-secondary transition text-sm">Browse Products</a>
         </div>
 
-        <div id="favorites-grid" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 mt-4">
+        <div id="favorites-grid" class="hidden w-full mt-4 space-y-8">
             <!-- Products will be loaded here -->
         </div>
     </div>

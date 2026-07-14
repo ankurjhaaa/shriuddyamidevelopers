@@ -126,7 +126,7 @@ foreach ($categoriesWithProducts as $cat) {
 
                     <div class="flex overflow-x-auto gap-3 md:gap-4 hide-scrollbar pb-2 snap-x">
                         <?php foreach ($strip['products'] as $product): ?>
-                            <div class="w-[220px] md:w-[240px] flex-shrink-0 bg-white border border-gray-200 hover:border-primary/50 transition-colors h-full group flex flex-col rounded-md overflow-hidden snap-start"
+                            <div class="w-[220px] md:w-[240px] flex-shrink-0 bg-white border border-gray-200 hover:border-primary/50 transition-colors h-full group flex flex-col rounded-md overflow-hidden snap-start relative wishlist-card"
                                 data-product-id="<?php echo $product['id']; ?>">
 
                                 <!-- Image -->
@@ -180,6 +180,11 @@ foreach ($categoriesWithProducts as $cat) {
                                         </a>
                                     </div>
                                 </div>
+                                <button
+                                    class="absolute top-2 right-2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm transition-colors"
+                                    data-id="<?php echo $product['id']; ?>">
+                                    <i class="fa-regular fa-heart text-sm"></i>
+                                </button>
                             </div>
                         <?php endforeach; ?>
                     </div>

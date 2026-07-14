@@ -22,7 +22,7 @@ if ($cleanQuery !== '') {
 }
 
 $sql = "
-    SELECT p.*, c.name as category_name, 
+    SELECT p.*, c.name as category_name, c.slug as category_slug,
            (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
