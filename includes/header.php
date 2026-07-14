@@ -7,19 +7,19 @@
     <title>
         <?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' : ''; ?><?php echo htmlspecialchars(getSetting('store_name')); ?>
     </title>
-    
+
     <!-- SEO Meta Tags -->
-    <?php 
+    <?php
     $seoTitle = isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' . htmlspecialchars(getSetting('store_name')) : htmlspecialchars(getSetting('store_name'));
-    $seoDescription = isset($pageDescription) ? htmlspecialchars($pageDescription) : 'Welcome to ' . htmlspecialchars(getSetting('store_name')) . ' - Premium quality agriculture and industrial machines designed for durability and performance in Purnea and beyond.';
-    $seoKeywords = isset($pageKeywords) ? htmlspecialchars($pageKeywords) : 'agriculture machines, industrial machines, farming equipment, Purnea Machine Baazar, tractors, cultivators, machinery store';
+    $seoDescription = isset($pageDescription) ? htmlspecialchars($pageDescription) : 'Welcome to ' . htmlspecialchars(getSetting('store_name')) . ' - Premium quality agriculture and industrial machines available near you across Bihar. Find the best dealers in Purnea and nearby.';
+    $seoKeywords = isset($pageKeywords) ? htmlspecialchars($pageKeywords) : 'agriculture machines near me, industrial machines bihar, farming equipment near me, Purnea Machine Bazaar, tractors in bihar, cultivators near me, machinery store bihar';
     ?>
     <meta name="description" content="<?php echo $seoDescription; ?>">
     <meta name="keywords" content="<?php echo $seoKeywords; ?>">
     <meta name="author" content="<?php echo htmlspecialchars(getSetting('store_name')); ?>">
-    
+
     <!-- Open Graph / Social Media Meta Tags -->
-    <?php 
+    <?php
     $seoImage = isset($ogImage) ? $ogImage : 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/assets/images/desktop_banner.png';
     $seoUrl = isset($canonicalUrl) ? $canonicalUrl : 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . strtok($_SERVER["REQUEST_URI"], '?');
     ?>
@@ -29,13 +29,13 @@
     <meta property="og:site_name" content="<?php echo htmlspecialchars(getSetting('store_name')); ?>">
     <meta property="og:image" content="<?php echo $seoImage; ?>">
     <meta property="og:url" content="<?php echo $seoUrl; ?>">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo $seoTitle; ?>">
     <meta name="twitter:description" content="<?php echo $seoDescription; ?>">
     <meta name="twitter:image" content="<?php echo $seoImage; ?>">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo $seoUrl; ?>">
 
@@ -60,6 +60,10 @@
         "latitude": 25.7771,
         "longitude": 87.4753
       },
+      "areaServed": {
+        "@type": "State",
+        "name": "Bihar"
+      },
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": [
@@ -79,12 +83,14 @@
       ]
     }
     </script>
-    
+
     <!-- Dynamic Page Specific Schema -->
-    <?php if (isset($customSchema)) echo $customSchema; ?>
+    <?php if (isset($customSchema))
+        echo $customSchema; ?>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Icons (FontAwesome via CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -123,10 +129,10 @@
 
     <!-- Custom CSS -->
     <link href="/assets/css/app.css" rel="stylesheet">
-    
+
     <!-- SPA Router (Turbo) -->
     <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.4/dist/turbo.es2017-umd.js"></script>
-    
+
     <!-- Global Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
     <script src="/assets/js/app.js?v=<?php echo time(); ?>" defer></script>
@@ -141,15 +147,18 @@
         <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[60px] items-center justify-between gap-6">
             <!-- Logo -->
             <a href="/" class="flex-shrink-0">
-                <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo" class="h-10 w-auto object-contain">
+                <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo"
+                    class="h-10 w-auto object-contain">
             </a>
 
             <!-- Massive Central Search Bar -->
-            <div class="flex-grow max-w-4xl flex items-center bg-white rounded-sm h-10 shadow-sm border-2 border-transparent focus-within:border-accent transition-colors overflow-hidden">
+            <div
+                class="flex-grow max-w-4xl flex items-center bg-white rounded-sm h-10 shadow-sm border-2 border-transparent focus-within:border-accent transition-colors overflow-hidden">
                 <form action="/search.php" method="GET" class="flex w-full h-full">
-                    <select name="category" class="hidden lg:block w-36 truncate bg-gray-100 text-gray-700 text-sm px-3 h-full border-r border-gray-200 outline-none cursor-pointer">
+                    <select name="category"
+                        class="hidden lg:block w-36 truncate bg-gray-100 text-gray-700 text-sm px-3 h-full border-r border-gray-200 outline-none cursor-pointer">
                         <option value="">All Categories</option>
-                        <?php 
+                        <?php
                         if (isset($pdo)) {
                             $navCats = $pdo->query("SELECT slug, name FROM categories ORDER BY name ASC")->fetchAll();
                             foreach ($navCats as $nc) {
@@ -159,8 +168,11 @@
                         }
                         ?>
                     </select>
-                    <input type="text" name="q" placeholder="Enter product / service to search" class="flex-grow px-4 text-sm text-gray-800 outline-none" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
-                    <button type="submit" class="bg-secondary text-white px-6 h-full hover:bg-accent transition font-semibold text-sm flex items-center gap-2">
+                    <input type="text" name="q" placeholder="Enter product / service to search"
+                        class="flex-grow px-4 text-sm text-gray-800 outline-none"
+                        value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
+                    <button type="submit"
+                        class="bg-secondary text-white px-6 h-full hover:bg-accent transition font-semibold text-sm flex items-center gap-2">
                         <i class="fa-solid fa-search"></i> Search
                     </button>
                 </form>
@@ -168,7 +180,8 @@
 
             <!-- Right Actions -->
             <div class="flex items-center gap-6 flex-shrink-0">
-                <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank" class="hidden lg:flex items-center gap-2 text-xs font-bold text-primary bg-white px-3 py-1.5 rounded-sm hover:shadow-md transition">
+                <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
+                    class="hidden lg:flex items-center gap-2 text-xs font-bold text-primary bg-white px-3 py-1.5 rounded-sm hover:shadow-md transition">
                     <i class="fa-solid fa-paper-plane text-accent"></i> Post Requirement
                 </a>
                 <nav class="flex gap-5 items-center text-[11px] font-semibold tracking-wide">
@@ -195,17 +208,22 @@
                     </a>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank" class="text-white"><i class="fa-solid fa-plus-circle text-lg"></i></a>
+                    <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
+                        class="text-white"><i class="fa-solid fa-plus-circle text-lg"></i></a>
                     <a href="/favorites.php" class="text-white"><i class="fa-solid fa-heart text-lg"></i></a>
                     <a href="#" class="text-white"><i class="fa-solid fa-user text-lg"></i></a>
                 </div>
             </div>
-            
+
             <!-- Bottom Row: Search Bar -->
             <div class="p-2 bg-primary">
-                <form action="/search.php" method="GET" class="flex w-full bg-white rounded-sm h-10 shadow-inner overflow-hidden">
-                    <input type="text" name="q" placeholder="Search products & suppliers" class="w-full px-3 text-sm text-gray-800 outline-none" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
-                    <button type="submit" class="bg-secondary text-white px-4 flex items-center justify-center"><i class="fa-solid fa-search"></i></button>
+                <form action="/search.php" method="GET"
+                    class="flex w-full bg-white rounded-sm h-10 shadow-inner overflow-hidden">
+                    <input type="text" name="q" placeholder="Search products & suppliers"
+                        class="w-full px-3 text-sm text-gray-800 outline-none"
+                        value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
+                    <button type="submit" class="bg-secondary text-white px-4 flex items-center justify-center"><i
+                            class="fa-solid fa-search"></i></button>
                 </form>
             </div>
         </div>

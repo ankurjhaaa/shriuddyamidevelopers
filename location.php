@@ -7,9 +7,13 @@ $placeSlug = $_GET['place'] ?? '';
 
 // Find the original place name from the slug (case insensitive match)
 $currentPlace = '';
-foreach ($locations as $loc) {
-    if (strtolower(str_replace(' ', '-', $loc)) === strtolower($placeSlug)) {
-        $currentPlace = $loc;
+$currentLat = null;
+$currentLng = null;
+foreach ($locations as $locName => $coords) {
+    if (strtolower(str_replace(' ', '-', $locName)) === strtolower($placeSlug)) {
+        $currentPlace = $locName;
+        $currentLat = $coords['lat'];
+        $currentLng = $coords['lng'];
         break;
     }
 }
@@ -34,8 +38,8 @@ $products = $stmt->fetchAll();
 // Dynamic SEO setup for the specific location
 $storeName = htmlspecialchars(getSetting('store_name'));
 $pageTitle = "Agriculture & Industrial Machines in {$currentPlace} - {$storeName}";
-$pageDescription = "Find the best agriculture and industrial machines in {$currentPlace}. Tractors, cultivators, and equipment available near you at {$storeName}.";
-$pageKeywords = strtolower("machines in {$currentPlace}, {$currentPlace} tractor showroom, agriculture equipment {$currentPlace}, {$storeName} {$currentPlace}");
+$pageDescription = "Find the best agriculture and industrial machines in {$currentPlace}, Bihar. Tractors, cultivators, and equipment available near you at {$storeName}.";
+$pageKeywords = strtolower("machines in {$currentPlace}, {$currentPlace} tractor showroom, agriculture equipment {$currentPlace}, {$storeName} {$currentPlace}, machines near me, agriculture machinery bihar, industrial machinery near me");
 
 // Schema setup
 $schemaLocalBusiness = [
@@ -50,6 +54,11 @@ $schemaLocalBusiness = [
         "addressLocality" => $currentPlace,
         "addressRegion" => "Bihar",
         "addressCountry" => "IN"
+    ],
+    "geo" => [
+        "@type" => "GeoCoordinates",
+        "latitude" => $currentLat,
+        "longitude" => $currentLng
     ]
 ];
 $customSchema = '<script type="application/ld+json">' . json_encode($schemaLocalBusiness, JSON_UNESCAPED_SLASHES) . '</script>';

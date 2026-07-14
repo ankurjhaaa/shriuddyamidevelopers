@@ -15,9 +15,24 @@ if ($categoryId) {
     }
 }
 
-$pageTitle = $categoryId ? "Best {$catName} in Purnea" : 'Shop Agriculture Machines in Purnea';
-$pageDescription = "Browse and buy {$catName} at the best price in Purnea. Purnea Machine Baazar offers top quality industrial and farming machinery.";
-$pageKeywords = strtolower($catName) . " in purnea, buy " . strtolower($catName) . ", purnea machine baazar, agriculture equipment purnea";
+// Smart Location Detection for SEO
+$query = $_GET['q'] ?? '';
+$locations = require __DIR__ . '/includes/locations.php';
+$detectedLocation = '';
+$cleanQuery = trim($query);
+
+if ($cleanQuery !== '') {
+    $pattern = '/\s+(in|near|at)\s+(' . implode('|', array_map('preg_quote', array_keys($locations))) . ')$/i';
+    if (preg_match($pattern, $cleanQuery, $matches)) {
+        $detectedLocation = ucwords(strtolower($matches[2]));
+    }
+}
+
+$displayLoc = $detectedLocation ? $detectedLocation : 'Bihar';
+
+$pageTitle = $categoryId ? "Best {$catName} in {$displayLoc}" : ($detectedLocation ? "Agriculture Machines in {$detectedLocation}" : 'Shop Agriculture Machines in Purnea');
+$pageDescription = "Browse and buy {$catName} at the best price near you in {$displayLoc}. Purnea Machine Bazaar offers top quality industrial and farming machinery.";
+$pageKeywords = strtolower($catName) . " in " . strtolower($displayLoc) . ", " . strtolower($catName) . " near me, buy " . strtolower($catName) . " bihar, purnea machine bazaar, agriculture equipment near me";
 
 $canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'];
 if ($categoryId) {

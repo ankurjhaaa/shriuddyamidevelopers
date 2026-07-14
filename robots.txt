@@ -4,4 +4,4 @@ Disallow: /includes/
 Disallow: /database/
 Disallow: /test.php
 
-Sitemap: https://purneamachinebaazar.com/sitemap.xml
+Sitemap: https://purneamachinebazaar.com/sitemap.xml

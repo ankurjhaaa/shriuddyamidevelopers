@@ -51,15 +51,17 @@
                 <div class="flex flex-wrap items-center gap-2 text-xs">
                     <?php 
                     $footerLocations = require __DIR__ . '/locations.php';
-                    $totalLocs = count($footerLocations);
-                    foreach ($footerLocations as $index => $loc): 
-                        $locSlug = strtolower(str_replace(' ', '-', $loc));
+                    $topFooterLocs = array_slice(array_keys($footerLocations), 0, 40);
+                    $totalLocs = count($topFooterLocs);
+                    foreach ($topFooterLocs as $index => $locName): 
+                        $locSlug = strtolower(str_replace(' ', '-', $locName));
                     ?>
-                        <a href="/location/<?php echo urlencode($locSlug); ?>" class="text-gray-500 hover:text-primary hover:underline transition font-medium"><?php echo htmlspecialchars($loc); ?></a>
+                        <a href="/location/<?php echo urlencode($locSlug); ?>" class="text-gray-500 hover:text-primary hover:underline transition font-medium"><?php echo htmlspecialchars($locName); ?></a>
                         <?php if($index < $totalLocs - 1): ?>
                             <span class="text-gray-300">|</span>
                         <?php endif; ?>
                     <?php endforeach; ?>
+                    <a href="/search.php" class="text-gray-500 hover:text-primary hover:underline transition font-medium">View All Regions...</a>
                 </div>
             </div>
             

@@ -13,8 +13,8 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
 $pageTitle = 'Home - Agriculture & Industrial Machines in Purnea';
-$pageDescription = 'Purnea Machine Baazar is the leading provider of agriculture, farming, and industrial machines in Purnea, Bihar. Get the best price on tractors, cultivators, and more.';
-$pageKeywords = 'purnea machine baazar, agriculture machines purnea, industrial machines purnea, tractors purnea, farming equipment bihar';
+$pageDescription = 'Purnea Machine Bazaar is the leading provider of agriculture, farming, and industrial machines near you in Purnea, Bihar. Get the best price on tractors, cultivators, and more across Bihar.';
+$pageKeywords = 'purnea machine bazaar, agriculture machines near me, industrial machines bihar, tractors near me, farming equipment bihar, machinery supplier near me';
 
 include __DIR__ . '/includes/header.php';
 

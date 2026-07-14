@@ -8,6 +8,19 @@ $query = $_GET['q'] ?? '';
 $categoryId = $_GET['category'] ?? '';
 $sort = $_GET['sort'] ?? '';
 
+// Location awareness
+$locations = require __DIR__ . '/../includes/locations.php';
+$detectedLocation = '';
+$cleanQuery = trim($query);
+
+if ($cleanQuery !== '') {
+    $pattern = '/\s+(in|near|at)\s+(' . implode('|', array_map('preg_quote', array_keys($locations))) . ')$/i';
+    if (preg_match($pattern, $cleanQuery, $matches)) {
+        $detectedLocation = $matches[2];
+        $cleanQuery = trim(preg_replace($pattern, '', $cleanQuery));
+    }
+}
+
 $sql = "
     SELECT p.*, c.name as category_name, 
            (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
@@ -17,11 +30,11 @@ $sql = "
 ";
 $params = [];
 
-if ($query !== '') {
+if ($cleanQuery !== '') {
     $sql .= " AND (p.name LIKE ? OR p.short_description LIKE ? OR c.name LIKE ?)";
-    $params[] = "%$query%";
-    $params[] = "%$query%";
-    $params[] = "%$query%";
+    $params[] = "%$cleanQuery%";
+    $params[] = "%$cleanQuery%";
+    $params[] = "%$cleanQuery%";
 }
 
 if ($categoryId !== '') {

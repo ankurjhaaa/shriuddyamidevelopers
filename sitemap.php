@@ -31,8 +31,8 @@ foreach ($categories as $cat) {
 
 // 3. Location Pages (Programmatic SEO)
 $locations = require __DIR__ . '/includes/locations.php';
-foreach ($locations as $loc) {
-    $locSlug = strtolower(str_replace(' ', '-', $loc));
+foreach ($locations as $locName => $coords) {
+    $locSlug = strtolower(str_replace(' ', '-', $locName));
     addUrl($baseUrl . '/location/' . urlencode($locSlug), date('Y-m-d'), 'weekly', '0.7');
 }
 
@@ -42,6 +42,18 @@ foreach ($products as $prod) {
     // Format date as YYYY-MM-DD
     $date = date('Y-m-d', strtotime($prod['created_at']));
     addUrl($baseUrl . '/products/' . urlencode($prod['slug']), $date, 'weekly', '0.8');
+}
+
+// 5. Smart Search Combos (Product + Top Locations)
+$topCities = array_slice(array_keys($locations), 0, 5); // Just top 5 cities so sitemap isn't millions of links
+$topProducts = $pdo->query("SELECT name FROM products WHERE status = 'active' LIMIT 50")->fetchAll();
+
+foreach ($topProducts as $prod) {
+    foreach ($topCities as $city) {
+        $locSlug = urlencode(strtolower(str_replace(' ', '-', $city)));
+        $prodSlug = urlencode(strtolower(str_replace(' ', '-', $prod['name'])));
+        addUrl($baseUrl . '/location/' . $locSlug . '/' . $prodSlug, date('Y-m-d'), 'weekly', '0.6');
+    }
 }
 
 echo '</urlset>';

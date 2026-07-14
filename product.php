@@ -72,9 +72,9 @@ foreach ($relatedProducts as $rp) {
 
 // Programmatic SEO setup
 $pageTitle = $product['name'] . ' in Purnea - Best Price';
-$baseDesc = $product['short_description'] ? $product['short_description'] : 'Buy ' . $product['name'] . ' in Purnea, Bihar at best prices. High-quality ' . strtolower($product['category_name']) . ' from Purnea Machine Baazar.';
+$baseDesc = $product['short_description'] ? $product['short_description'] : 'Buy ' . $product['name'] . ' near you in Bihar at best prices. High-quality ' . strtolower($product['category_name']) . ' from Purnea Machine Bazaar.';
 $pageDescription = $baseDesc . ' Contact us for latest price and specifications.';
-$pageKeywords = strtolower($product['name']) . ', buy ' . strtolower($product['name']) . ' in Purnea, ' . strtolower($product['category_name']) . ' in Purnea, Purnea Machine Baazar, agriculture machinery Purnea';
+$pageKeywords = strtolower($product['name']) . ' near me, buy ' . strtolower($product['name']) . ' bihar, ' . strtolower($product['category_name']) . ' near me, Purnea Machine Bazaar, agriculture machinery bihar';
 
 // Product JSON-LD Schema
 $schemaImage = !empty($images) ? 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/' . $images[0] : '';
@@ -375,6 +375,34 @@ include __DIR__ . '/includes/header.php';
             class="flex-[2] bg-primary text-white font-semibold py-2.5 rounded-sm flex items-center justify-center gap-2 text-sm shadow-sm hover:bg-secondary transition">
             Get Latest Price
         </a>
+    </div>
+    </div>
+
+    <!-- SEO: Internal Linking to Locations -->
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-12 mb-8 hidden md:block">
+        <div class="border border-gray-200 rounded-sm overflow-hidden bg-white">
+            <h2 class="bg-gray-100 px-4 py-2 border-b border-gray-200 font-bold text-gray-800 text-sm">Find <?php echo htmlspecialchars($product['name']); ?> in Bihar</h2>
+            <div class="p-4 bg-white">
+                <ul class="flex flex-wrap gap-2 text-sm leading-relaxed">
+                    <?php 
+                    $locs = require __DIR__ . '/includes/locations.php';
+                    $keys = array_keys($locs);
+                    $topCities = array_slice($keys, 0, 30);
+                    foreach ($topCities as $city): ?>
+                        <li>
+                            <a href="/location/<?php echo urlencode(strtolower(str_replace(' ', '-', $city))); ?>/<?php echo urlencode(strtolower(str_replace(' ', '-', $product['name']))); ?>" 
+                               class="text-primary hover:underline hover:text-accent font-medium whitespace-nowrap">
+                                <?php echo htmlspecialchars($product['name']); ?> in <?php echo htmlspecialchars($city); ?>
+                            </a>
+                            <span class="text-gray-300 mx-1">|</span>
+                        </li>
+                    <?php endforeach; ?>
+                    <li>
+                        <a href="/search.php" class="text-gray-600 hover:text-primary underline font-semibold">View All Locations</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Full Screen Image Lightbox -->
