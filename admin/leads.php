@@ -94,7 +94,7 @@ include __DIR__ . '/includes/header.php';
 </div>
 
 <!-- Floating Action Button -->
-<a href="/admin/leads_export.php" data-turbo="false" class="fixed bottom-24 md:bottom-10 right-6 bg-white border border-gray-200 text-gray-700 w-14 h-14 rounded-full flex items-center justify-center hover:bg-gray-50 transition shadow-lg z-30 group hover:scale-105" title="Export CSV">
+<a href="/admin/leads_export.php" data-turbo="false" class="fixed bottom-24 md:bottom-10 right-6 bg-white border border-gray-200 text-gray-700 w-14 h-14 rounded-sm flex items-center justify-center hover:bg-gray-50 transition shadow-lg z-30 group hover:scale-105" title="Export CSV">
     <i class="fa-solid fa-file-csv text-green-600 text-xl transition-transform"></i>
 </a>
 

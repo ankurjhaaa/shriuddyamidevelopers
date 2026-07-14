@@ -107,7 +107,7 @@ function initProductLightbox() {
             progressContainer.innerHTML = '';
             for (let i = 0; i < numImages; i++) {
                 const barWrapper = document.createElement('div');
-                barWrapper.className = 'flex-grow h-full bg-white/30 rounded-full overflow-hidden relative cursor-pointer';
+                barWrapper.className = 'flex-grow h-full bg-white/30 rounded-sm overflow-hidden relative cursor-pointer';
                 
                 const fill = document.createElement('div');
                 fill.className = 'absolute top-0 left-0 h-full bg-white transition-none';
@@ -347,7 +347,7 @@ function initProductLightbox() {
                 
                 // Show visual feedback for pause/play
                 const iconContainer = document.createElement('div');
-                iconContainer.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl z-50 animate-ping opacity-0 transition-opacity duration-300 pointer-events-none';
+                iconContainer.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 text-white rounded-sm w-16 h-16 flex items-center justify-center text-2xl z-50 animate-ping opacity-0 transition-opacity duration-300 pointer-events-none';
                 iconContainer.innerHTML = userPaused ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
                 imgContainer.appendChild(iconContainer);
                 

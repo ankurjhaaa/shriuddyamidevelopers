@@ -100,7 +100,7 @@ include __DIR__ . '/includes/header.php';
 
 <!-- Add Modal -->
 <div id="addModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
+    <div class="bg-white rounded-sm shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
             <h3 class="text-lg font-bold text-gray-900">Add New Category</h3>
             <button onclick="document.getElementById('addModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
@@ -123,7 +123,7 @@ include __DIR__ . '/includes/header.php';
 
 <!-- Edit Modal -->
 <div id="editModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
+    <div class="bg-white rounded-sm shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
             <h3 class="text-lg font-bold text-gray-900">Edit Category</h3>
             <button onclick="document.getElementById('editModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
@@ -154,7 +154,7 @@ function editCategory(id, name) {
 </script>
 
 <!-- Floating Action Button -->
-<button onclick="document.getElementById('addModal').classList.remove('hidden')" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center hover:bg-blue-700 transition shadow-lg z-30 group hover:scale-105" title="Add Category">
+<button onclick="document.getElementById('addModal').classList.remove('hidden')" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-14 h-14 rounded-sm flex items-center justify-center hover:bg-blue-700 transition shadow-lg z-30 group hover:scale-105" title="Add Category">
     <i class="fa-solid fa-plus text-xl transition-transform"></i>
 </button>
 

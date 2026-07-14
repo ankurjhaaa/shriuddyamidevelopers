@@ -49,7 +49,7 @@ $categoryId = $_GET['category'] ?? '';
 $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
 ?>
 
-<div class="bg-gray-100 min-h-screen pb-16 pt-4">
+<div class="bg-white min-h-screen pb-16 pt-4">
     <div class="max-w-[1440px] mx-auto px-2 md:px-4">
         
         <!-- Breadcrumbs -->
@@ -96,11 +96,11 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 
                     <!-- Mobile Category Filter Pills -->
                     <div class="flex overflow-x-auto hide-scrollbar gap-2 mt-3 w-full snap-x">
-                        <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-semibold border transition <?php echo $categoryId === '' ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="">
+                        <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-sm text-[10px] font-semibold border transition <?php echo $categoryId === '' ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="">
                             All
                         </button>
                         <?php foreach ($categories as $cat): ?>
-                            <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-semibold border transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
+                            <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-3 py-1 rounded-sm text-[10px] font-semibold border transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-300'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
                                 <?php echo htmlspecialchars($cat['name']); ?>
                             </button>
                         <?php endforeach; ?>
@@ -112,7 +112,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 <input type="hidden" id="searchInputDesktop" value="">
                 
                 <!-- Results Header -->
-                <div class="bg-white p-3 md:p-4 rounded-sm border border-gray-200 mb-4 hidden lg:flex justify-between items-center">
+                <div class="bg-white p-3 md:p-4 rounded-md border border-gray-200 mb-6 hidden lg:flex justify-between items-center shadow-sm">
                     <h1 class="text-lg font-bold text-gray-800"><?php echo $catName; ?> <span class="text-xs text-gray-500 font-normal ml-2" id="resultsCount"></span></h1>
                     <div class="flex items-center gap-2 text-xs">
                         <span class="text-gray-500">Sort by:</span>
@@ -125,7 +125,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 </div>
 
                 <!-- Search Results Container -->
-                <div id="searchResults" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+                <div id="searchResults" class="flex flex-wrap justify-center sm:justify-start gap-3 md:gap-4">
                     <!-- Results will be injected here via JS -->
                 </div>
             
@@ -135,7 +135,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 </div>
                 
                 <!-- Empty State -->
-                <div id="searchEmpty" class="hidden flex flex-col items-center justify-center py-16 bg-white rounded-sm border border-gray-200 mt-4">
+                <div id="searchEmpty" class="hidden flex flex-col items-center justify-center py-16 bg-white rounded-md border border-gray-200 mt-4">
                     <i class="fa-solid fa-box-open text-4xl text-gray-300 mb-3"></i>
                     <h3 class="text-base font-semibold text-gray-800 mb-1">No products found</h3>
                     <p class="text-xs text-gray-500">Try adjusting your filters or search term.</p>
@@ -176,7 +176,7 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 const clickedId = btn.dataset.id;
                 
                 categoryBtns.forEach(b => {
-                    if(b.classList.contains('rounded-full')) {
+                    if(b.classList.contains('rounded-sm')) {
                         // Mobile pill
                         b.classList.remove('bg-primary/10', 'text-primary', 'border-primary');
                         b.classList.add('bg-white', 'text-gray-600', 'border-gray-300');

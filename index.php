@@ -52,36 +52,33 @@ foreach ($categoriesWithProducts as $cat) {
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-    <!-- IndiaMART Style Full-Width Banner -->
-    <div class="relative w-full z-10 bg-gray-100 border-b border-gray-200">
-        <div class="swiper heroSwiper w-full h-[300px] md:h-[350px]">
+    <div class="relative w-full z-10 bg-white border-b border-gray-200">
+        <div class="swiper heroSwiper w-full h-[350px] md:h-[450px]">
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="swiper-slide relative">
                     <img src="/assets/images/carousel/1.png" class="w-full h-full object-cover"
                         alt="Industrial Tractor">
-                    <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent z-10"></div>
-                    <div class="absolute inset-0 z-20 flex flex-col justify-center px-12">
-                        <h1 class="text-3xl font-bold text-white mb-2 shadow-sm">Heavy Machinery Deals</h1>
-                        <p class="text-white/90 text-sm max-w-sm mb-4">Discover premium tractors and agriculture
-                            equipment.</p>
+                    <div class="absolute inset-0 bg-primary/70 mix-blend-multiply z-10"></div>
+                    <div class="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-20 max-w-[1440px] mx-auto">
+                        <span class="text-accent font-bold tracking-wider text-sm mb-2 uppercase">Premium Collection</span>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Heavy Machinery<br>For Modern Farming</h1>
+                        <p class="text-white/90 text-base md:text-lg max-w-md mb-8">Discover our premium range of tractors and agriculture equipment designed for high yield and durability.</p>
                         <a href="/search.php"
-                            class="bg-accent text-white px-5 py-2 rounded-sm font-medium w-fit shadow-sm text-sm hover:bg-orange-600 transition">Shop
-                            Now</a>
+                            class="bg-accent text-white px-8 py-3 rounded-md font-bold w-fit text-sm hover:bg-orange-600 transition-colors">Explore Collection</a>
                     </div>
                 </div>
                 <!-- Slide 2 -->
                 <div class="swiper-slide relative">
                     <img src="/assets/images/carousel/2.png" class="w-full h-full object-cover"
                         alt="Industrial Harvester">
-                    <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent z-10"></div>
-                    <div class="absolute inset-0 z-20 flex flex-col justify-center px-12">
-                        <h1 class="text-3xl font-bold text-white mb-2 shadow-sm">Advanced Harvesters</h1>
-                        <p class="text-white/90 text-sm max-w-sm mb-4">Increase yield with state-of-the-art harvesters.
-                        </p>
+                    <div class="absolute inset-0 bg-primary/70 mix-blend-multiply z-10"></div>
+                    <div class="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-20 max-w-[1440px] mx-auto">
+                        <span class="text-accent font-bold tracking-wider text-sm mb-2 uppercase">New Arrivals</span>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Advanced Harvesters<br>For Maximum Output</h1>
+                        <p class="text-white/90 text-base md:text-lg max-w-md mb-8">Increase your farming yield with our state-of-the-art harvesters and industrial tools.</p>
                         <a href="/search.php"
-                            class="bg-accent text-white px-5 py-2 rounded-sm font-medium w-fit shadow-sm text-sm hover:bg-orange-600 transition">Shop
-                            Now</a>
+                            class="bg-accent text-white px-8 py-3 rounded-md font-bold w-fit text-sm hover:bg-orange-600 transition-colors">Explore Collection</a>
                     </div>
                 </div>
             </div>
@@ -115,41 +112,41 @@ foreach ($categoriesWithProducts as $cat) {
 
 
 
-    <!-- IndiaMART Style Horizontal Product Strips (Category Wise) -->
+    <!-- Horizontal Product Strips -->
     <?php foreach ($categoryStrips as $index => $strip): ?>
-        <div class="bg-gray-100 <?php echo $index === 0 ? 'py-4 md:py-6' : 'pb-4 md:pb-6'; ?>">
-            <div class="max-w-[1440px] mx-auto px-2 md:px-4">
-                <div class="bg-white p-3 md:p-4 rounded-sm shadow-sm border border-gray-200">
-                    <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800">
+        <div class="bg-white <?php echo $index === 0 ? 'py-6 md:py-10' : 'pb-6 md:pb-10'; ?>">
+            <div class="max-w-[1440px] mx-auto px-4 md:px-8">
+                <div class="bg-white p-0">
+                    <div class="flex justify-between items-center mb-4 md:mb-6">
+                        <h3 class="text-base md:text-xl font-bold text-gray-800 truncate pr-4">
                             <?php echo htmlspecialchars($strip['category']['name']); ?></h3>
                         <a href="/category/<?php echo urlencode($strip['category']['slug']); ?>"
-                            class="text-primary text-sm font-semibold hover:underline">View All</a>
+                            class="text-primary text-xs md:text-sm font-semibold hover:underline flex-shrink-0">View All</a>
                     </div>
 
                     <div class="flex overflow-x-auto gap-3 md:gap-4 hide-scrollbar pb-2 snap-x">
                         <?php foreach ($strip['products'] as $product): ?>
-                            <div class="w-[160px] md:w-[220px] flex-shrink-0 bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden snap-start"
+                            <div class="w-[220px] md:w-[240px] flex-shrink-0 bg-white border border-gray-200 hover:border-primary/50 transition-colors h-full group flex flex-col rounded-md overflow-hidden snap-start"
                                 data-product-id="<?php echo $product['id']; ?>">
 
                                 <!-- Image -->
                                 <a href="/products/<?php echo urlencode($product['slug']); ?>"
-                                    class="block relative w-full h-[180px] bg-white border-b border-gray-100 p-2 flex items-center justify-center">
+                                    class="block relative w-full h-[180px] md:h-[200px] bg-white border-b border-gray-100 p-3 flex items-center justify-center group-hover:bg-blue-50/30 transition-colors">
                                     <?php if ($product['primary_image']): ?>
                                         <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>"
                                             class="w-full h-full object-cover mix-blend-multiply" loading="lazy">
                                     <?php else: ?>
-                                        <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50">
+                                        <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50 rounded-t-md">
                                             <i class="fa-solid fa-image text-3xl"></i>
                                         </div>
                                     <?php endif; ?>
                                 </a>
 
                                 <!-- Content -->
-                                <div class="flex-grow flex flex-col p-2 md:p-3">
-                                    <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2">
+                                <div class="flex-grow flex flex-col p-3 md:p-4">
+                                    <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2 w-full">
                                         <h4
-                                            class="text-xs md:text-sm font-medium text-blue-700 hover:underline leading-snug line-clamp-2">
+                                            class="text-sm md:text-base font-semibold text-gray-800 hover:text-primary transition-colors leading-snug truncate">
                                             <?php echo htmlspecialchars($product['name']); ?></h4>
                                     </a>
 
@@ -158,7 +155,7 @@ foreach ($categoriesWithProducts as $cat) {
                                         data-visibility="<?php echo $product['price_visibility']; ?>">
                                         <?php if ($product['price_visibility'] === 'public'): ?>
                                             <span
-                                                class="font-bold text-base md:text-lg text-gray-900"><?php echo formatPrice($product['price']); ?></span>
+                                                class="font-bold text-lg md:text-xl text-gray-900"><?php echo formatPrice($product['price']); ?></span>
                                         <?php elseif ($product['price_visibility'] === 'locked'): ?>
                                             <button
                                                 class="btn-unlock-price text-accent font-semibold text-[10px] md:text-xs hover:underline flex items-center gap-1">
@@ -177,8 +174,8 @@ foreach ($categoriesWithProducts as $cat) {
                                             class="text-[10px] md:text-[11px] text-gray-500 mb-2 truncate flex items-center gap-1">
                                             <i class="fa-solid fa-location-dot text-gray-400"></i> Purnea, Bihar</p>
 
-                                        <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
-                                            class="w-full text-center bg-primary text-white hover:bg-secondary transition px-2 py-1.5 rounded-sm text-[11px] md:text-xs font-semibold flex justify-center items-center gap-1">
+                                        <a href="<?php echo getWhatsappLink('Hi, I am interested in ' . $product['name']); ?>" target="_blank"
+                                            class="w-full block text-center bg-primary text-white font-medium text-xs md:text-sm py-2 rounded-md hover:bg-secondary transition-colors">
                                             Contact Supplier
                                         </a>
                                     </div>
@@ -209,7 +206,7 @@ foreach ($categoriesWithProducts as $cat) {
 
 <!-- Floating WhatsApp Button -->
 <a href="<?php echo getWhatsappLink(); ?>" target="_blank"
-    class="fixed bottom-24 md:bottom-8 right-6 z-40 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+    class="fixed bottom-24 md:bottom-8 right-6 z-40 bg-green-500 text-white w-12 h-12 rounded-sm flex items-center justify-center shadow-lg">
     <i class="fa-brands fa-whatsapp text-2xl"></i>
 </a>
 

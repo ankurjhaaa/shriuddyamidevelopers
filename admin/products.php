@@ -104,7 +104,7 @@ include __DIR__ . '/includes/header.php';
 </div>
 
 <!-- Floating Action Button -->
-<a href="/admin/product_edit.php" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center hover:bg-blue-700 transition shadow-lg z-30 group hover:scale-105" title="Add Product">
+<a href="/admin/product_edit.php" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-14 h-14 rounded-sm flex items-center justify-center hover:bg-blue-700 transition shadow-lg z-30 group hover:scale-105" title="Add Product">
     <i class="fa-solid fa-plus text-xl transition-transform"></i>
 </a>
 

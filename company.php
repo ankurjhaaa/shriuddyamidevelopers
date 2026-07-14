@@ -16,11 +16,11 @@ $productsStmt = $pdo->query("SELECT p.*, c.name as category_name,
 $companyProducts = $productsStmt->fetchAll();
 ?>
 
-<div class="bg-gray-50 min-h-screen pb-16 pt-4">
+<div class="bg-white min-h-screen pb-16 pt-4">
     <div class="max-w-[1440px] mx-auto px-2 md:px-4">
         
         <!-- Company Banner -->
-        <div class="bg-white rounded-sm border border-gray-200 overflow-hidden mb-6 shadow-sm">
+        <div class="bg-white rounded-md border border-gray-200 overflow-hidden mb-6">
             <!-- Cover/Top color bar -->
             <div class="h-32 md:h-48 bg-primary relative">
                 <!-- Optional: Cover background pattern -->
@@ -29,7 +29,7 @@ $companyProducts = $productsStmt->fetchAll();
             
             <div class="px-6 md:px-10 pb-6 relative">
                 <div class="flex flex-col md:flex-row gap-6 md:items-end -mt-16 md:-mt-24 mb-4 relative z-10">
-                    <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-lg shadow-md border-4 border-white flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-md border-4 border-white shadow-md flex items-center justify-center overflow-hidden flex-shrink-0 z-10">
                         <img src="/assets/images/logo.png" alt="Company Logo" class="max-w-full max-h-full object-contain p-2">
                     </div>
                     
@@ -65,11 +65,11 @@ $companyProducts = $productsStmt->fetchAll();
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- Left Column: About & Details -->
-            <div class="lg:col-span-2 space-y-6">
-                <!-- About Us -->
-                <div class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-sm">
-                    <h2 class="bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 text-base">About Company</h2>
+            <!-- Left Sidebar: About & Contact -->
+            <div class="w-full lg:col-span-2 flex flex-col gap-6">
+                <!-- About Box -->
+                <div class="bg-white border border-gray-200 rounded-md">
+                    <h2 class="bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 text-base rounded-t-md">About Company</h2>
                     <div class="p-5 text-sm text-gray-700 leading-relaxed space-y-4">
                         <p>Welcome to <strong>Shri Uddyami Developers</strong>, a premium enterprise. We are a leading manufacturer, wholesaler, and trader of high-quality agricultural and industrial machinery based in Purnea, Bihar.</p>
                         
@@ -80,7 +80,7 @@ $companyProducts = $productsStmt->fetchAll();
                 </div>
 
                 <!-- Company Highlights -->
-                <div class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-sm">
+                <div class="bg-white border border-gray-200 rounded-md overflow-hidden">
                     <h2 class="bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 text-base">Factsheet</h2>
                     <div class="p-5">
                         <table class="w-full text-sm text-left border-collapse">
@@ -114,7 +114,7 @@ $companyProducts = $productsStmt->fetchAll();
             <!-- Right Column: Sidebar -->
             <div class="space-y-6">
                 <!-- Our Products Grid (Mini) -->
-                <div class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-sm">
+                <div class="bg-white border border-gray-200 rounded-md overflow-hidden">
                     <div class="flex justify-between items-center bg-gray-100 px-5 py-3 border-b border-gray-200">
                         <h2 class="font-bold text-gray-800 text-base">Top Products</h2>
                         <a href="/search.php" class="text-xs text-primary font-bold hover:underline">View All</a>
@@ -140,9 +140,9 @@ $companyProducts = $productsStmt->fetchAll();
                     </div>
                 </div>
 
-                <!-- Contact Widget -->
-                <div class="bg-white border border-gray-200 rounded-sm overflow-hidden shadow-sm">
-                    <h2 class="bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 text-base">Contact Us</h2>
+                <!-- Contact Box -->
+                <div class="bg-white border border-gray-200 rounded-md">
+                    <h2 class="bg-gray-100 px-5 py-3 border-b border-gray-200 font-bold text-gray-800 text-base rounded-t-md">Contact Us</h2>
                     <div class="p-5">
                         <p class="font-bold text-gray-800 mb-1">Shri Uddyami Developers</p>
                         <div class="flex items-start gap-2 text-sm text-gray-600 mb-4 mt-2">

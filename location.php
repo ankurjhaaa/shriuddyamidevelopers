@@ -67,7 +67,7 @@ $canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVE
 
 include __DIR__ . '/includes/header.php';
 ?>
-<div class="bg-gray-100 min-h-screen pb-16">
+<div class="bg-white min-h-screen pb-16 pt-6">
     <!-- Clean Header -->
     <div class="bg-white border-b border-gray-200 py-6 px-4 mb-6">
         <div class="max-w-[1440px] mx-auto">
@@ -87,7 +87,7 @@ include __DIR__ . '/includes/header.php';
         <!-- Products Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
             <?php foreach ($products as $product): ?>
-                <div class="bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden"
+                <div class="bg-white rounded-md border border-gray-200 hover:border-primary transition-all h-full group flex flex-col overflow-hidden"
                     data-product-id="<?php echo $product['id']; ?>">
 
                     <!-- Image -->
@@ -104,10 +104,10 @@ include __DIR__ . '/includes/header.php';
                     </a>
 
                     <!-- Content -->
-                    <div class="flex-grow flex flex-col p-2 md:p-3">
-                        <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2">
+                    <div class="flex-grow flex flex-col p-3 md:p-4">
+                        <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2 w-full">
                             <h4
-                                class="text-xs md:text-sm font-medium text-blue-700 hover:underline leading-snug line-clamp-2">
+                                class="text-sm md:text-base font-semibold text-gray-800 hover:text-primary transition-colors leading-snug truncate">
                                 <?php echo htmlspecialchars($product['name']); ?></h4>
                         </a>
 
@@ -135,10 +135,10 @@ include __DIR__ . '/includes/header.php';
                                     class="fa-solid fa-location-dot text-gray-400"></i>
                                 <?php echo htmlspecialchars($currentPlace); ?>, Bihar</p>
 
-                            <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
-                                class="w-full text-center bg-primary text-white hover:bg-secondary transition px-2 py-1.5 rounded-sm text-[11px] md:text-xs font-semibold flex justify-center items-center gap-1">
-                                Contact Supplier
-                            </a>
+                                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
+                                        class="w-full text-center bg-primary text-white hover:bg-secondary transition py-2 rounded-md text-xs font-semibold flex justify-center items-center gap-1">
+                                        Contact Supplier
+                                    </a>
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <?php if (empty($products)): ?>
-            <div class="flex flex-col items-center justify-center py-16 bg-white rounded-sm border border-gray-200">
+            <div class="flex flex-col items-center justify-center py-16 bg-white rounded-md border border-gray-200">
                 <i class="fa-solid fa-box-open text-4xl text-gray-300 mb-3"></i>
                 <h3 class="text-base font-semibold text-gray-800 mb-1">No products found</h3>
                 <p class="text-xs text-gray-500">Check back later for equipment in
@@ -157,7 +157,7 @@ include __DIR__ . '/includes/header.php';
         <?php if (!empty($products)): ?>
             <div class="mt-8 text-center">
                 <a href="/search.php"
-                    class="inline-block bg-white border border-gray-300 text-primary font-bold px-8 py-2.5 rounded-sm shadow-sm hover:bg-gray-50 transition text-sm">View
+                    class="inline-block bg-white border border-gray-300 text-primary font-bold px-8 py-2.5 rounded-md hover:bg-gray-50 transition text-sm">View
                     All Products in Bihar</a>
             </div>
         <?php endif; ?>

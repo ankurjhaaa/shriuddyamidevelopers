@@ -80,7 +80,7 @@
                 <a href="/" target="_blank" data-turbo="false" class="hidden sm:flex text-sm text-blue-600 hover:text-blue-800 font-medium items-center gap-1 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 transition">
                     View Website <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
                 </a>
-                <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm border-2 border-white ring-2 ring-gray-100">
+                <div class="w-9 h-9 rounded-sm bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm border-2 border-white ring-2 ring-gray-100">
                     A
                 </div>
             </div>

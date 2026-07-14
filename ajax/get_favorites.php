@@ -29,7 +29,7 @@ ob_start();
 if (!empty($products)) {
     foreach ($products as $product) {
         ?>
-        <div class="bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden wishlist-card"
+        <div class="bg-white border border-gray-200 hover:border-primary transition-all h-full group flex flex-col rounded-sm overflow-hidden wishlist-card"
             data-product-id="<?php echo $product['id']; ?>">
 
             <!-- Image -->
@@ -78,7 +78,7 @@ if (!empty($products)) {
             </div>
 
             <button
-                class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center text-red-500 hover:text-gray-400 z-10 wishlist-btn shadow-sm"
+                class="absolute top-2 right-2 w-6 h-6 bg-white/90 rounded-sm flex items-center justify-center text-red-500 hover:text-gray-400 z-10 wishlist-btn shadow-sm"
                 data-id="<?php echo $product['id']; ?>">
                 <i class="fa-solid fa-heart text-xs"></i>
             </button>

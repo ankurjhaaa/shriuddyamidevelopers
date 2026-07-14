@@ -6,20 +6,20 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div class="col-span-1 md:col-span-2">
                     <a href="/" class="flex items-center gap-2 mb-4 group">
-                        <i class="fa-solid fa-tractor text-accent text-xl group-hover:scale-110 transition-transform"></i>
+                        <i class="fa-solid fa-tractor text-accent text-xl  transition-transform"></i>
                         <span class="font-bold text-lg text-primary tracking-tight"><?php echo htmlspecialchars(getSetting('store_name')); ?></span>
                     </a>
                     <p class="text-gray-500 text-sm leading-relaxed max-w-sm mb-4">
                         Premium quality agriculture and industrial machines designed for durability and performance. Experience modern farming.
                     </p>
                     <div class="flex gap-3">
-                        <a href="#" class="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                        <a href="#" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
                             <i class="fa-brands fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                        <a href="#" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
                             <i class="fa-brands fa-instagram text-sm"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                        <a href="#" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
                             <i class="fa-brands fa-twitter text-sm"></i>
                         </a>
                     </div>
@@ -128,13 +128,13 @@
         <div class="bg-white w-full max-w-[350px] rounded-lg transform scale-95 opacity-0 transition-all duration-300 shadow-2xl relative overflow-hidden" id="waPopupContent">
             <!-- Header Pattern -->
             <div class="bg-primary h-16 w-full absolute top-0 left-0 flex justify-end p-3">
-                <button type="button" id="closeWaPopup" class="text-white hover:text-gray-200 transition-colors z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black bg-opacity-20 hover:bg-opacity-30 cursor-pointer">
+                <button type="button" id="closeWaPopup" class="text-white hover:text-gray-200 transition-colors z-20 w-8 h-8 flex items-center justify-center rounded-sm bg-black bg-opacity-20 hover:bg-opacity-30 cursor-pointer">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
             
             <div class="pt-8 pb-6 px-6 relative z-10 text-center flex flex-col items-center mt-2">
-                <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mb-4 border-4 border-white mt-1">
+                <div class="w-20 h-20 bg-white rounded-sm shadow-lg flex items-center justify-center mb-4 border-4 border-white mt-1">
                     <i class="fa-brands fa-whatsapp text-5xl text-[#25D366]"></i>
                 </div>
                 

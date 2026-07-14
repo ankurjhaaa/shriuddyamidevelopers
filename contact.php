@@ -8,7 +8,7 @@ include __DIR__ . '/includes/header.php';
 $settings = getAllSettings();
 ?>
 
-<div class="bg-gray-100 min-h-screen pb-16">
+<div class="bg-white min-h-screen pb-16">
     <!-- Clean Structural Header -->
     <div class="bg-white border-b border-gray-200 py-6 px-4 mb-8">
         <div class="max-w-[1440px] mx-auto">
@@ -28,7 +28,7 @@ $settings = getAllSettings();
             <div class="w-full lg:w-1/3 flex flex-col gap-4">
                 
                 <!-- Head Office Info -->
-                <div class="bg-white border border-gray-200 rounded-sm p-5">
+                <div class="bg-white border border-gray-200 rounded-md p-5">
                     <h2 class="text-lg font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Head Office</h2>
                     
                     <div class="flex items-start gap-3 mb-4">
@@ -57,7 +57,7 @@ $settings = getAllSettings();
                 </div>
 
                 <!-- Business Details -->
-                <div class="bg-white border border-gray-200 rounded-sm p-5">
+                <div class="bg-white border border-gray-200 rounded-md p-5">
                     <h2 class="text-lg font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Business Information</h2>
                     
                     <div class="grid grid-cols-2 gap-4">
@@ -77,7 +77,7 @@ $settings = getAllSettings();
                 </div>
 
                 <!-- Quick Links -->
-                <div class="bg-white border border-gray-200 rounded-sm">
+                <div class="bg-white border border-gray-200 rounded-md overflow-hidden">
                     <div class="flex items-center justify-between p-4 border-b border-gray-100 hover:bg-gray-50 transition">
                         <a href="/about.php" class="text-sm font-semibold text-gray-800 flex-grow">About Our Company</a>
                         <i class="fa-solid fa-angle-right text-gray-400"></i>
@@ -91,9 +91,9 @@ $settings = getAllSettings();
             </div>
 
             <!-- Right Side: Interactive Map -->
-            <div class="w-full lg:w-2/3 bg-white border border-gray-200 rounded-sm flex flex-col p-5">
+            <div class="w-full lg:w-2/3 bg-white border border-gray-200 rounded-md flex flex-col p-5">
                 <h2 class="text-lg font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Locate Us</h2>
-                <div class="flex-grow bg-gray-100 border border-gray-200 rounded-sm min-h-[400px] flex flex-col items-center justify-center">
+                <div class="flex-grow bg-gray-50 border border-gray-200 rounded-md min-h-[400px] flex flex-col items-center justify-center">
                     <i class="fa-solid fa-map-location-dot text-5xl text-gray-300 mb-3"></i>
                     <span class="text-sm text-gray-500">Map Integration Area</span>
                     <span class="text-xs text-gray-400 mt-1">Embed Google Maps iframe here</span>

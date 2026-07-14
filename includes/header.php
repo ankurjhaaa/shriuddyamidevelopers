@@ -105,16 +105,14 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#00a699', // IndiaMART Teal
-                        secondary: '#008378', // Darker Teal
-                        accent: '#ff5722', // Action Orange
+                        primary: '#1e3a8a', // Deep Blue
+                        secondary: '#172554', // Darker Blue
+                        accent: '#ea580c', // Action Orange
                     },
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 6s ease-in-out 3s infinite',
                     },
                     keyframes: {
                         float: {
@@ -141,8 +139,8 @@
 
 <body class="bg-white text-gray-800 antialiased font-sans pb-16 md:pb-0">
 
-    <!-- Top App Bar (Pure IndiaMART Style) -->
-    <header class="bg-primary text-white sticky top-0 z-50">
+    <!-- Top App Bar (Flat White Theme) -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <!-- Desktop Header -->
         <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[60px] items-center justify-between gap-6">
             <!-- Logo -->
@@ -153,10 +151,10 @@
 
             <!-- Massive Central Search Bar -->
             <div
-                class="flex-grow max-w-4xl flex items-center bg-white rounded-sm h-10 shadow-sm border-2 border-transparent focus-within:border-accent transition-colors overflow-hidden">
+                class="flex-grow max-w-4xl flex items-center bg-white rounded-md h-10 border border-gray-300 focus-within:border-primary transition-colors overflow-hidden">
                 <form action="/search.php" method="GET" class="flex w-full h-full">
                     <select name="category"
-                        class="hidden lg:block w-36 truncate bg-gray-100 text-gray-700 text-sm px-3 h-full border-r border-gray-200 outline-none cursor-pointer">
+                        class="hidden lg:block w-36 truncate bg-white hover:bg-gray-50 text-gray-700 text-sm px-3 h-full border-r border-gray-300 outline-none cursor-pointer">
                         <option value="">All Categories</option>
                         <?php
                         if (isset($pdo)) {
@@ -181,17 +179,17 @@
             <!-- Right Actions -->
             <div class="flex items-center gap-6 flex-shrink-0">
                 <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
-                    class="hidden lg:flex items-center gap-2 text-xs font-bold text-primary bg-white px-3 py-1.5 rounded-sm hover:shadow-md transition">
+                    class="hidden lg:flex items-center gap-2 text-xs font-bold text-white bg-primary px-3 py-1.5 rounded-md hover:bg-secondary transition border border-primary">
                     <i class="fa-solid fa-paper-plane text-accent"></i> Post Requirement
                 </a>
-                <nav class="flex gap-5 items-center text-[11px] font-semibold tracking-wide">
-                    <a href="/favorites.php" class="hover:text-gray-200 transition flex flex-col items-center">
+                <nav class="flex gap-5 items-center text-[11px] font-semibold tracking-wide text-gray-600">
+                    <a href="/favorites.php" class="hover:text-primary transition flex flex-col items-center">
                         <i class="fa-solid fa-heart text-xl mb-1"></i> Favorites
                     </a>
-                    <a href="/contact.php" class="hover:text-gray-200 transition flex flex-col items-center">
+                    <a href="/contact.php" class="hover:text-primary transition flex flex-col items-center">
                         <i class="fa-solid fa-comment-dots text-xl mb-1"></i> Messages
                     </a>
-                    <a href="#" class="hover:text-gray-200 transition flex flex-col items-center">
+                    <a href="#" class="hover:text-primary transition flex flex-col items-center">
                         <i class="fa-solid fa-circle-user text-xl mb-1"></i> Sign In
                     </a>
                 </nav>
@@ -201,7 +199,7 @@
         <!-- Mobile Header -->
         <div class="md:hidden">
             <!-- Top Row: Hamburger, Logo, User -->
-            <div class="flex items-center justify-between px-3 h-14 border-b border-white/20">
+            <div class="flex items-center justify-between px-3 h-14 border-b border-gray-200">
                 <div class="flex items-center gap-3">
                     <a href="/" class="flex items-center">
                         <img src="/assets/images/logo.png" alt="Logo" class="h-6 w-auto object-contain">
@@ -209,20 +207,20 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank"
-                        class="text-white"><i class="fa-solid fa-plus-circle text-lg"></i></a>
-                    <a href="/favorites.php" class="text-white"><i class="fa-solid fa-heart text-lg"></i></a>
-                    <a href="#" class="text-white"><i class="fa-solid fa-user text-lg"></i></a>
+                        class="text-gray-600 hover:text-primary"><i class="fa-solid fa-plus-circle text-lg"></i></a>
+                    <a href="/favorites.php" class="text-gray-600 hover:text-primary"><i class="fa-solid fa-heart text-lg"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-primary"><i class="fa-solid fa-user text-lg"></i></a>
                 </div>
             </div>
 
             <!-- Bottom Row: Search Bar -->
-            <div class="p-2 bg-primary">
+            <div class="p-3 bg-white border-b border-gray-200">
                 <form action="/search.php" method="GET"
-                    class="flex w-full bg-white rounded-sm h-10 shadow-inner overflow-hidden">
+                    class="flex w-full bg-white border border-gray-300 rounded-md h-10 overflow-hidden focus-within:border-primary">
                     <input type="text" name="q" placeholder="Search products & suppliers"
-                        class="w-full px-3 text-sm text-gray-800 outline-none"
+                        class="w-full px-3 text-sm text-gray-800 outline-none bg-transparent"
                         value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
-                    <button type="submit" class="bg-secondary text-white px-4 flex items-center justify-center"><i
+                    <button type="submit" class="bg-primary text-white px-4 flex items-center justify-center hover:bg-secondary"><i
                             class="fa-solid fa-search"></i></button>
                 </form>
             </div>

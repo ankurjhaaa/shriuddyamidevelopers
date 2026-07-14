@@ -235,7 +235,7 @@ include __DIR__ . '/includes/header.php';
                         <?php if($img['is_primary']): ?>
                             <span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded shadow-sm">Primary</span>
                         <?php endif; ?>
-                        <a href="?id=<?php echo $id; ?>&delete_img=<?php echo $img['id']; ?>" data-turbo="false" onclick="return confirm('Delete this image?')" class="absolute top-3 right-3 bg-red-500 text-white w-7 h-7 flex items-center justify-center rounded-full opacity-100 transition shadow hover:bg-red-600">
+                        <a href="?id=<?php echo $id; ?>&delete_img=<?php echo $img['id']; ?>" data-turbo="false" onclick="return confirm('Delete this image?')" class="absolute top-3 right-3 bg-red-500 text-white w-7 h-7 flex items-center justify-center rounded-sm opacity-100 transition shadow hover:bg-red-600">
                             <i class="fa-solid fa-xmark text-sm"></i>
                         </a>
                     </div>
