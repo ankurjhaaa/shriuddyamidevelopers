@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const searchInput = document.getElementById('searchInput');
     const searchCategory = document.getElementById('searchCategory');
     const searchResults = document.getElementById('searchResults');
@@ -15,7 +15,7 @@
         const categoryId = searchCategory ? searchCategory.value : '';
         const sortSelect = document.getElementById('sortSelectDesktop');
         const sortValue = sortSelect ? sortSelect.value : '';
-        
+
         if (query.length > 0) {
             clearSearch.classList.remove('hidden');
         } else {
@@ -23,7 +23,7 @@
         }
 
         // Always show all products if query is empty on search page, handled by backend
-        
+
         // Update URL state
         let newPath = categoryId ? `/category/${categoryId}` : '/search.php';
         let newUrl = new URL(newPath, window.location.origin);
@@ -31,7 +31,7 @@
             newUrl.searchParams.set('q', query);
         }
         window.history.replaceState({}, '', newUrl);
-        
+
         searchResults.innerHTML = '';
         searchResults.classList.add('hidden');
         searchEmpty.classList.add('hidden');
@@ -45,22 +45,22 @@
 
             if (result.success && result.data.length > 0) {
                 searchResults.classList.remove('hidden');
-                
+
                 const resultsCountEl = document.getElementById('resultsCount');
-                if(resultsCountEl) {
+                if (resultsCountEl) {
                     resultsCountEl.textContent = `(${result.data.length} products)`;
                 }
-                
+
                 const isUnlocked = localStorage.getItem('price_unlocked') === 'true';
 
                 result.data.forEach(product => {
-                    
+
                     let priceHtml = '';
                     if (product.price_visibility === 'public') {
                         priceHtml = `<span class="font-bold text-lg text-gray-900">${product.formatted_price}</span>`;
                     } else if (product.price_visibility === 'locked') {
                         if (isUnlocked) {
-                            priceHtml = `<span class="font-bold text-lg text-gray-900">₹ ${parseFloat(product.price).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
+                            priceHtml = `<span class="font-bold text-lg text-gray-900">₹ ${parseFloat(product.price).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
                         } else {
                             priceHtml = `
                                 <button class="btn-unlock-price text-accent font-semibold text-xs hover:underline flex items-center gap-1">
@@ -78,22 +78,22 @@
 
                     const escapeHtml = (unsafe) => {
                         return (unsafe || '').toString()
-                             .replace(/&/g, "&amp;")
-                             .replace(/</g, "&lt;")
-                             .replace(/>/g, "&gt;")
-                             .replace(/"/g, "&quot;")
-                             .replace(/'/g, "&#039;");
+                            .replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;");
                     };
 
                     const card = `
                         <div class="bg-white border border-gray-200 hover:shadow-lg transition-all h-full group flex flex-col rounded-sm overflow-hidden" data-product-id="${product.id}">
                             
                             <!-- Image -->
-                            <a href="/products/${encodeURIComponent(product.slug)}" class="block relative w-full aspect-square bg-white border-b border-gray-100 p-2">
-                                ${product.primary_image 
-                                    ? `<img src="/${product.primary_image}" class="w-full h-full object-contain mix-blend-multiply" loading="lazy">`
-                                    : `<div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50"><i class="fa-solid fa-image text-4xl"></i></div>`
-                                }
+                            <a href="/products/${encodeURIComponent(product.slug)}" class="block relative w-full h-[180px] bg-white border-b border-gray-100 p-2 flex items-center justify-center">
+                                ${product.primary_image
+                            ? `<img src="/${product.primary_image}" class="w-full h-full object-cover mix-blend-multiply" loading="lazy">`
+                            : `<div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50"><i class="fa-solid fa-image text-4xl"></i></div>`
+                        }
                             </a>
                             
                             <!-- Content -->
@@ -123,7 +123,7 @@
                 if (window.processPriceContainers) {
                     window.processPriceContainers();
                 }
-                
+
                 if (typeof initWishlist === 'function') {
                     initWishlist();
                 }
@@ -131,7 +131,7 @@
             } else {
                 searchEmpty.classList.remove('hidden');
                 const resultsCountEl = document.getElementById('resultsCount');
-                if(resultsCountEl) {
+                if (resultsCountEl) {
                     resultsCountEl.textContent = `(0 products)`;
                 }
             }
