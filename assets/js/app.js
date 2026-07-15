@@ -17,9 +17,11 @@ function initApp() {
                     const realIndex = this.realIndex;
                     document.querySelectorAll('.thumbnail-item').forEach((thumb, i) => {
                         if (i === realIndex) {
-                            thumb.classList.add('border-primary', 'border-2');
+                            thumb.classList.add('border-primary', 'shadow-sm', 'scale-110');
+                            thumb.classList.remove('border-gray-200', 'opacity-70', 'hover:opacity-100');
                         } else {
-                            thumb.classList.remove('border-primary', 'border-2');
+                            thumb.classList.remove('border-primary', 'shadow-sm', 'scale-110');
+                            thumb.classList.add('border-gray-200', 'opacity-70', 'hover:opacity-100');
                         }
                     });
                 }
@@ -53,28 +55,46 @@ function initProductLightbox() {
     if (!playlist || playlist.length === 0) return;
 
     const mainImage = document.getElementById('lbMainImage');
-    const progressContainer = document.getElementById('lbProgressContainer');
-    const sidebar = document.getElementById('lbSidebar');
     const closeBtn = document.getElementById('closeLightbox');
     const prevBtn = document.getElementById('lbPrevBtn');
     const nextBtn = document.getElementById('lbNextBtn');
+    const imageCounter = document.getElementById('lbImageCounter');
     
-    // Sidebar elements
+    // Bottom elements
     const productNameEl = document.getElementById('lbProductName');
-    const productPriceEl = document.getElementById('lbProductPrice');
     const enquireBtn = document.getElementById('lbEnquireBtn');
 
-    // Story State
     let currentProductIndex = 0;
     let currentImageIndex = 0;
     
-    // Timer State
-    let timerId = null;
-    let startTime = 0;
-    let timeElapsed = 0;
-    let userPaused = false; 
-    let isLoading = false; 
-    const DURATION = 5000; 
+    // Zoom state
+    let currentScale = 1;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let translateX = 0, translateY = 0;
+
+    const resetZoom = () => {
+        currentScale = 1;
+        translateX = 0;
+        translateY = 0;
+        isDragging = false;
+        if (mainImage) {
+            mainImage.style.transform = `translate(0px, 0px) scale(1)`;
+            mainImage.style.cursor = 'zoom-in';
+            mainImage.style.transition = 'transform 0.3s ease-out';
+        }
+    };
+    
+    const applyZoom = () => {
+        if (mainImage) {
+            mainImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+            if (currentScale > 1) {
+                mainImage.style.cursor = 'grab';
+            } else {
+                mainImage.style.cursor = 'zoom-in';
+            }
+        }
+    };
 
     const formatPrice = (price) => {
         return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
@@ -84,45 +104,14 @@ function initProductLightbox() {
         const product = playlist[currentProductIndex];
         if (productNameEl) productNameEl.textContent = product.name;
         
-        if (productPriceEl) {
-            if (product.price_visibility === 'public') {
-                productPriceEl.textContent = formatPrice(product.price);
-            } else {
-                productPriceEl.innerHTML = '<span class="text-sm font-semibold text-primary">Price on Request</span>';
-            }
+        if (imageCounter) {
+            imageCounter.textContent = `${currentImageIndex + 1} / ${product.images.length}`;
         }
 
         if (enquireBtn) {
             const waUrl = new URL(enquireBtn.href);
             waUrl.searchParams.set('text', `Hi, I am interested in ${product.name}. Can you send me a quote?`);
             enquireBtn.href = waUrl.toString();
-        }
-    };
-
-    const buildProgressBars = () => {
-        const product = playlist[currentProductIndex];
-        const numImages = product.images.length;
-        
-        if (progressContainer) {
-            progressContainer.innerHTML = '';
-            for (let i = 0; i < numImages; i++) {
-                const barWrapper = document.createElement('div');
-                barWrapper.className = 'flex-grow h-full bg-white/30 rounded-sm overflow-hidden relative cursor-pointer';
-                
-                const fill = document.createElement('div');
-                fill.className = 'absolute top-0 left-0 h-full bg-white transition-none';
-                fill.style.width = i < currentImageIndex ? '100%' : '0%';
-                fill.id = `lb-progress-${i}`;
-                
-                barWrapper.appendChild(fill);
-                
-                barWrapper.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    jumpToImage(i);
-                });
-                
-                progressContainer.appendChild(barWrapper);
-            }
         }
     };
     
@@ -132,48 +121,34 @@ function initProductLightbox() {
         let nextImgIdx = currentImageIndex + 1;
         
         if (nextImgIdx >= product.images.length) {
-            nextProdIdx++;
-            nextImgIdx = 0;
+            return; // Preload stops at last image
         }
         
-        if (nextProdIdx < playlist.length) {
-            const img = new Image();
-            img.src = '/' + playlist[nextProdIdx].images[nextImgIdx];
-        }
+        const img = new Image();
+        img.src = '/' + product.images[nextImgIdx];
     };
 
     const updateLightboxView = () => {
         const product = playlist[currentProductIndex];
         
+        if (currentImageIndex < 0) {
+            currentImageIndex = product.images.length - 1;
+        }
         if (currentImageIndex >= product.images.length) {
             currentImageIndex = 0;
         }
-
-        if (progressContainer && progressContainer.children.length !== product.images.length) {
-            buildProgressBars();
-        } else if (progressContainer) {
-            for (let i = 0; i < product.images.length; i++) {
-                const fill = document.getElementById(`lb-progress-${i}`);
-                if (fill) {
-                    fill.style.width = i < currentImageIndex ? '100%' : '0%';
-                }
-            }
-        }
         
         if (prevBtn) {
-            prevBtn.style.opacity = (currentProductIndex === 0 && currentImageIndex === 0) ? '0.3' : '1';
+            prevBtn.style.opacity = (currentImageIndex === 0) ? '0.3' : '1';
+            prevBtn.style.pointerEvents = (currentImageIndex === 0) ? 'none' : 'auto';
         }
         if (nextBtn) {
-            const isLast = (currentProductIndex === playlist.length - 1 && currentImageIndex === product.images.length - 1);
+            const isLast = (currentImageIndex === product.images.length - 1);
             nextBtn.style.opacity = isLast ? '0.3' : '1';
+            nextBtn.style.pointerEvents = isLast ? 'none' : 'auto';
         }
         
         updateSidebar();
-        
-        userPaused = false;
-        isLoading = true;
-        
-        cancelAnimationFrame(timerId);
 
         if (mainImage) {
             const newSrc = '/' + product.images[currentImageIndex];
@@ -183,17 +158,15 @@ function initProductLightbox() {
             mainImage.onerror = null;
             
             const handleLoad = () => {
-                isLoading = false;
-                startTimer();
+                resetZoom();
                 preloadNextImage();
             };
             
             mainImage.onload = handleLoad;
             
-            // In case the image fails to load, don't freeze forever
+            // In case the image fails to load
             mainImage.onerror = () => {
-                isLoading = false;
-                startTimer(); 
+                resetZoom();
             };
             
             mainImage.src = newSrc;
@@ -204,115 +177,46 @@ function initProductLightbox() {
         }
     };
 
-    const startTimer = () => {
-        cancelAnimationFrame(timerId);
-        if (isLoading) return; 
-
-        startTime = performance.now() - timeElapsed;
-        
-        const tick = (now) => {
-            if (!userPaused && !isLoading) {
-                timeElapsed = now - startTime;
-                const percentage = Math.min((timeElapsed / DURATION) * 100, 100);
-                
-                const activeFill = document.getElementById(`lb-progress-${currentImageIndex}`);
-                if (activeFill) {
-                    activeFill.style.width = `${percentage}%`;
-                }
-
-                if (timeElapsed >= DURATION) {
-                    advanceStory();
-                    return;
-                }
-            } else {
-                startTime = now - timeElapsed;
-            }
-            timerId = requestAnimationFrame(tick);
-        };
-        
-        timerId = requestAnimationFrame(tick);
-    };
-
-    const advanceStory = () => {
+    const advanceStory = (direction = 1) => {
         const product = playlist[currentProductIndex];
-        timeElapsed = 0;
         
-        if (currentImageIndex < product.images.length - 1) {
-            currentImageIndex++;
-            updateLightboxView();
-        } else {
-            if (currentProductIndex < playlist.length - 1) {
-                currentProductIndex++;
-                currentImageIndex = 0;
-                buildProgressBars();
-                updateLightboxView();
-            } else {
-                closeLightboxModal();
+        if (direction === 1) {
+            if (currentImageIndex < product.images.length - 1) {
+                currentImageIndex++;
+            }
+        } else if (direction === -1) {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
             }
         }
-    };
-
-    const goBackStory = () => {
-        timeElapsed = 0;
-        
-        if (currentImageIndex > 0) {
-            currentImageIndex--;
-            updateLightboxView();
-        } else {
-            if (currentProductIndex > 0) {
-                currentProductIndex--;
-                const product = playlist[currentProductIndex];
-                currentImageIndex = product.images.length - 1;
-                buildProgressBars();
-                updateLightboxView();
-            } else {
-                updateLightboxView(); 
-            }
-        }
-    };
-
-    const jumpToImage = (index) => {
-        timeElapsed = 0;
-        currentImageIndex = index;
         updateLightboxView();
     };
 
-    const openLightbox = (startingProductIndex = 0, startingImageIndex = 0) => {
-        currentProductIndex = startingProductIndex;
-        currentImageIndex = startingImageIndex;
-        timeElapsed = 0;
-        userPaused = false;
-        isLoading = false; // Reset to false before updateLightboxView
-        
-        buildProgressBars();
-        updateLightboxView();
+    const openLightbox = (productIndex, imgIndex) => {
+        currentProductIndex = productIndex;
+        currentImageIndex = imgIndex;
         
         lightbox.style.display = 'flex';
-        void lightbox.offsetWidth; // Reflow
+        // Trigger reflow
+        void lightbox.offsetWidth;
         
-        lightbox.classList.remove('hidden', 'opacity-0');
-        if (sidebar) {
-            sidebar.classList.remove('md:translate-x-full');
-            sidebar.classList.add('md:translate-x-0');
-        }
+        lightbox.classList.remove('opacity-0', 'hidden');
+        lightbox.classList.add('opacity-100');
         
         document.body.style.overflow = 'hidden';
+        
+        resetZoom();
+        updateLightboxView();
     };
 
-    const closeLightboxModal = () => {
-        cancelAnimationFrame(timerId);
-        
+    const close = () => {
+        lightbox.classList.remove('opacity-100');
         lightbox.classList.add('opacity-0');
-        if (sidebar) {
-            sidebar.classList.remove('md:translate-x-0');
-            sidebar.classList.add('md:translate-x-full');
-        }
-        
         setTimeout(() => {
             lightbox.classList.add('hidden');
             lightbox.style.display = 'none';
-            document.body.style.overflow = '';
         }, 300);
+        document.body.style.overflow = 'auto';
     };
 
     const triggers = document.querySelectorAll('.lb-trigger');
@@ -323,56 +227,152 @@ function initProductLightbox() {
         });
     });
 
-    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goBackStory(); });
-    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); advanceStory(); });
-    if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightboxModal(); });
+    // Event Listeners
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    if (prevBtn) prevBtn.addEventListener('click', () => { advanceStory(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { advanceStory(1); });
 
     const imgContainer = mainImage ? mainImage.parentElement : null;
     if (imgContainer) {
+        // Zoom on Wheel
+        imgContainer.addEventListener('wheel', (e) => {
+            if (e.target === closeBtn || e.target.closest('button')) return;
+            e.preventDefault();
+            
+            const zoomAmount = e.deltaY * -0.005;
+            currentScale += zoomAmount;
+            
+            // Min max bounds
+            if (currentScale < 1) {
+                resetZoom();
+                return;
+            }
+            if (currentScale > 4) currentScale = 4;
+            
+            mainImage.style.transition = 'none';
+            applyZoom();
+        }, { passive: false });
+
+        // Double click to zoom in/out
+        imgContainer.addEventListener('dblclick', (e) => {
+            if (e.target === closeBtn || e.target.closest('button')) return;
+            
+            if (currentScale > 1) {
+                resetZoom();
+            } else {
+                currentScale = 2;
+                mainImage.style.transition = 'transform 0.3s ease-out';
+                applyZoom();
+            }
+        });
+
+        // Click to navigate (only when not zoomed)
         imgContainer.addEventListener('click', (e) => {
-            if (e.target === closeBtn || e.target.closest('button') || e.target.closest('#lbProgressContainer')) return;
+            if (e.target === closeBtn || e.target.closest('button')) return;
+            if (currentScale > 1) return; // Disable click navigation when zoomed
             
             const rect = imgContainer.getBoundingClientRect();
             const x = e.clientX - rect.left;
             
             if (x < rect.width * 0.3) {
-                // Left 30% -> Go back
-                goBackStory();
+                advanceStory(-1);
             } else if (x > rect.width * 0.7) {
-                // Right 30% -> Go forward
-                advanceStory();
-            } else {
-                // Middle 40% -> Toggle Pause
-                userPaused = !userPaused;
-                
-                // Show visual feedback for pause/play
-                const iconContainer = document.createElement('div');
-                iconContainer.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/50 text-white rounded-sm w-16 h-16 flex items-center justify-center text-2xl z-50 animate-ping opacity-0 transition-opacity duration-300 pointer-events-none';
-                iconContainer.innerHTML = userPaused ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
-                imgContainer.appendChild(iconContainer);
-                
-                requestAnimationFrame(() => {
-                    iconContainer.style.opacity = '1';
-                });
-                
-                setTimeout(() => {
-                    iconContainer.style.opacity = '0';
-                    setTimeout(() => iconContainer.remove(), 300);
-                }, 600);
+                advanceStory(1);
             }
+        });
+
+        // Drag to pan
+        imgContainer.addEventListener('mousedown', (e) => {
+            if (currentScale <= 1 || e.target.closest('button')) return;
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            mainImage.style.transition = 'none';
+            mainImage.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            applyZoom();
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            applyZoom();
+        });
+        
+        // Touch events for mobile dragging
+        let lastTouchX = 0, lastTouchY = 0;
+        let initialPinchDistance = null;
+        let initialScale = 1;
+        
+        imgContainer.addEventListener('touchstart', (e) => {
+            if (e.target.closest('button')) return;
+            
+            if (e.touches.length === 2) {
+                // Pinch to zoom start
+                initialPinchDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                initialScale = currentScale;
+            } else if (currentScale > 1 && e.touches.length === 1) {
+                // Drag start
+                isDragging = true;
+                lastTouchX = e.touches[0].clientX;
+                lastTouchY = e.touches[0].clientY;
+                mainImage.style.transition = 'none';
+            }
+        }, { passive: false });
+        
+        imgContainer.addEventListener('touchmove', (e) => {
+            if (e.target.closest('button')) return;
+            
+            if (e.touches.length === 2 && initialPinchDistance) {
+                e.preventDefault(); // prevent native scroll
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                
+                const ratio = currentDistance / initialPinchDistance;
+                currentScale = initialScale * ratio;
+                
+                if (currentScale < 1) currentScale = 1;
+                if (currentScale > 4) currentScale = 4;
+                
+                if (currentScale === 1) resetZoom();
+                else applyZoom();
+                
+            } else if (isDragging && e.touches.length === 1) {
+                e.preventDefault(); // prevent native scroll while panning
+                const dx = e.touches[0].clientX - lastTouchX;
+                const dy = e.touches[0].clientY - lastTouchY;
+                
+                translateX += dx;
+                translateY += dy;
+                
+                lastTouchX = e.touches[0].clientX;
+                lastTouchY = e.touches[0].clientY;
+                applyZoom();
+            }
+        }, { passive: false });
+        
+        imgContainer.addEventListener('touchend', (e) => {
+            isDragging = false;
+            initialPinchDistance = null;
         });
     }
 
     document.addEventListener('keydown', (e) => {
         if (lightbox.classList.contains('hidden')) return;
         
-        if (e.key === 'Escape') closeLightboxModal();
-        if (e.key === 'ArrowRight') advanceStory();
-        if (e.key === 'ArrowLeft') goBackStory();
-        if (e.key === ' ') {
-            e.preventDefault();
-            userPaused = !userPaused;
-        }
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') advanceStory(1);
+        if (e.key === 'ArrowLeft') advanceStory(-1);
     });
 }
 function initWaAutoPopup() {

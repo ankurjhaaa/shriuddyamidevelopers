@@ -150,14 +150,16 @@ include __DIR__ . '/includes/header.php';
                         <div class="swiper-pagination"></div>
                     </div>
 
-                    <!-- Thumbnails -->
+                    <!-- Thumbnails (Status/Story Style) -->
                     <?php if (count($images) > 1): ?>
-                        <div class="flex gap-2 overflow-x-auto mt-3 pb-2">
+                        <div class="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar snap-x py-3 px-2">
                             <?php foreach ($images as $index => $img): ?>
-                                <div class="w-16 h-16 border border-gray-200 rounded-md overflow-hidden flex-shrink-0 cursor-pointer hover:border-primary transition-colors thumbnail-item <?php echo $index === 0 ? 'border-primary border-2' : ''; ?>"
+                                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 p-0.5 overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-200 thumbnail-item <?php echo $index === 0 ? 'border-primary shadow-sm scale-110' : 'border-gray-200 opacity-70 hover:opacity-100'; ?>"
                                     data-index="<?php echo $index; ?>">
-                                    <img src="/<?php echo htmlspecialchars($img); ?>" class="w-full h-full object-cover lb-trigger"
-                                        data-index="<?php echo $index; ?>">
+                                    <div class="w-full h-full rounded-full overflow-hidden bg-white">
+                                        <img src="/<?php echo htmlspecialchars($img); ?>" class="w-full h-full object-cover lb-trigger mix-blend-multiply"
+                                            data-index="<?php echo $index; ?>">
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -268,29 +270,48 @@ include __DIR__ . '/includes/header.php';
                     </div>
                 </div>
 
-                <!-- Company Details Block (Mimicking IndiaMART) -->
-                <div class="border border-gray-200 rounded-md overflow-hidden">
-                    <h2 class="bg-white px-4 py-2 border-b border-gray-200 font-bold text-gray-800 text-sm">Company
-                        Details</h2>
-                    <a href="/company.php"
-                        class="p-4 flex gap-4 items-start block hover:bg-white transition cursor-pointer group">
-                        <div
-                            class="w-16 h-16 bg-white border border-gray-200 rounded-md flex-shrink-0 flex items-center justify-center overflow-hidden">
-                            <img src="/assets/images/logo.png" alt="Company Logo"
-                                class="max-w-full max-h-full object-contain p-1">
+                <!-- Seller Profile (Modern Social Style) -->
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mt-12 mb-8 shadow-sm relative">
+                    <!-- Cover Background -->
+                    <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-800 w-full relative overflow-hidden">
+                        <!-- Abstract shapes for cover -->
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full transform translate-x-16 -translate-y-16"></div>
+                        <div class="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full transform -translate-x-8 translate-y-8"></div>
+                    </div>
+                    
+                    <!-- Avatar/Logo -->
+                    <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
+                        <div class="w-24 h-24 bg-white rounded-xl border-4 border-white shadow-md flex items-center justify-center overflow-hidden p-2">
+                            <img src="/assets/images/logo.png" alt="Company Logo" class="max-w-full max-h-full object-contain">
                         </div>
-                        <div>
-                            <h3 class="font-bold text-blue-700 text-lg group-hover:underline mb-1">Shri Uddyami
-                                Developers</h3>
-                            <p class="text-xs text-gray-600 mb-1"><i
-                                    class="fa-solid fa-location-dot text-gray-400 w-4"></i>
-                                <?php echo htmlspecialchars(getSetting('address')); ?></p>
-                            <p class="text-xs text-gray-600 mb-2"><i
-                                    class="fa-solid fa-shield-check text-green-600 w-4"></i> TrustSEAL Verified</p>
-                            <span class="text-xs text-primary font-bold group-hover:underline">View Company Profile <i
-                                    class="fa-solid fa-chevron-right text-[10px] ml-1"></i></span>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="pt-16 pb-6 px-4 md:px-8 text-center">
+                        <h3 class="font-black text-gray-900 text-xl md:text-2xl mb-1 tracking-tight">Shri Uddyami Developers</h3>
+                        <p class="text-sm text-gray-500 mb-4 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-map-marker-alt text-gray-400"></i>
+                            <?php echo htmlspecialchars(getSetting('address')); ?>
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
+                            <span class="bg-blue-50 text-blue-700 border border-blue-100 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-shield-halved"></i> Top Supplier
+                            </span>
+                            <span class="bg-green-50 text-green-700 border border-green-100 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check"></i> Verified
+                            </span>
                         </div>
-                    </a>
+                        
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
+                            <a href="/company.php" class="flex-1 bg-white border-2 border-gray-200 text-gray-800 hover:border-gray-300 hover:bg-gray-50 transition-colors font-bold py-2.5 rounded-lg text-sm">
+                                View Profile
+                            </a>
+                            <a href="<?php echo getWhatsappLink('Hi, I want to know more about your company.'); ?>" target="_blank" class="flex-1 bg-gray-900 text-white hover:bg-black transition-colors font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2">
+                                Contact Us <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -384,91 +405,52 @@ include __DIR__ . '/includes/header.php';
     </div>
 
 
-    <!-- Full Screen Image Lightbox -->
+    <!-- Full Screen Image Lightbox (Standard Gallery Style) -->
     <div id="productLightbox"
-        class="fixed inset-0 z-[100] hidden flex-col md:flex-row bg-black/95 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+        class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-sm transition-opacity duration-300 opacity-0 flex flex-col"
         style="display: none;">
 
-        <!-- Left: Image Viewer Area -->
-        <div class="flex-grow h-[50vh] md:h-full relative flex items-center justify-center p-4">
+        <!-- Top Bar -->
+        <div class="w-full flex justify-between items-center p-4 absolute top-0 z-20 bg-gradient-to-b from-black/60 to-transparent">
+            <div class="text-white font-medium text-lg px-2" id="lbImageCounter">
+                1 / 1
+            </div>
             <!-- Close Button -->
             <button id="closeLightbox"
-                class="absolute top-4 left-4 md:left-6 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-md flex items-center justify-center text-white transition-colors">
-                <i class="fa-solid fa-xmark text-xl"></i>
+                class="w-10 h-10 hover:bg-white/10 rounded-full flex items-center justify-center text-white transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
+        </div>
 
+        <!-- Image Viewer Area -->
+        <div class="flex-grow w-full h-full relative flex items-center justify-center p-4 md:p-12">
+            
             <!-- Navigation Arrows -->
             <button id="lbPrevBtn"
-                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/10 hover:bg-white/30 rounded-md flex items-center justify-center text-white transition-colors">
+                class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 border border-white/10 rounded-full flex items-center justify-center text-white transition-colors">
                 <i class="fa-solid fa-chevron-left text-xl"></i>
             </button>
             <button id="lbNextBtn"
-                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/10 hover:bg-white/30 rounded-md flex items-center justify-center text-white transition-colors">
+                class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 border border-white/10 rounded-full flex items-center justify-center text-white transition-colors">
                 <i class="fa-solid fa-chevron-right text-xl"></i>
             </button>
 
             <!-- Main Image -->
             <img id="lbMainImage" src="" alt="Product Image"
-                class="max-h-full max-w-full object-contain drop-shadow-2xl select-none">
-
-            <!-- Top Progress Bars (Story Style) -->
-            <div id="lbProgressContainer"
-                class="absolute top-4 left-4 right-4 md:left-20 md:right-20 flex gap-1 z-20 h-1.5">
-                <!-- Progress bars will be injected here via JS -->
-            </div>
+                class="max-h-full max-w-full object-contain drop-shadow-2xl select-none transition-transform duration-300">
         </div>
 
-        <!-- Right: Quick Requirement Form Panel -->
-        <div class="w-full md:w-[350px] lg:w-[400px] h-[50vh] md:h-full bg-white flex-shrink-0 flex flex-col overflow-y-auto transform md:translate-x-full transition-transform duration-300"
-            id="lbSidebar">
-            <!-- Header -->
-            <div
-                class="bg-primary text-white py-4 px-5 text-center font-bold text-lg sticky top-0 z-10 shadow-sm border-b border-primary-dark">
-                Quick Requirement Form
-            </div>
-
-            <div class="p-6 flex flex-col gap-6 flex-grow">
-                <!-- Product Info -->
-                <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-blue-700 mt-1.5"></i>
-                    <div>
-                        <h3 id="lbProductName" class="font-semibold text-gray-900 text-lg leading-tight mb-2">
-                            <?php echo htmlspecialchars($product['name']); ?></h3>
-                        <div id="lbProductPrice" class="text-xl font-bold text-gray-800">
-                            <?php if ($product['price_visibility'] === 'public'): ?>
-                                <?php echo formatPrice($product['price']); ?>
-                            <?php else: ?>
-                                <span class="text-sm font-semibold text-primary">Price on Request</span>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Company Info Box -->
-                <div class="bg-white border border-gray-100 rounded-md p-5">
-                    <h4 class="font-medium text-gray-800 mb-1">Shri Uddyami Developers</h4>
-                    <p class="text-sm text-gray-500 mb-3"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i>
-                        Purnea, Bihar</p>
-                    <div
-                        class="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-100/50 px-2.5 py-1.5 rounded inline-flex">
-                        <i class="fa-solid fa-shield-check"></i> TrustSEAL Verified
-                    </div>
-                </div>
-
-                <!-- CTAs -->
-                <div class="flex flex-col gap-3 mt-auto pt-4">
-                    <a id="lbEnquireBtn"
-                        href="<?php echo getWhatsappLink('Hi, I am interested in ' . $product['name'] . '. Can you send me a quote?'); ?>"
-                        target="_blank"
-                        class="w-full bg-primary hover:bg-secondary text-white py-3.5 rounded-md transition font-bold text-base flex justify-center items-center shadow-md">
-                        Enquire Now
-                    </a>
-                    <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>"
-                        class="w-full bg-white border-2 border-primary text-primary hover:bg-primary/5 py-3 rounded-md transition font-bold text-base flex justify-center items-center shadow-sm gap-2">
-                        <i class="fa-solid fa-phone"></i> Call Now
-                    </a>
-                </div>
-            </div>
+        <!-- Bottom Caption Bar -->
+        <div class="w-full p-6 absolute bottom-0 z-20 bg-gradient-to-t from-black/80 to-transparent flex flex-col items-center justify-center text-center">
+            <h3 id="lbProductName" class="font-bold text-white text-lg md:text-xl mb-3 drop-shadow-md">
+                <?php echo htmlspecialchars($product['name']); ?>
+            </h3>
+            <a id="lbEnquireBtn"
+                href="<?php echo getWhatsappLink('Hi, I am interested in ' . $product['name'] . '. Can you send me a quote?'); ?>"
+                target="_blank"
+                class="bg-primary hover:bg-secondary text-white px-8 py-2.5 rounded-full transition font-bold text-sm shadow-lg flex items-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Enquire for Price
+            </a>
         </div>
     </div>
 
