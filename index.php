@@ -53,35 +53,34 @@ foreach ($categoriesWithProducts as $cat) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
     <div class="relative w-full z-10 bg-white border-b border-gray-200">
-        <div class="swiper heroSwiper w-full h-[350px] md:h-[450px]">
+        <!-- Responsive heights: Auto on mobile (perfect square), Fixed smaller height on laptop -->
+        <div class="swiper heroSwiper w-full md:h-[400px] lg:h-[450px] xl:h-[500px]">
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="swiper-slide relative">
-                    <img src="/assets/images/carousel/1.png" class="w-full h-full object-cover"
-                        alt="Industrial Tractor">
-                    <div class="absolute inset-0 bg-primary/70 mix-blend-multiply z-10"></div>
-                    <div class="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-20 max-w-[1440px] mx-auto">
-                        <span class="text-accent font-bold tracking-wider text-sm mb-2 uppercase">Premium Collection</span>
-                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Heavy Machinery<br>For Modern Farming</h1>
-                        <p class="text-white/90 text-base md:text-lg max-w-md mb-8">Discover our premium range of tractors and agriculture equipment designed for high yield and durability.</p>
-                        <a href="/search.php"
-                            class="bg-accent text-white px-8 py-3 rounded-md font-bold w-fit text-sm hover:bg-orange-600 transition-colors">Explore Collection</a>
-                    </div>
+                    <picture>
+                        <source media="(min-width: 768px)" srcset="/assets/images/carousel/desk_1.png">
+                        <img src="/assets/images/carousel/mobile_1.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner 1">
+                    </picture>
                 </div>
                 <!-- Slide 2 -->
                 <div class="swiper-slide relative">
-                    <img src="/assets/images/carousel/2.png" class="w-full h-full object-cover"
-                        alt="Industrial Harvester">
-                    <div class="absolute inset-0 bg-primary/70 mix-blend-multiply z-10"></div>
-                    <div class="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-20 max-w-[1440px] mx-auto">
-                        <span class="text-accent font-bold tracking-wider text-sm mb-2 uppercase">New Arrivals</span>
-                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Advanced Harvesters<br>For Maximum Output</h1>
-                        <p class="text-white/90 text-base md:text-lg max-w-md mb-8">Increase your farming yield with our state-of-the-art harvesters and industrial tools.</p>
-                        <a href="/search.php"
-                            class="bg-accent text-white px-8 py-3 rounded-md font-bold w-fit text-sm hover:bg-orange-600 transition-colors">Explore Collection</a>
-                    </div>
+                    <picture>
+                        <source media="(min-width: 768px)" srcset="/assets/images/carousel/desk_2.png">
+                        <img src="/assets/images/carousel/mobile_2.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner 2">
+                    </picture>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide relative">
+                    <picture>
+                        <source media="(min-width: 768px)" srcset="/assets/images/carousel/desk_3.png">
+                        <img src="/assets/images/carousel/mobile3.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner 3">
+                    </picture>
                 </div>
             </div>
+            <!-- Navigation Arrows -->
+            <div class="swiper-button-next" style="color: #00a699;"></div>
+            <div class="swiper-button-prev" style="color: #00a699;"></div>
             <!-- Pagination -->
             <div class="swiper-pagination"></div>
         </div>
@@ -93,7 +92,8 @@ foreach ($categoriesWithProducts as $cat) {
         document.addEventListener('DOMContentLoaded', function () {
             const swiper = new Swiper('.heroSwiper', {
                 loop: true,
-                effect: 'fade',
+                effect: 'slide',
+                speed: 600,
                 autoplay: {
                     delay: 5000,
                     disableOnInteraction: false,
