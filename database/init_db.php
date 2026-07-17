@@ -73,18 +73,18 @@ if ($stmt->fetchColumn() == 0) {
 
 // Insert default settings
 $defaultSettings = [
-    'store_name' => 'Agri & Industrial Store',
+    'store_name' => 'Shri Uddyami Developers',
     'logo' => '',
     'banner' => '',
-    'phone' => '+919876543210',
-    'whatsapp' => '+919876543210',
-    'address' => '123 Main Street, City',
-    'gst' => '22AAAAA0000A1Z5',
-    'social_links' => '{}'
+    'phone' => '+919304939879',
+    'whatsapp' => '+919304939879',
+    'address' => 'Ram Avtar market, Gandhi nagar, Near Dog hospital madhubani, Purnea, Bihar',
+    'gst' => '10MQUPK4180R1ZV',
+    'social_links' => '{"facebook": "https://facebook.com/shriuddyami", "instagram": "https://instagram.com/shriuddyami", "twitter": "https://twitter.com/shriuddyami"}'
 ];
 
 foreach ($defaultSettings as $key => $value) {
-    $stmt = $pdo->prepare("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)");
+    $stmt = $pdo->prepare("REPLACE INTO settings (key, value) VALUES (?, ?)");
     $stmt->execute([$key, $value]);
 }
 

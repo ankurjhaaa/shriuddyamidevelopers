@@ -13,15 +13,23 @@
                         Premium quality agriculture and industrial machines designed for durability and performance. Experience modern farming.
                     </p>
                     <div class="flex gap-3">
-                        <a href="#" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                        <?php 
+                        $socialLinksJson = getSetting('social_links');
+                        $socialLinks = json_decode($socialLinksJson, true) ?: [];
+                        if(!empty($socialLinks['facebook'])): 
+                        ?>
+                        <a href="<?php echo htmlspecialchars($socialLinks['facebook']); ?>" target="_blank" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
                             <i class="fa-brands fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                        <?php endif; if(!empty($socialLinks['instagram'])): ?>
+                        <a href="<?php echo htmlspecialchars($socialLinks['instagram']); ?>" target="_blank" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
                             <i class="fa-brands fa-instagram text-sm"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                        <?php endif; if(!empty($socialLinks['twitter'])): ?>
+                        <a href="<?php echo htmlspecialchars($socialLinks['twitter']); ?>" target="_blank" class="w-8 h-8 rounded-sm bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
                             <i class="fa-brands fa-twitter text-sm"></i>
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 
