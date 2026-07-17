@@ -49,6 +49,10 @@
                 <i class="fa-solid fa-address-book mr-3 w-5 text-center <?php echo $currentPage == 'leads.php' ? 'text-blue-400' : 'text-gray-400 group-hover:text-gray-300'; ?>"></i> Leads
             </a>
             
+            <a href="/admin/carousel.php" class="<?php echo $currentPage == 'carousel.php' ? 'bg-blue-600/20 text-blue-400' : 'text-gray-300 hover:bg-gray-800 hover:text-white'; ?> group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
+                <i class="fa-solid fa-images mr-3 w-5 text-center <?php echo $currentPage == 'carousel.php' ? 'text-blue-400' : 'text-gray-400 group-hover:text-gray-300'; ?>"></i> Banners
+            </a>
+            
             <a href="/admin/settings.php" class="<?php echo $currentPage == 'settings.php' ? 'bg-blue-600/20 text-blue-400' : 'text-gray-300 hover:bg-gray-800 hover:text-white'; ?> group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition">
                 <i class="fa-solid fa-gear mr-3 w-5 text-center <?php echo $currentPage == 'settings.php' ? 'text-blue-400' : 'text-gray-400 group-hover:text-gray-300'; ?>"></i> Settings
             </a>

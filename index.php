@@ -56,27 +56,32 @@ foreach ($categoriesWithProducts as $cat) {
         <!-- Responsive heights: Auto on mobile (perfect square), Fixed smaller height on laptop -->
         <div class="swiper heroSwiper w-full md:h-[400px] lg:h-[450px] xl:h-[500px]">
             <div class="swiper-wrapper">
-                <!-- Slide 1 -->
+                <?php
+                $stmt = $pdo->query("SELECT * FROM carousel_banners ORDER BY order_index ASC");
+                $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if (count($banners) > 0):
+                    foreach ($banners as $index => $banner):
+                ?>
+                <!-- Slide <?php echo $index + 1; ?> -->
                 <div class="swiper-slide relative">
                     <picture>
-                        <source media="(min-width: 768px)" srcset="/assets/images/carousel/desk_1.png">
-                        <img src="/assets/images/carousel/mobile_1.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner 1">
+                        <source media="(min-width: 768px)" srcset="<?php echo htmlspecialchars($banner['desktop_image_url']); ?>">
+                        <img src="<?php echo htmlspecialchars($banner['mobile_image_url']); ?>" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner <?php echo $index + 1; ?>">
                     </picture>
                 </div>
-                <!-- Slide 2 -->
+                <?php 
+                    endforeach;
+                else:
+                ?>
+                <!-- Fallback Slide if database is empty -->
                 <div class="swiper-slide relative">
                     <picture>
-                        <source media="(min-width: 768px)" srcset="/assets/images/carousel/desk_2.png">
-                        <img src="/assets/images/carousel/mobile_2.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner 2">
+                        <source media="(min-width: 768px)" srcset="/assets/images/desktop_banner.png">
+                        <img src="/assets/images/mobile_banner.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Default Banner">
                     </picture>
                 </div>
-                <!-- Slide 3 -->
-                <div class="swiper-slide relative">
-                    <picture>
-                        <source media="(min-width: 768px)" srcset="/assets/images/carousel/desk_3.png">
-                        <img src="/assets/images/carousel/mobile3.png" class="w-full h-auto md:w-full md:h-full md:object-fill" alt="Banner 3">
-                    </picture>
-                </div>
+                <?php endif; ?>
             </div>
             <!-- Navigation Arrows -->
             <div class="swiper-button-next" style="color: #00a699;"></div>
