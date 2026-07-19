@@ -112,22 +112,22 @@ $canonicalUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVE
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="bg-white min-h-screen pb-24 md:pb-12 pt-0 md:pt-4">
+<div class="bg-slate-50 min-h-screen pb-24 md:pb-12 pt-0 md:pt-4">
     <div class="max-w-[1440px] mx-auto px-0 md:px-8">
 
         <!-- Breadcrumb -->
-        <div class="text-[11px] text-gray-500 mb-4 hidden md:block mt-4">
-            <a href="/" class="hover:text-primary">Home</a> &rsaquo;
+        <div class="text-xs text-gray-500 mb-4 hidden md:block mt-4 font-medium uppercase tracking-wider">
+            <a href="/" class="hover:text-primary transition-colors">Home</a> <span class="mx-1">&gt;</span>
             <a href="/search.php?category=<?php echo htmlspecialchars($product['category_id']); ?>"
-                class="hover:text-primary"><?php echo htmlspecialchars($product['category_name']); ?></a> &rsaquo;
-            <span class="text-gray-800 font-semibold"><?php echo htmlspecialchars($product['name']); ?></span>
+                class="hover:text-primary transition-colors"><?php echo htmlspecialchars($product['category_name']); ?></a> <span class="mx-1">&gt;</span>
+            <span class="text-gray-900 font-bold"><?php echo htmlspecialchars($product['name']); ?></span>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-4 lg:items-start relative">
+        <div class="flex flex-col lg:flex-row gap-6 lg:items-start relative">
 
             <!-- Left: Sticky Image Gallery -->
             <div
-                class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 bg-white md:rounded-md border-b md:border md:border-gray-200 p-0 md:p-4 lg:sticky lg:top-[70px] relative">
+                class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 bg-white md:rounded-xl border-b md:border md:border-slate-200 md:shadow-sm p-0 md:p-5 lg:sticky lg:top-[70px] relative">
                 
                 <!-- Wishlist Button -->
                 <button
@@ -137,7 +137,7 @@ include __DIR__ . '/includes/header.php';
                 </button>
                 <?php if (!empty($images)): ?>
                     <div
-                        class="swiper product-gallery w-full aspect-square md:border md:border-gray-100 md:rounded-md overflow-hidden mb-2 bg-gray-50 md:bg-white">
+                        class="swiper product-gallery w-full aspect-square md:border md:border-slate-100 md:rounded-lg overflow-hidden mb-3 bg-slate-50 md:bg-white relative">
                         <div class="swiper-wrapper">
                             <?php foreach ($images as $index => $img): ?>
                                 <div class="swiper-slide flex items-center justify-center p-0 md:p-2">
@@ -174,9 +174,9 @@ include __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Right: Product Details & Specs -->
-            <div class="w-full flex-grow bg-white md:rounded-md md:border md:border-gray-200 p-4 md:p-6 lg:p-8">
-                <div class="mb-4">
-                    <h1 class="text-xl md:text-2xl font-bold text-gray-900 leading-snug mb-3">
+            <div class="w-full flex-grow bg-white md:rounded-xl md:border md:border-slate-200 md:shadow-sm p-5 md:p-6 lg:p-8">
+                <div class="mb-6">
+                    <h1 class="text-xl md:text-3xl font-black text-gray-900 leading-tight mb-4 tracking-tight">
                         <?php echo htmlspecialchars($product['name']); ?></h1>
 
                     <!-- Price Block -->
@@ -212,20 +212,20 @@ include __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- CTA Action Box -->
-                <div class="hidden md:flex bg-white border border-gray-200 p-4 rounded-md flex-col sm:flex-row gap-3 mb-8">
+                <div class="hidden md:flex bg-slate-50 border border-slate-200 p-5 rounded-xl flex-col sm:flex-row gap-4 mb-8">
                     <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
-                        class="flex-1 bg-primary hover:bg-secondary text-white font-bold py-3 px-4 rounded-md flex items-center justify-center gap-2 text-sm md:text-base transition">
-                        Contact Supplier
+                        class="flex-1 bg-green-50 text-green-600 border border-green-200 hover:bg-green-600 hover:text-white hover:border-green-600 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 text-sm md:text-base transition-colors">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Contact Supplier
                     </a>
                     <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>"
-                        class="flex-1 bg-white hover:bg-gray-50 border border-primary text-primary font-bold py-3 px-4 rounded-md flex items-center justify-center gap-2 text-sm md:text-base transition">
+                        class="flex-1 bg-white hover:bg-slate-50 border border-slate-300 hover:border-primary hover:text-primary text-gray-900 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 text-sm md:text-base transition-colors shadow-sm">
                         <i class="fa-solid fa-phone"></i> View Mobile Number
                     </a>
                 </div>
 
                 <!-- Product Specifications -->
-                <div class="border border-gray-200 rounded-md overflow-hidden mb-8">
-                    <h2 class="bg-white px-4 py-2 border-b border-gray-200 font-bold text-gray-800 text-sm">Product
+                <div class="border border-slate-200 rounded-xl overflow-hidden mb-8 shadow-sm bg-white">
+                    <h2 class="bg-slate-50 px-5 py-4 border-b border-slate-100 font-bold text-gray-900 text-lg">Product
                         Specifications</h2>
                     <?php if ($product['specifications']):
                         $specs = json_decode($product['specifications'], true);
@@ -257,10 +257,10 @@ include __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Product Description -->
-                <div class="border border-gray-200 rounded-md overflow-hidden mb-8">
-                    <h2 class="bg-white px-4 py-2 border-b border-gray-200 font-bold text-gray-800 text-sm">Product
+                <div class="border border-slate-200 rounded-xl overflow-hidden mb-8 shadow-sm bg-white">
+                    <h2 class="bg-slate-50 px-5 py-4 border-b border-slate-100 font-bold text-gray-900 text-lg">Product
                         Description</h2>
-                    <div class="p-4 text-sm text-gray-700 leading-relaxed space-y-4">
+                    <div class="p-5 md:p-6 text-sm md:text-base text-gray-600 leading-relaxed font-medium space-y-4">
                         <?php
                         if ($product['short_description'])
                             echo '<p class="font-medium">' . nl2br(htmlspecialchars($product['short_description'])) . '</p>';
@@ -319,70 +319,67 @@ include __DIR__ . '/includes/header.php';
     </div>
 
     <!-- Related Products -->
-    <div class="max-w-[1440px] mx-auto px-4 md:px-8 mt-6 md:mt-10 mb-10">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 mt-8 md:mt-12 mb-12">
         <?php if (!empty($relatedProducts)): ?>
-            <div class="bg-white p-3 md:p-4 rounded-md shadow-sm border border-gray-200">
-                <div class="mb-4 flex justify-between items-center border-b border-gray-100 pb-2">
-                    <h3 class="text-lg md:text-xl font-bold text-gray-800">You may also be interested in</h3>
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="mb-6 flex justify-between items-center border-b border-slate-100 pb-4">
+                    <h3 class="text-xl md:text-2xl font-black text-gray-900">You may also be interested in</h3>
                 </div>
-                <div class="flex overflow-x-auto gap-3 md:gap-4 hide-scrollbar pb-2 snap-x">
+                <div class="flex overflow-x-auto gap-4 md:gap-6 hide-scrollbar pb-4 snap-x">
                     <?php foreach ($relatedProducts as $product): ?>
-                        <div class="w-[220px] md:w-[240px] flex-shrink-0 bg-white border border-gray-200 hover:border-primary/50 transition-colors h-full group flex flex-col rounded-md overflow-hidden snap-start relative wishlist-card"
+                        <div class="w-[240px] md:w-[260px] flex-shrink-0 snap-start bg-white border border-slate-200 hover:border-primary transition-all h-full group flex flex-col rounded-xl overflow-hidden wishlist-card relative"
                             data-product-id="<?php echo $product['id']; ?>">
 
                             <!-- Image -->
                             <a href="/products/<?php echo urlencode($product['slug']); ?>"
-                                class="block relative w-full h-[180px] md:h-[200px] bg-white border-b border-gray-100 p-3 flex items-center justify-center group-hover:bg-blue-50/30 transition-colors">
+                                class="block relative w-full h-[200px] md:h-[220px] bg-slate-50 border-b border-slate-100 p-4 flex items-center justify-center">
                                 <?php if ($product['primary_image']): ?>
                                     <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>"
-                                        class="w-full h-full object-cover mix-blend-multiply" loading="lazy">
+                                        class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy">
                                 <?php else: ?>
-                                    <div class="w-full h-full flex items-center justify-center text-gray-200 bg-gray-50 rounded-t-md">
-                                        <i class="fa-solid fa-image text-3xl"></i>
+                                    <div class="w-full h-full flex items-center justify-center text-slate-200">
+                                        <i class="fa-solid fa-image text-4xl group-hover:scale-105 transition-transform duration-300"></i>
                                     </div>
                                 <?php endif; ?>
                             </a>
 
                             <!-- Content -->
-                            <div class="flex-grow flex flex-col p-3 md:p-4">
-                                <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-2 w-full">
-                                    <h4 class="text-sm md:text-base font-semibold text-gray-800 hover:text-primary transition-colors leading-snug truncate">
+                            <div class="flex-grow flex flex-col p-4 md:p-5">
+                                <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-3 w-full">
+                                    <h4 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug truncate" title="<?php echo htmlspecialchars($product['name']); ?>">
                                         <?php echo htmlspecialchars($product['name']); ?></h4>
                                 </a>
 
-                                <div class="price-container mb-2" data-product-id="<?php echo $product['id']; ?>"
-                                    data-price="<?php echo $product['price']; ?>"
-                                    data-visibility="<?php echo $product['price_visibility']; ?>">
+                                <div class="price-container mb-4" data-product-id="<?php echo $product['id']; ?>"
+                                    data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
                                     <?php if ($product['price_visibility'] === 'public'): ?>
-                                        <span class="font-bold text-lg md:text-xl text-gray-900"><?php echo formatPrice($product['price']); ?></span>
+                                        <span class="font-bold text-lg text-gray-900 tracking-tight"><?php echo formatPrice($product['price']); ?></span>
                                     <?php elseif ($product['price_visibility'] === 'locked'): ?>
-                                        <button
-                                            class="btn-unlock-price text-accent font-semibold text-xs hover:underline flex items-center gap-1">
+                                        <button class="btn-unlock-price text-primary font-bold text-xs hover:underline flex items-center gap-1">
                                             Unlock Price <i class="fa-solid fa-lock text-[10px]"></i>
                                         </button>
                                     <?php else: ?>
-                                        <button
-                                            class="btn-unlock-price text-gray-500 text-[10px] md:text-xs font-semibold hover:underline flex items-center gap-1">
+                                        <button class="btn-unlock-price text-gray-500 text-[11px] md:text-xs font-bold hover:underline flex items-center gap-1">
                                             Get Latest Price
                                         </button>
                                     <?php endif; ?>
                                 </div>
 
-                                <div class="mt-auto">
-                                    <p class="text-[10px] md:text-[11px] text-gray-500 mb-2 truncate flex items-center gap-1">
-                                        <i class="fa-solid fa-location-dot text-gray-400"></i> Purnea, Bihar</p>
+                                <div class="mt-auto space-y-3">
+                                    <p class="text-[11px] md:text-xs text-gray-500 truncate flex items-center gap-1.5 font-medium">
+                                        <i class="fa-solid fa-location-dot text-primary"></i> Purnea, Bihar</p>
 
-                                    <a href="<?php echo getWhatsappLink('Hi, I am interested in ' . $product['name']); ?>" target="_blank"
-                                        class="w-full block text-center bg-primary text-white font-medium text-xs md:text-sm py-2 rounded-md hover:bg-secondary transition-colors">
-                                        Contact Supplier
+                                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" data-turbo="false"
+                                        class="w-full flex items-center justify-center gap-2 bg-green-50 text-green-600 border border-green-200 font-bold text-xs md:text-sm py-2.5 rounded-lg hover:bg-green-600 hover:text-white hover:border-green-600 transition-colors">
+                                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
                                     </a>
                                 </div>
                             </div>
 
                             <button
-                                class="absolute top-2 right-2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm transition-colors"
+                                class="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-red-500 hover:text-gray-400 z-30 wishlist-btn shadow-sm transition-colors border border-slate-100"
                                 data-id="<?php echo $product['id']; ?>">
-                                <i class="fa-regular fa-heart text-sm"></i>
+                                <i class="fa-regular fa-heart"></i>
                             </button>
                         </div>
                     <?php endforeach; ?>

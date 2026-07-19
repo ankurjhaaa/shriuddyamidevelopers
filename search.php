@@ -49,39 +49,65 @@ $categoryId = $_GET['category'] ?? '';
 $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
 ?>
 
-<div class="bg-white min-h-screen pb-16 pt-4">
-    <div class="max-w-[1440px] mx-auto px-4 md:px-8">
+<div class="bg-slate-50 min-h-screen pb-16">
+    <!-- Premium Hero Search Section -->
+    <div class="bg-slate-900 py-12 md:py-16 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#f97316 1px, transparent 1px); background-size: 30px 30px;"></div>
         
-        <!-- Breadcrumbs -->
-        <div class="text-[11px] text-gray-500 mb-4 hidden md:block">
-            <a href="/" class="hover:text-primary">Home</a> &rsaquo; 
-            <span class="text-gray-800 font-semibold"><?php echo $catName; ?></span>
+        <div class="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10 text-center">
+            <h1 class="text-3xl md:text-5xl font-black text-white mb-4">Explore <span class="text-primary">Machines</span></h1>
+            <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-8">Find the best agriculture and industrial equipment in Bihar. Tap a category or search below.</p>
+            
+            <!-- Mobile Search Bar (Live Search) -->
+            <div class="max-w-2xl mx-auto bg-white rounded-lg p-2 flex items-center shadow-sm">
+                <i class="fa-solid fa-magnifying-glass text-gray-400 ml-3"></i>
+                <input type="text" id="searchInput" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>" placeholder="Search for tractors, harvesters..." class="w-full bg-transparent border-none focus:ring-0 px-4 py-2 md:py-3 text-gray-800 font-medium placeholder-gray-400">
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-[1440px] mx-auto px-4 md:px-8 -mt-6 relative z-20">
+        
+        <!-- Category Grid (Replaces old pills) -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 md:p-6 mb-8">
+            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-primary"></i> Categories
+            </h3>
+            
+            <div class="flex overflow-x-auto hide-scrollbar gap-3 md:gap-4 w-full snap-x pb-2 custom-scrollbar">
+                
+                <!-- "All" Button -->
+                <button class="category-filter-btn flex-shrink-0 snap-start flex flex-col items-center justify-center p-3 w-24 md:w-28 rounded-lg border transition-all <?php echo $categoryId === '' ? 'border-primary bg-primary/5 text-primary' : 'border-gray-100 bg-gray-50 hover:border-gray-300 text-gray-600 hover:bg-gray-100'; ?>" data-id="">
+                    <div class="w-10 h-10 rounded flex items-center justify-center mb-2 <?php echo $categoryId === '' ? 'bg-primary text-white' : 'bg-white text-gray-400 border border-gray-200'; ?>">
+                        <i class="fa-solid fa-table-cells-large text-base"></i>
+                    </div>
+                    <span class="text-[11px] font-bold text-center leading-tight truncate w-full px-1">All Products</span>
+                </button>
+
+                <!-- Category Buttons -->
+                <?php foreach ($categories as $cat): 
+                    $isActive = ($categoryId == $cat['slug']);
+                ?>
+                    <button class="category-filter-btn flex-shrink-0 snap-start flex flex-col items-center justify-center p-3 w-24 md:w-28 rounded-lg border transition-all <?php echo $isActive ? 'border-primary bg-primary/5 text-primary' : 'border-gray-100 bg-gray-50 hover:border-gray-300 text-gray-600 hover:bg-gray-100'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
+                        <div class="w-10 h-10 rounded flex items-center justify-center mb-2 overflow-hidden <?php echo $isActive ? 'border border-primary' : 'border border-gray-200 bg-white'; ?>">
+                            <?php if($cat['image']): ?>
+                                <img src="/<?php echo htmlspecialchars($cat['image']); ?>" class="w-full h-full object-cover">
+                            <?php else: ?>
+                                <i class="fa-solid fa-box text-base <?php echo $isActive ? 'text-primary' : 'text-gray-400'; ?>"></i>
+                            <?php endif; ?>
+                        </div>
+                        <span class="text-[11px] font-bold text-center leading-tight truncate w-full px-1"><?php echo htmlspecialchars($cat['name']); ?></span>
+                    </button>
+                <?php endforeach; ?>
+            </div>
         </div>
 
-        <div class="flex flex-col gap-6">
-            
-            <!-- Category Filter Pills Slider -->
-            <div class="pt-2 pb-1 bg-white">
-                <input type="hidden" id="searchInput" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
-                <!-- Category Filter Pills Slider -->
-                <div class="flex overflow-x-auto hide-scrollbar gap-2 md:gap-3 w-full snap-x pb-2">
-                    <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-4 py-1.5 rounded-md text-xs md:text-sm font-semibold border transition <?php echo $categoryId === '' ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'; ?>" data-id="">
-                        All
-                    </button>
-                    <?php foreach ($categories as $cat): ?>
-                        <button class="category-filter-btn flex-shrink-0 snap-start whitespace-nowrap px-4 py-1.5 rounded-md text-xs md:text-sm font-semibold border transition <?php echo $categoryId == $cat['slug'] ? 'bg-primary/10 text-primary border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'; ?>" data-id="<?php echo htmlspecialchars($cat['slug']); ?>">
-                            <?php echo htmlspecialchars($cat['name']); ?>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="flex-grow">
-                <!-- Hidden inputs for JS logic -->
-                <input type="hidden" id="searchCategory" value="<?php echo htmlspecialchars($categoryId); ?>">
-                <input type="hidden" id="searchInputDesktop" value="">
-                
+        <!-- Main Content (Results) -->
+        <div class="flex-grow">
+            <!-- Hidden inputs for JS logic -->
+            <input type="hidden" id="searchCategory" value="<?php echo htmlspecialchars($categoryId); ?>">
+            <input type="hidden" id="searchInputDesktop" value="">
 
 
                 <!-- Search Results Container -->
@@ -136,21 +162,44 @@ $categories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAl
                 const clickedId = btn.dataset.id;
                 
                 categoryBtns.forEach(b => {
-                    if(b.classList.contains('rounded-sm')) {
-                        // Mobile pill
-                        b.classList.remove('bg-primary/10', 'text-primary', 'border-primary');
-                        b.classList.add('bg-white', 'text-gray-600', 'border-gray-300');
-                        if(b.dataset.id === clickedId) {
-                            b.classList.remove('bg-white', 'text-gray-600', 'border-gray-300');
-                            b.classList.add('bg-primary/10', 'text-primary', 'border-primary');
+                    const iconContainer = b.querySelector('div');
+                    const icon = b.querySelector('i.fa-box');
+                    
+                    // Reset all to inactive
+                    b.classList.remove('border-primary', 'bg-primary/5', 'text-primary');
+                    b.classList.add('border-gray-100', 'bg-gray-50', 'hover:border-gray-300', 'text-gray-600', 'hover:bg-gray-100');
+                    
+                    if(iconContainer) {
+                        iconContainer.classList.remove('border', 'border-primary', 'bg-primary', 'text-white');
+                        
+                        // If it's the "All" button, it has a default style
+                        if(b.dataset.id === "") {
+                            iconContainer.classList.add('bg-white', 'text-gray-400', 'border', 'border-gray-200');
+                        } else {
+                            iconContainer.classList.add('border', 'border-gray-200', 'bg-white');
                         }
-                    } else {
-                        // Desktop list item
-                        b.classList.remove('text-primary', 'font-bold');
-                        b.classList.add('text-gray-600');
-                        if(b.dataset.id === clickedId) {
-                            b.classList.remove('text-gray-600');
-                            b.classList.add('text-primary', 'font-bold');
+                    }
+                    if(icon) {
+                        icon.classList.remove('text-primary');
+                        icon.classList.add('text-gray-400');
+                    }
+
+                    // Set clicked to active
+                    if(b.dataset.id === clickedId) {
+                        b.classList.remove('border-gray-100', 'bg-gray-50', 'hover:border-gray-300', 'text-gray-600', 'hover:bg-gray-100');
+                        b.classList.add('border-primary', 'bg-primary/5', 'text-primary');
+                        
+                        if(iconContainer) {
+                            iconContainer.classList.remove('border', 'border-gray-200', 'bg-white', 'text-gray-400');
+                            if(b.dataset.id === "") {
+                                iconContainer.classList.add('bg-primary', 'text-white');
+                            } else {
+                                iconContainer.classList.add('border', 'border-primary');
+                            }
+                        }
+                        if(icon) {
+                            icon.classList.remove('text-gray-400');
+                            icon.classList.add('text-primary');
                         }
                     }
                 });
