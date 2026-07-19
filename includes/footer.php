@@ -158,5 +158,17 @@
         </div>
     </div>
 
+    <!-- Floating Action Buttons -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" data-turbo="false"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold w-12 h-12 md:w-auto md:h-auto md:px-5 md:py-2.5 rounded-full md:rounded-xl flex items-center justify-center md:justify-start gap-2 shadow-lg transition-all">
+            <i class="fa-solid fa-phone transform -scale-x-100 text-xl md:text-base"></i> <span class="hidden md:block text-sm">Call me</span>
+        </a>
+        <a href="<?php echo getWhatsappLink(); ?>" target="_blank" data-turbo="false"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold w-12 h-12 md:w-auto md:h-auto md:px-5 md:py-2.5 rounded-full md:rounded-xl flex items-center justify-center md:justify-start gap-2 shadow-lg transition-all">
+            <i class="fa-brands fa-whatsapp text-2xl md:text-lg"></i> <span class="hidden md:block text-sm">Message me</span>
+        </a>
+    </div>
+
 </body>
 </html>

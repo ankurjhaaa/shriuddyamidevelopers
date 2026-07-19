@@ -54,7 +54,7 @@ foreach ($categoriesWithProducts as $cat) {
 
     <div class="relative w-full z-10 bg-slate-900 border-b border-gray-200 animate-fade-in-down ">
         <!-- Responsive heights: Auto on mobile (perfect square), Fixed smaller height on laptop -->
-        <div class="swiper heroSwiper w-full md:h-[400px] lg:h-[450px] xl:h-[500px]">
+        <div class="swiper heroSwiper w-full md:h-[450px] lg:h-[550px] xl:h-[600px]">
             <div class="swiper-wrapper">
                 <?php
                 $stmt = $pdo->query("SELECT * FROM carousel_banners ORDER BY order_index ASC");
@@ -73,7 +73,7 @@ foreach ($categoriesWithProducts as $cat) {
                                     alt="Banner <?php echo $index + 1; ?>">
                             </picture>
                         </div>
-                    <?php
+                        <?php
                     endforeach;
                 else:
                     ?>
@@ -99,24 +99,14 @@ foreach ($categoriesWithProducts as $cat) {
 
         </div>
 
-        <!-- Reference Style Floating Banner Buttons (Outside Swiper) -->
-        <div class="absolute bottom-6 md:bottom-12 left-4 md:left-12 z-30 flex flex-col gap-3 pointer-events-none">
-            <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" data-turbo="false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-sm transition-colors w-fit pointer-events-auto text-sm">
-                <i class="fa-solid fa-phone transform -scale-x-100"></i> Call me
-            </a>
-            <a href="<?php echo getWhatsappLink(); ?>" target="_blank" data-turbo="false"
-                class="bg-green-500 hover:bg-green-600 text-white font-bold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-sm transition-colors w-fit pointer-events-auto text-sm">
-                <i class="fa-brands fa-whatsapp text-lg"></i> Message me
-            </a>
-        </div>
     </div>
 
     <!-- Animated Trust Badges Section -->
     <div class="bg-white border-b border-slate-200 py-8 md:py-12 animate-fade-in-up">
         <div class="max-w-[1440px] mx-auto px-4 md:px-8">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                <div
+                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
                     <div
                         class="w-16 h-16 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-blue-100 shadow-sm">
                         <i class="fa-solid fa-shield-check"></i>
@@ -124,7 +114,8 @@ foreach ($categoriesWithProducts as $cat) {
                     <h4 class="font-bold text-gray-900 text-sm md:text-base">100% Genuine</h4>
                     <p class="text-xs text-gray-500 mt-1 font-medium">Direct from Top Brands</p>
                 </div>
-                <div class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                <div
+                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
                     <div
                         class="w-16 h-16 rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-green-100 shadow-sm">
                         <i class="fa-solid fa-tags"></i>
@@ -132,7 +123,8 @@ foreach ($categoriesWithProducts as $cat) {
                     <h4 class="font-bold text-gray-900 text-sm md:text-base">Best Prices</h4>
                     <p class="text-xs text-gray-500 mt-1 font-medium">Unbeatable Deals</p>
                 </div>
-                <div class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                <div
+                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
                     <div
                         class="w-16 h-16 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-orange-100 shadow-sm">
                         <i class="fa-solid fa-truck-fast"></i>
@@ -140,7 +132,8 @@ foreach ($categoriesWithProducts as $cat) {
                     <h4 class="font-bold text-gray-900 text-sm md:text-base">Fast Delivery</h4>
                     <p class="text-xs text-gray-500 mt-1 font-medium">Across Bihar</p>
                 </div>
-                <div class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                <div
+                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
                     <div
                         class="w-16 h-16 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-purple-100 shadow-sm">
                         <i class="fa-solid fa-headset"></i>
@@ -199,9 +192,9 @@ foreach ($categoriesWithProducts as $cat) {
                         preventClicks: false,
                         preventClicksPropagation: false,
                     });
-                    
+
                     // Allow clicking the container to change the slide
-                    swiperEl.addEventListener('click', function(e) {
+                    swiperEl.addEventListener('click', function (e) {
                         if (!e.target.closest('a') && !e.target.closest('button')) {
                             sw.slideNext();
                         }
@@ -232,25 +225,28 @@ foreach ($categoriesWithProducts as $cat) {
                     <!-- Image / Flip Slider Side -->
                     <div class="w-full lg:w-1/2 relative <?php echo $isEven ? 'lg:order-1' : 'lg:order-2'; ?>">
                         <?php $displayProducts = array_slice($strip['products'], 0, 5); // Up to 5 products ?>
-                        
-                        <div class="swiper categorySwiper w-full h-[300px] md:h-[450px] rounded-2xl border border-slate-200 shadow-sm cursor-pointer bg-white overflow-hidden relative group">
+
+                        <div
+                            class="swiper categorySwiper w-full h-[300px] md:h-[450px] rounded-2xl border border-slate-200 shadow-sm cursor-pointer bg-white overflow-hidden relative group">
                             <div class="swiper-wrapper">
                                 <?php foreach ($displayProducts as $prod): ?>
-                                <div class="swiper-slide bg-white flex items-center justify-center p-8 md:p-12">
-                                    <?php if ($prod['primary_image']): ?>
-                                        <img src="/<?php echo htmlspecialchars($prod['primary_image']); ?>"
-                                            class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" alt="<?php echo htmlspecialchars($prod['name']); ?>" loading="lazy">
-                                    <?php else: ?>
-                                        <i class="fa-solid fa-image text-6xl text-slate-200"></i>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Product Name Overlay -->
-                                    <div class="absolute bottom-6 left-0 right-0 flex justify-center z-10">
-                                        <span class="bg-black/80 text-white text-xs md:text-sm font-bold px-4 py-2 rounded-lg backdrop-blur-sm shadow-sm max-w-[80%] truncate">
-                                            <?php echo htmlspecialchars($prod['name']); ?>
-                                        </span>
+                                    <div class="swiper-slide bg-white flex items-center justify-center p-8 md:p-12">
+                                        <?php if ($prod['primary_image']): ?>
+                                            <img src="/<?php echo htmlspecialchars($prod['primary_image']); ?>"
+                                                class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                                                alt="<?php echo htmlspecialchars($prod['name']); ?>" loading="lazy">
+                                        <?php else: ?>
+                                            <i class="fa-solid fa-image text-6xl text-slate-200"></i>
+                                        <?php endif; ?>
+
+                                        <!-- Product Name Overlay -->
+                                        <div class="absolute bottom-6 left-0 right-0 flex justify-center z-10">
+                                            <span
+                                                class="bg-black/80 text-white text-xs md:text-sm font-bold px-4 py-2 rounded-lg backdrop-blur-sm shadow-sm max-w-[80%] truncate">
+                                                <?php echo htmlspecialchars($prod['name']); ?>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
                                 <?php endforeach; ?>
                             </div>
                         </div>
@@ -289,7 +285,8 @@ foreach ($categoriesWithProducts as $cat) {
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-gray-900">Wide Range</h4>
-                                    <p class="text-xs text-gray-500 mt-1 font-medium">Reliable machinery and equipment for every industrial need.</p>
+                                    <p class="text-xs text-gray-500 mt-1 font-medium">Reliable machinery and equipment for
+                                        every industrial need.</p>
                                 </div>
                             </div>
                             <div class="flex gap-4 items-start p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
@@ -299,7 +296,8 @@ foreach ($categoriesWithProducts as $cat) {
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-gray-900">24/7 Support</h4>
-                                    <p class="text-xs text-gray-500 mt-1 font-medium">Emergency or planned — we’re always ready to serve you.</p>
+                                    <p class="text-xs text-gray-500 mt-1 font-medium">Emergency or planned — we’re always
+                                        ready to serve you.</p>
                                 </div>
                             </div>
                         </div>
@@ -309,25 +307,29 @@ foreach ($categoriesWithProducts as $cat) {
                             <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
                                 <div
                                     class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i></div>
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
                                 Highly Maintained Machines
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
                                 <div
                                     class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i></div>
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
                                 Experienced Operators
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
                                 <div
                                     class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i></div>
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
                                 Affordable & Transparent Pricing
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
                                 <div
                                     class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i></div>
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
                                 Timely Project Delivery
                             </div>
                         </div>
@@ -345,7 +347,8 @@ foreach ($categoriesWithProducts as $cat) {
                                     <div>
                                         <h4 class="font-black text-gray-900 text-lg tracking-tight">Shri Uddyami</h4>
                                         <p class="text-xs text-gray-500 uppercase tracking-widest font-bold">Founder,
-                                            <?php echo htmlspecialchars(getSetting('store_name')); ?></p>
+                                            <?php echo htmlspecialchars(getSetting('store_name')); ?>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

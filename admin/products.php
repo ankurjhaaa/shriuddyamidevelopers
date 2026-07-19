@@ -18,7 +18,7 @@ if (isset($_GET['delete'])) {
     // Delete from DB (CASCADE handles product_images)
     $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
     $stmt->execute([$id]);
-    header("Location: /admin/products.php?msg=deleted");
+    header("Location: /admin/products.php?msg=deleted", true, 303);
     exit;
 }
 

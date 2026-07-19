@@ -8,7 +8,7 @@ checkAdminAuth();
 if (isset($_GET['delete'])) {
     $stmt = $pdo->prepare("DELETE FROM leads WHERE id = ?");
     $stmt->execute([$_GET['delete']]);
-    header("Location: /admin/leads.php?msg=deleted");
+    header("Location: /admin/leads.php?msg=deleted", true, 303);
     exit;
 }
 

@@ -12,13 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'add') {
         $stmt = $pdo->prepare("INSERT INTO categories (name, slug) VALUES (?, ?)");
         $stmt->execute([$name, $slug]);
-        header("Location: /admin/categories.php?msg=added");
+        header("Location: /admin/categories.php?msg=added", true, 303);
         exit;
     } elseif ($_POST['action'] === 'edit') {
         $id = $_POST['id'];
         $stmt = $pdo->prepare("UPDATE categories SET name = ?, slug = ? WHERE id = ?");
         $stmt->execute([$name, $slug, $id]);
-        header("Location: /admin/categories.php?msg=updated");
+        header("Location: /admin/categories.php?msg=updated", true, 303);
         exit;
     }
 }
@@ -28,7 +28,7 @@ if (isset($_GET['delete'])) {
     // Note: In real app, check if products exist first or use CASCADE
     $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
     $stmt->execute([$_GET['delete']]);
-    header("Location: /admin/categories.php?msg=deleted");
+    header("Location: /admin/categories.php?msg=deleted", true, 303);
     exit;
 }
 

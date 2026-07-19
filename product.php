@@ -119,7 +119,8 @@ include __DIR__ . '/includes/header.php';
         <div class="text-xs text-gray-500 mb-4 hidden md:block mt-4 font-medium uppercase tracking-wider">
             <a href="/" class="hover:text-primary transition-colors">Home</a> <span class="mx-1">&gt;</span>
             <a href="/search.php?category=<?php echo htmlspecialchars($product['category_id']); ?>"
-                class="hover:text-primary transition-colors"><?php echo htmlspecialchars($product['category_name']); ?></a> <span class="mx-1">&gt;</span>
+                class="hover:text-primary transition-colors"><?php echo htmlspecialchars($product['category_name']); ?></a>
+            <span class="mx-1">&gt;</span>
             <span class="text-gray-900 font-bold"><?php echo htmlspecialchars($product['name']); ?></span>
         </div>
 
@@ -128,7 +129,7 @@ include __DIR__ . '/includes/header.php';
             <!-- Left: Sticky Image Gallery -->
             <div
                 class="w-full lg:w-[450px] xl:w-[500px] flex-shrink-0 bg-white md:rounded-xl border-b md:border md:border-slate-200 md:shadow-sm p-0 md:p-5 lg:sticky lg:top-[70px] relative">
-                
+
                 <!-- Wishlist Button -->
                 <button
                     class="absolute top-6 right-6 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 z-10 wishlist-btn shadow-sm transition-colors"
@@ -157,7 +158,8 @@ include __DIR__ . '/includes/header.php';
                                 <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 p-0.5 overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-200 thumbnail-item <?php echo $index === 0 ? 'border-primary shadow-sm scale-110' : 'border-gray-200 opacity-70 hover:opacity-100'; ?>"
                                     data-index="<?php echo $index; ?>">
                                     <div class="w-full h-full rounded-full overflow-hidden bg-white">
-                                        <img src="/<?php echo htmlspecialchars($img); ?>" class="w-full h-full object-cover lb-trigger mix-blend-multiply"
+                                        <img src="/<?php echo htmlspecialchars($img); ?>"
+                                            class="w-full h-full object-cover lb-trigger mix-blend-multiply"
                                             data-index="<?php echo $index; ?>">
                                     </div>
                                 </div>
@@ -174,10 +176,12 @@ include __DIR__ . '/includes/header.php';
             </div>
 
             <!-- Right: Product Details & Specs -->
-            <div class="w-full flex-grow bg-white md:rounded-xl md:border md:border-slate-200 md:shadow-sm p-5 md:p-6 lg:p-8">
+            <div
+                class="w-full flex-grow bg-white md:rounded-xl md:border md:border-slate-200 md:shadow-sm p-5 md:p-6 lg:p-8">
                 <div class="mb-6">
                     <h1 class="text-xl md:text-3xl font-black text-gray-900 leading-tight mb-4 tracking-tight">
-                        <?php echo htmlspecialchars($product['name']); ?></h1>
+                        <?php echo htmlspecialchars($product['name']); ?>
+                    </h1>
 
                     <!-- Price Block -->
                     <div class="flex items-center gap-3">
@@ -212,7 +216,8 @@ include __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- CTA Action Box -->
-                <div class="hidden md:flex bg-slate-50 border border-slate-200 p-5 rounded-xl flex-col sm:flex-row gap-4 mb-8">
+                <div
+                    class="hidden md:flex bg-slate-50 border border-slate-200 p-5 rounded-xl flex-col sm:flex-row gap-4 mb-8">
                     <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
                         class="flex-1 bg-green-50 text-green-600 border border-green-200 hover:bg-green-600 hover:text-white hover:border-green-600 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 text-sm md:text-base transition-colors">
                         <i class="fa-brands fa-whatsapp text-lg"></i> Contact Supplier
@@ -237,7 +242,8 @@ include __DIR__ . '/includes/header.php';
                                     foreach ($specs as $key => $value): ?>
                                         <tr class="border-b border-gray-100 <?php echo $isEven ? 'bg-white' : 'bg-white'; ?>">
                                             <td class="py-3 px-4 text-gray-500 w-1/3 border-r border-gray-100">
-                                                <?php echo htmlspecialchars($key); ?></td>
+                                                <?php echo htmlspecialchars($key); ?>
+                                            </td>
                                             <td class="py-3 px-4 text-gray-800 font-medium"><?php echo htmlspecialchars($value); ?>
                                             </td>
                                         </tr>
@@ -275,39 +281,51 @@ include __DIR__ . '/includes/header.php';
                     <!-- Cover Background -->
                     <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-800 w-full relative overflow-hidden">
                         <!-- Abstract shapes for cover -->
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full transform translate-x-16 -translate-y-16"></div>
-                        <div class="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full transform -translate-x-8 translate-y-8"></div>
-                    </div>
-                    
-                    <!-- Avatar/Logo -->
-                    <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
-                        <div class="w-24 h-24 bg-white rounded-xl border-4 border-white shadow-md flex items-center justify-center overflow-hidden p-2">
-                            <img src="/assets/images/logo.png" alt="Company Logo" class="max-w-full max-h-full object-contain">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full transform translate-x-16 -translate-y-16">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full transform -translate-x-8 translate-y-8">
                         </div>
                     </div>
-                    
+
+                    <!-- Avatar/Logo -->
+                    <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
+                        <div
+                            class="w-24 h-24 bg-white rounded-xl border-4 border-white shadow-md flex items-center justify-center overflow-hidden p-2">
+                            <img src="/assets/images/logo.png" alt="Company Logo"
+                                class="max-w-full max-h-full object-contain">
+                        </div>
+                    </div>
+
                     <!-- Content -->
                     <div class="pt-16 pb-6 px-4 md:px-8 text-center">
-                        <h3 class="font-black text-gray-900 text-xl md:text-2xl mb-1 tracking-tight">Shri Uddyami Developers</h3>
+                        <h3 class="font-black text-gray-900 text-xl md:text-2xl mb-1 tracking-tight">Shri Uddyami
+                            Developers</h3>
                         <p class="text-sm text-gray-500 mb-4 flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-map-marker-alt text-gray-400"></i>
                             <?php echo htmlspecialchars(getSetting('address')); ?>
                         </p>
-                        
+
                         <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
-                            <span class="bg-blue-50 text-blue-700 border border-blue-100 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                            <span
+                                class="bg-blue-50 text-blue-700 border border-blue-100 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
                                 <i class="fa-solid fa-shield-halved"></i> Top Supplier
                             </span>
-                            <span class="bg-green-50 text-green-700 border border-green-100 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                            <span
+                                class="bg-green-50 text-green-700 border border-green-100 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
                                 <i class="fa-solid fa-circle-check"></i> Verified
                             </span>
                         </div>
-                        
+
                         <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
-                            <a href="/company.php" class="flex-1 bg-white border-2 border-gray-200 text-gray-800 hover:border-gray-300 hover:bg-gray-50 transition-colors font-bold py-2.5 rounded-lg text-sm">
+                            <a href="/company.php"
+                                class="flex-1 bg-white border-2 border-gray-200 text-gray-800 hover:border-gray-300 hover:bg-gray-50 transition-colors font-bold py-2.5 rounded-lg text-sm">
                                 View Profile
                             </a>
-                            <a href="<?php echo getWhatsappLink('Hi, I want to know more about your company.'); ?>" target="_blank" class="flex-1 bg-gray-900 text-white hover:bg-black transition-colors font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2">
+                            <a href="<?php echo getWhatsappLink('Hi, I want to know more about your company.'); ?>"
+                                target="_blank"
+                                class="flex-1 bg-gray-900 text-white hover:bg-black transition-colors font-bold py-2.5 rounded-lg text-sm flex items-center justify-center gap-2">
                                 Contact Us <i class="fa-solid fa-arrow-right text-xs"></i>
                             </a>
                         </div>
@@ -335,10 +353,12 @@ include __DIR__ . '/includes/header.php';
                                 class="block relative w-full h-[200px] md:h-[220px] bg-slate-50 border-b border-slate-100 p-4 flex items-center justify-center">
                                 <?php if ($product['primary_image']): ?>
                                     <img src="/<?php echo htmlspecialchars($product['primary_image']); ?>"
-                                        class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                                        class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy">
                                 <?php else: ?>
                                     <div class="w-full h-full flex items-center justify-center text-slate-200">
-                                        <i class="fa-solid fa-image text-4xl group-hover:scale-105 transition-transform duration-300"></i>
+                                        <i
+                                            class="fa-solid fa-image text-4xl group-hover:scale-105 transition-transform duration-300"></i>
                                     </div>
                                 <?php endif; ?>
                             </a>
@@ -346,30 +366,39 @@ include __DIR__ . '/includes/header.php';
                             <!-- Content -->
                             <div class="flex-grow flex flex-col p-4 md:p-5">
                                 <a href="/products/<?php echo urlencode($product['slug']); ?>" class="block mb-3 w-full">
-                                    <h4 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug truncate" title="<?php echo htmlspecialchars($product['name']); ?>">
-                                        <?php echo htmlspecialchars($product['name']); ?></h4>
+                                    <h4 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug truncate"
+                                        title="<?php echo htmlspecialchars($product['name']); ?>">
+                                        <?php echo htmlspecialchars($product['name']); ?>
+                                    </h4>
                                 </a>
 
                                 <div class="price-container mb-4" data-product-id="<?php echo $product['id']; ?>"
-                                    data-price="<?php echo $product['price']; ?>" data-visibility="<?php echo $product['price_visibility']; ?>">
+                                    data-price="<?php echo $product['price']; ?>"
+                                    data-visibility="<?php echo $product['price_visibility']; ?>">
                                     <?php if ($product['price_visibility'] === 'public'): ?>
-                                        <span class="font-bold text-lg text-gray-900 tracking-tight"><?php echo formatPrice($product['price']); ?></span>
+                                        <span
+                                            class="font-bold text-lg text-gray-900 tracking-tight"><?php echo formatPrice($product['price']); ?></span>
                                     <?php elseif ($product['price_visibility'] === 'locked'): ?>
-                                        <button class="btn-unlock-price text-primary font-bold text-xs hover:underline flex items-center gap-1">
+                                        <button
+                                            class="btn-unlock-price text-primary font-bold text-xs hover:underline flex items-center gap-1">
                                             Unlock Price <i class="fa-solid fa-lock text-[10px]"></i>
                                         </button>
                                     <?php else: ?>
-                                        <button class="btn-unlock-price text-gray-500 text-[11px] md:text-xs font-bold hover:underline flex items-center gap-1">
+                                        <button
+                                            class="btn-unlock-price text-gray-500 text-[11px] md:text-xs font-bold hover:underline flex items-center gap-1">
                                             Get Latest Price
                                         </button>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="mt-auto space-y-3">
-                                    <p class="text-[11px] md:text-xs text-gray-500 truncate flex items-center gap-1.5 font-medium">
-                                        <i class="fa-solid fa-location-dot text-primary"></i> Purnea, Bihar</p>
+                                    <p
+                                        class="text-[11px] md:text-xs text-gray-500 truncate flex items-center gap-1.5 font-medium">
+                                        <i class="fa-solid fa-location-dot text-primary"></i> Purnea, Bihar
+                                    </p>
 
-                                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank" data-turbo="false"
+                                    <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"
+                                        data-turbo="false"
                                         class="w-full flex items-center justify-center gap-2 bg-green-50 text-green-600 border border-green-200 font-bold text-xs md:text-sm py-2.5 rounded-lg hover:bg-green-600 hover:text-white hover:border-green-600 transition-colors">
                                         <i class="fa-brands fa-whatsapp"></i> WhatsApp
                                     </a>
@@ -408,7 +437,8 @@ include __DIR__ . '/includes/header.php';
         style="display: none;">
 
         <!-- Top Bar -->
-        <div class="w-full flex justify-between items-center p-4 absolute top-0 z-20 bg-gradient-to-b from-black/60 to-transparent">
+        <div
+            class="w-full flex justify-between items-center p-4 absolute top-0 z-20 bg-gradient-to-b from-black/60 to-transparent">
             <div class="text-white font-medium text-lg px-2" id="lbImageCounter">
                 1 / 1
             </div>
@@ -421,7 +451,7 @@ include __DIR__ . '/includes/header.php';
 
         <!-- Image Viewer Area -->
         <div class="flex-grow w-full h-full relative flex items-center justify-center p-4 md:p-12">
-            
+
             <!-- Navigation Arrows -->
             <button id="lbPrevBtn"
                 class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/50 hover:bg-black/80 border border-white/10 rounded-full flex items-center justify-center text-white transition-colors">
@@ -438,7 +468,8 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Bottom Caption Bar -->
-        <div class="w-full p-6 absolute bottom-0 z-20 bg-gradient-to-t from-black/80 to-transparent flex flex-col items-center justify-center text-center">
+        <div
+            class="w-full p-6 absolute bottom-0 z-20 bg-gradient-to-t from-black/80 to-transparent flex flex-col items-center justify-center text-center">
             <h3 id="lbProductName" class="font-bold text-white text-lg md:text-xl mb-3 drop-shadow-md">
                 <?php echo htmlspecialchars($product['name']); ?>
             </h3>

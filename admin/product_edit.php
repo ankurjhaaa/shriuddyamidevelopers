@@ -18,7 +18,7 @@ if ($id) {
     $product = $stmt->fetch();
     
     if (!$product) {
-        header("Location: /admin/products.php");
+        header("Location: /admin/products.php", true, 303);
         exit;
     }
     
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    header("Location: /admin/products.php?msg=saved");
+    header("Location: /admin/products.php?msg=saved", true, 303);
     exit;
 }
 
@@ -116,7 +116,7 @@ if (isset($_GET['delete_img']) && $id) {
         }
         $pdo->prepare("DELETE FROM product_images WHERE id = ?")->execute([$imgId]);
     }
-    header("Location: /admin/product_edit.php?id=" . $id);
+    header("Location: /admin/product_edit.php?id=" . $id, true, 303);
     exit;
 }
 

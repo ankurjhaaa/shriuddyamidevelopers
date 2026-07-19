@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: /admin_login.php");
+    header("Location: /admin_login.php", true, 303);
     exit;
 }
 
@@ -35,6 +35,36 @@ function uploadToImageKit($tmpFile, $fileName, $authHeader) {
     return $response['url'] ?? null;
 }
 
+function deleteFromImageKit($url, $authHeader) {
+    if (!$url) return;
+    
+    $parsed = parse_url($url);
+    $path = $parsed['path'] ?? '';
+    $fileName = basename($path);
+    
+    if (!$fileName) return;
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://api.imagekit.io/v1/files?searchQuery=" . urlencode("name=\"$fileName\""));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($authHeader));
+    $result = curl_exec($ch);
+    curl_close($ch);
+    
+    $response = json_decode($result, true);
+    if (!empty($response) && isset($response[0]['fileId'])) {
+        $fileId = $response[0]['fileId'];
+        
+        $ch2 = curl_init();
+        curl_setopt($ch2, CURLOPT_URL, "https://api.imagekit.io/v1/files/" . $fileId);
+        curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, array($authHeader));
+        curl_exec($ch2);
+        curl_close($ch2);
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'add') {
         $orderIndex = (int)$_POST['order_index'];
@@ -42,11 +72,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $deskUrl = '';
         $mobileUrl = '';
         
-        if (isset($_FILES['desktop_image']) && $_FILES['desktop_image']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['desktop_image']) && $_FILES['desktop_image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['desktop_image']['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['err'] = "Desktop image error. The file might be too large (must be under " . ini_get('upload_max_filesize') . ").";
+                header("Location: carousel.php", true, 303);
+                exit;
+            }
             $deskUrl = uploadToImageKit($_FILES['desktop_image']['tmp_name'], $_FILES['desktop_image']['name'], $authHeader);
         }
         
-        if (isset($_FILES['mobile_image']) && $_FILES['mobile_image']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['mobile_image']) && $_FILES['mobile_image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['mobile_image']['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['err'] = "Mobile image error. The file might be too large (must be under " . ini_get('upload_max_filesize') . ").";
+                header("Location: carousel.php", true, 303);
+                exit;
+            }
             $mobileUrl = uploadToImageKit($_FILES['mobile_image']['tmp_name'], $_FILES['mobile_image']['name'], $authHeader);
         }
         
@@ -57,16 +97,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         } else {
             $_SESSION['err'] = "Failed to upload images to ImageKit.";
         }
-        header("Location: carousel.php");
+        header("Location: carousel.php", true, 303);
         exit;
     }
-    
+    if ($_POST['action'] === 'edit') {
+        $id = (int)$_POST['id'];
+        $orderIndex = (int)$_POST['order_index'];
+        
+        $stmt = $pdo->prepare("SELECT desktop_image_url, mobile_image_url FROM carousel_banners WHERE id = ?");
+        $stmt->execute([$id]);
+        $banner = $stmt->fetch();
+        
+        if (!$banner) {
+            header("Location: carousel.php", true, 303);
+            exit;
+        }
+
+        $deskUrl = $banner['desktop_image_url'];
+        $mobileUrl = $banner['mobile_image_url'];
+        
+        if (isset($_FILES['desktop_image']) && $_FILES['desktop_image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['desktop_image']['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['err'] = "Desktop image error. The file might be too large (must be under " . ini_get('upload_max_filesize') . ").";
+                header("Location: carousel.php", true, 303);
+                exit;
+            }
+            deleteFromImageKit($deskUrl, $authHeader);
+            $deskUrl = uploadToImageKit($_FILES['desktop_image']['tmp_name'], $_FILES['desktop_image']['name'], $authHeader);
+        }
+        
+        if (isset($_FILES['mobile_image']) && $_FILES['mobile_image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['mobile_image']['error'] !== UPLOAD_ERR_OK) {
+                $_SESSION['err'] = "Mobile image error. The file might be too large (must be under " . ini_get('upload_max_filesize') . ").";
+                header("Location: carousel.php", true, 303);
+                exit;
+            }
+            deleteFromImageKit($mobileUrl, $authHeader);
+            $mobileUrl = uploadToImageKit($_FILES['mobile_image']['tmp_name'], $_FILES['mobile_image']['name'], $authHeader);
+        }
+        
+        if ($deskUrl && $mobileUrl) {
+            $stmt = $pdo->prepare("UPDATE carousel_banners SET desktop_image_url = ?, mobile_image_url = ?, order_index = ? WHERE id = ?");
+            $stmt->execute([$deskUrl, $mobileUrl, $orderIndex, $id]);
+            $_SESSION['msg'] = "Banner updated successfully!";
+        } else {
+            $_SESSION['err'] = "Failed to upload new images.";
+        }
+        
+        header("Location: carousel.php", true, 303);
+        exit;
+    }
+
     if ($_POST['action'] === 'delete') {
         $id = (int)$_POST['id'];
-        $stmt = $pdo->prepare("DELETE FROM carousel_banners WHERE id = ?");
+        
+        $stmt = $pdo->prepare("SELECT desktop_image_url, mobile_image_url FROM carousel_banners WHERE id = ?");
         $stmt->execute([$id]);
-        $_SESSION['msg'] = "Banner deleted successfully!";
-        header("Location: carousel.php");
+        $banner = $stmt->fetch();
+        
+        if ($banner) {
+            deleteFromImageKit($banner['desktop_image_url'], $authHeader);
+            deleteFromImageKit($banner['mobile_image_url'], $authHeader);
+            
+            $stmt = $pdo->prepare("DELETE FROM carousel_banners WHERE id = ?");
+            $stmt->execute([$id]);
+            $_SESSION['msg'] = "Banner deleted successfully!";
+        }
+        
+        header("Location: carousel.php", true, 303);
         exit;
     }
     
@@ -76,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $stmt = $pdo->prepare("UPDATE carousel_banners SET order_index = ? WHERE id = ?");
         $stmt->execute([$orderIndex, $id]);
         $_SESSION['msg'] = "Order updated!";
-        header("Location: carousel.php");
+        header("Location: carousel.php", true, 303);
         exit;
     }
 }
@@ -136,6 +234,9 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </form>
                     </td>
                     <td class="px-6 py-4 text-right">
+                        <button type="button" onclick="openEditModal(<?php echo $banner['id']; ?>, '<?php echo htmlspecialchars(addslashes($banner['desktop_image_url'])); ?>', '<?php echo htmlspecialchars(addslashes($banner['mobile_image_url'])); ?>', <?php echo $banner['order_index']; ?>)" class="text-blue-500 hover:text-blue-700 transition mr-3" title="Edit">
+                            <i class="fa-solid fa-pen-to-square text-lg"></i>
+                        </button>
                         <form method="POST" onsubmit="return confirm('Delete this banner?');" class="inline-block">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id" value="<?php echo $banner['id']; ?>">
@@ -190,5 +291,55 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </form>
     </div>
 </div>
+
+<!-- Edit Banner Modal -->
+<div id="editModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg w-full max-w-md shadow-2xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+            <h3 class="font-bold text-gray-800 text-lg">Edit Banner</h3>
+            <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+        <form method="POST" enctype="multipart/form-data" class="p-6">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="id" id="edit_id">
+            
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Desktop Image (Optional to keep existing)</label>
+                <input type="file" name="desktop_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 outline-none border border-gray-200 rounded p-1">
+                <div class="mt-2 text-xs text-gray-500 truncate" id="edit_desktop_preview"></div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Mobile Image (Optional to keep existing)</label>
+                <input type="file" name="mobile_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 outline-none border border-gray-200 rounded p-1">
+                <div class="mt-2 text-xs text-gray-500 truncate" id="edit_mobile_preview"></div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Order Index</label>
+                <input type="number" name="order_index" id="edit_order_index" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 outline-none">
+            </div>
+            
+            <div class="flex justify-end gap-3">
+                <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 border border-gray-300 rounded text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition shadow-sm">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openEditModal(id, deskUrl, mobileUrl, orderIndex) {
+    document.getElementById('edit_id').value = id;
+    document.getElementById('edit_order_index').value = orderIndex;
+    
+    document.getElementById('edit_desktop_preview').innerHTML = 'Current: <a href="'+deskUrl+'" target="_blank" class="text-blue-500 underline">View Image</a>';
+    document.getElementById('edit_mobile_preview').innerHTML = 'Current: <a href="'+mobileUrl+'" target="_blank" class="text-blue-500 underline">View Image</a>';
+    
+    document.getElementById('editModal').classList.remove('hidden');
+}
+</script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$_POST[$key], $key]);
         }
     }
-    header("Location: /admin/settings.php?success=1");
+    header("Location: /admin/settings.php?success=1", true, 303);
     exit;
 }
 
