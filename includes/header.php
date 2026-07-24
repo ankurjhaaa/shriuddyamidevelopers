@@ -334,7 +334,7 @@
             </div>
         </div>
         <!-- Premium Full-Screen Mobile Menu Sidebar Overlay -->
-        <div id="full-screen-sidebar" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] opacity-0 transition-opacity duration-300 ease-out flex justify-end" onclick="if(event.target === this) toggleSidebar();">
+        <div id="full-screen-sidebar" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] opacity-0 transition-opacity duration-300 ease-out flex justify-end" onclick="if(event.target === this) toggleSidebar();">
             <div id="sidebar-panel" class="w-full md:w-[450px] lg:w-[480px] h-full bg-white flex flex-col shadow-2xl overflow-hidden relative transform translate-x-full transition-transform duration-300 ease-out">
                 
                 <!-- Sidebar Top Header -->
@@ -509,13 +509,16 @@
                 toggleSidebar(true);
             }
 
-            document.addEventListener('DOMContentLoaded', function() {
+            function initSidebarSearch() {
                 const input = document.getElementById('sidebar-search-input');
                 const results = document.getElementById('sidebar-search-results');
                 const menuLinks = document.getElementById('sidebar-menu-links');
                 let debounceTimer;
 
                 if (input && results && menuLinks) {
+                    if (input.dataset.searchInitialized === 'true') return;
+                    input.dataset.searchInitialized = 'true';
+
                     input.addEventListener('input', function() {
                         clearTimeout(debounceTimer);
                         const query = this.value.trim();
@@ -537,7 +540,7 @@
                                             const img = product.primary_image ? '/' + product.primary_image : '/assets/images/placeholder.jpg';
                                             const price = product.formatted_price ? `<span class="text-xs font-bold text-primary block mt-0.5">${product.formatted_price}</span>` : '';
                                             html += `
-                                                <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="flex items-center gap-3.5 p-3 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                                <a href="/product.php?slug=${encodeURIComponent(product.slug)}" onclick="toggleSidebar()" class="flex items-center gap-3.5 p-3 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
                                                     <img src="${img}" class="w-14 h-14 object-cover rounded-md bg-white border border-gray-200 flex-shrink-0" alt="${product.name}">
                                                     <div class="flex-1 min-w-0">
                                                         <h5 class="text-sm font-bold text-slate-800 group-hover:text-primary transition truncate">${product.name}</h5>
@@ -563,7 +566,10 @@
                         }, 200);
                     });
                 }
-            });
+            }
+
+            document.addEventListener('DOMContentLoaded', initSidebarSearch);
+            document.addEventListener('turbo:load', initSidebarSearch);
         </script>
     </header>
 

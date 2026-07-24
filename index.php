@@ -52,9 +52,16 @@ foreach ($categoriesWithProducts as $cat) {
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-    <div class="relative w-full z-10 bg-slate-900 border-b border-gray-200 animate-fade-in-down ">
-        <!-- Responsive heights: Auto on mobile (perfect square), Fixed smaller height on laptop -->
-        <div class="swiper heroSwiper w-full md:h-[450px] lg:h-[550px] xl:h-[600px]">
+    <style>
+        /* Easily change mobile & desktop carousel heights here */
+        .hero-banner-container { height: 270px; } /* Mobile Height */
+        @media (min-width: 768px) { .hero-banner-container { height: 450px; } } /* Tablet Height */
+        @media (min-width: 1024px) { .hero-banner-container { height: 550px; } } /* Desktop Height */
+    </style>
+
+    <div class="relative w-full z-10 bg-slate-900 border-b border-gray-200 animate-fade-in-down">
+        <!-- Hero Swiper Carousel -->
+        <div class="swiper heroSwiper w-full hero-banner-container">
             <div class="swiper-wrapper">
                 <?php
                 $stmt = $pdo->query("SELECT * FROM carousel_banners ORDER BY order_index ASC");
@@ -69,7 +76,7 @@ foreach ($categoriesWithProducts as $cat) {
                                 <source media="(min-width: 768px)"
                                     srcset="<?php echo htmlspecialchars($banner['desktop_image_url']); ?>">
                                 <img src="<?php echo htmlspecialchars($banner['mobile_image_url']); ?>"
-                                    class="w-full h-auto md:w-full md:h-full md:object-fill"
+                                    class="w-full h-full object-fill"
                                     alt="Banner <?php echo $index + 1; ?>">
                             </picture>
                         </div>
@@ -216,7 +223,7 @@ foreach ($categoriesWithProducts as $cat) {
                  
                 <!-- Image Side -->
                 <div class="w-full md:w-1/2 h-[45%] md:h-full p-4 md:p-8 lg:p-12 flex items-center justify-center order-1 md:order-2">
-                    <div class="w-full h-full rounded-2xl overflow-hidden <?php echo ($index % 2 === 0) ? 'bg-gray-100 border border-gray-200' : 'bg-white border border-gray-100'; ?>">
+                    <div class="w-full h-full rounded-lg overflow-hidden <?php echo ($index % 2 === 0) ? 'bg-gray-100 border border-gray-200' : 'bg-white border border-gray-100'; ?>">
                         <?php if ($imagePath): ?>
                             <img src="/<?php echo htmlspecialchars($imagePath); ?>" class="w-full h-full object-cover" alt="<?php echo htmlspecialchars($strip['category']['name']); ?>">
                         <?php else: ?>
@@ -250,7 +257,7 @@ foreach ($categoriesWithProducts as $cat) {
 
                     <!-- Button (BottomNav Style on Mobile) -->
                     <div class="sticky bottom-0 left-0 w-full p-4 pb-6 md:p-0 md:w-auto md:static md:px-12 lg:px-16 md:pb-12 lg:pb-16 mt-auto <?php echo $bgColor; ?> md:bg-transparent z-20">
-                        <a href="/products?category=<?php echo urlencode($strip['category']['slug']); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-xl md:rounded-lg transition-colors w-full md:w-max group/btn">
+                        <a href="/products?category=<?php echo urlencode($strip['category']['slug']); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-md md:rounded-lg transition-colors w-full md:w-max group/btn">
                             <span class="tracking-widest uppercase text-sm">Explore Details</span>
                             <i class="fa-solid fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
                         </a>
