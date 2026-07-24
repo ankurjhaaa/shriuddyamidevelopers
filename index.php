@@ -102,44 +102,36 @@ foreach ($categoriesWithProducts as $cat) {
     </div>
 
     <!-- Animated Trust Badges Section -->
-    <div class="bg-white border-b border-slate-200 py-8 md:py-12 animate-fade-in-up">
-        <div class="max-w-[1440px] mx-auto px-4 md:px-8">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div
-                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
-                    <div
-                        class="w-16 h-16 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-blue-100 shadow-sm">
-                        <i class="fa-solid fa-shield-check"></i>
+    <div class="bg-white border-b border-slate-200 py-4 md:py-12 animate-fade-in-up">
+        <div class="max-w-[1440px] mx-auto px-2 md:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 text-center">
+                <div class="flex flex-col items-center p-3 md:p-6 rounded-xl md:rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                    <div class="w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg md:text-2xl mb-2 md:mb-4 group-hover:scale-105 transition-transform border border-blue-100 shadow-sm">
+                        <i class="fa-solid fa-award"></i>
                     </div>
-                    <h4 class="font-bold text-gray-900 text-sm md:text-base">100% Genuine</h4>
-                    <p class="text-xs text-gray-500 mt-1 font-medium">Direct from Top Brands</p>
+                    <h4 class="font-bold text-gray-900 text-xs md:text-base">100% Genuine</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 font-medium">Direct from Top Brands</p>
                 </div>
-                <div
-                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
-                    <div
-                        class="w-16 h-16 rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-green-100 shadow-sm">
+                <div class="flex flex-col items-center p-3 md:p-6 rounded-xl md:rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                    <div class="w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-lg md:text-2xl mb-2 md:mb-4 group-hover:scale-105 transition-transform border border-green-100 shadow-sm">
                         <i class="fa-solid fa-tags"></i>
                     </div>
-                    <h4 class="font-bold text-gray-900 text-sm md:text-base">Best Prices</h4>
-                    <p class="text-xs text-gray-500 mt-1 font-medium">Unbeatable Deals</p>
+                    <h4 class="font-bold text-gray-900 text-xs md:text-base">Best Prices</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 font-medium">Unbeatable Deals</p>
                 </div>
-                <div
-                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
-                    <div
-                        class="w-16 h-16 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-orange-100 shadow-sm">
+                <div class="flex flex-col items-center p-3 md:p-6 rounded-xl md:rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                    <div class="w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-lg md:text-2xl mb-2 md:mb-4 group-hover:scale-105 transition-transform border border-orange-100 shadow-sm">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
-                    <h4 class="font-bold text-gray-900 text-sm md:text-base">Fast Delivery</h4>
-                    <p class="text-xs text-gray-500 mt-1 font-medium">Across Bihar</p>
+                    <h4 class="font-bold text-gray-900 text-xs md:text-base">Fast Delivery</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 font-medium">Across Bihar</p>
                 </div>
-                <div
-                    class="flex flex-col items-center p-6 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
-                    <div
-                        class="w-16 h-16 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform border border-purple-100 shadow-sm">
+                <div class="flex flex-col items-center p-3 md:p-6 rounded-xl md:rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors group cursor-pointer">
+                    <div class="w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg md:text-2xl mb-2 md:mb-4 group-hover:scale-105 transition-transform border border-purple-100 shadow-sm">
                         <i class="fa-solid fa-headset"></i>
                     </div>
-                    <h4 class="font-bold text-gray-900 text-sm md:text-base">24/7 Support</h4>
-                    <p class="text-xs text-gray-500 mt-1 font-medium">We're Here to Help</p>
+                    <h4 class="font-bold text-gray-900 text-xs md:text-base">24/7 Support</h4>
+                    <p class="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 font-medium">We're Here to Help</p>
                 </div>
             </div>
         </div>
@@ -209,182 +201,65 @@ foreach ($categoriesWithProducts as $cat) {
 
 
 
-    <!-- Category Feature Blocks (New Tejoplast Style Layout) -->
-    <?php foreach ($categoryStrips as $index => $strip):
-        // Get the top product of this category to feature
-        $topProduct = $strip['products'][0] ?? null;
-        if (!$topProduct)
-            continue;
-
-        $isEven = $index % 2 === 0;
+<!-- Full-Cover Sticky Stack Categories (Premium Flat Light Theme) -->
+<?php if (!empty($categoryStrips)): ?>
+    <div class="w-full relative bg-gray-50">
+        <?php foreach ($categoryStrips as $index => $strip): 
+            $imagePath = $strip['products'][0]['primary_image'] ?? null;
+            // Alternating flat backgrounds
+            $bgColor = ($index % 2 === 0) ? 'bg-white' : 'bg-gray-50';
+            
+            $mbClass = 'mb-0';
         ?>
-        <div class="py-16 md:py-24 <?php echo $isEven ? 'bg-white' : 'bg-slate-50'; ?>">
-            <div class="max-w-[1440px] mx-auto px-4 md:px-8">
-                <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-
-                    <!-- Image / Flip Slider Side -->
-                    <div class="w-full lg:w-1/2 relative <?php echo $isEven ? 'lg:order-1' : 'lg:order-2'; ?>">
-                        <?php $displayProducts = array_slice($strip['products'], 0, 5); // Up to 5 products ?>
-
-                        <div
-                            class="swiper categorySwiper w-full h-[300px] md:h-[450px] rounded-2xl border border-slate-200 shadow-sm cursor-pointer bg-white overflow-hidden relative group">
-                            <div class="swiper-wrapper">
-                                <?php foreach ($displayProducts as $prod): ?>
-                                    <div class="swiper-slide bg-white flex items-center justify-center p-8 md:p-12">
-                                        <?php if ($prod['primary_image']): ?>
-                                            <img src="/<?php echo htmlspecialchars($prod['primary_image']); ?>"
-                                                class="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                                                alt="<?php echo htmlspecialchars($prod['name']); ?>" loading="lazy">
-                                        <?php else: ?>
-                                            <i class="fa-solid fa-image text-6xl text-slate-200"></i>
-                                        <?php endif; ?>
-
-                                        <!-- Product Name Overlay -->
-                                        <div class="absolute bottom-6 left-0 right-0 flex justify-center z-10">
-                                            <span
-                                                class="bg-black/80 text-white text-xs md:text-sm font-bold px-4 py-2 rounded-lg backdrop-blur-sm shadow-sm max-w-[80%] truncate">
-                                                <?php echo htmlspecialchars($prod['name']); ?>
-                                            </span>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- Floating Action Buttons on Image (Outside Swiper) -->
-                        <div class="absolute top-6 left-6 z-30 flex flex-col gap-3 pointer-events-none">
-                            <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" data-turbo="false"
-                                class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors w-fit text-sm pointer-events-auto shadow-sm">
-                                <i class="fa-solid fa-phone transform -scale-x-100"></i> Call
-                            </a>
-                            <a href="<?php echo getWhatsappLink('Hi, I am interested in ' . $strip['category']['name'] . ' products.'); ?>"
-                                target="_blank" data-turbo="false"
-                                class="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-colors w-fit text-sm pointer-events-auto shadow-sm">
-                                <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Content Side -->
-                    <div class="w-full lg:w-1/2 <?php echo $isEven ? 'lg:order-2' : 'lg:order-1'; ?>">
-                        <h2 class="text-3xl md:text-5xl font-black text-gray-900 leading-tight mb-6 tracking-tight">
-                            Best Deals in <span
-                                class="text-primary"><?php echo htmlspecialchars($strip['category']['name']); ?></span>
-                        </h2>
-
-                        <p class="text-gray-600 leading-relaxed mb-8 text-base md:text-lg">
-                            <?php echo htmlspecialchars($topProduct['short_description'] ?? 'At ' . getSetting('store_name') . ', we are one of the trusted suppliers of premium quality machinery. We provide complete after-sales support to our customers for training, maintenance and troubleshooting. Our team of experts is always ready to help you get your machines working easier and faster.'); ?>
-                        </p>
-
-                        <!-- Large Features -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                            <div class="flex gap-4 items-start p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl flex-shrink-0">
-                                    <i class="fa-solid fa-gears"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900">Wide Range</h4>
-                                    <p class="text-xs text-gray-500 mt-1 font-medium">Reliable machinery and equipment for
-                                        every industrial need.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4 items-start p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl flex-shrink-0">
-                                    <i class="fa-solid fa-headset"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900">24/7 Support</h4>
-                                    <p class="text-xs text-gray-500 mt-1 font-medium">Emergency or planned — we’re always
-                                        ready to serve you.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Checkmarks List -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 mb-10 border-b border-gray-200 pb-10">
-                            <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
-                                <div
-                                    class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                                Highly Maintained Machines
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
-                                <div
-                                    class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                                Experienced Operators
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
-                                <div
-                                    class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                                Affordable & Transparent Pricing
-                            </div>
-                            <div class="flex items-center gap-3 text-sm text-gray-700 font-medium">
-                                <div
-                                    class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">
-                                    <i class="fa-solid fa-check"></i>
-                                </div>
-                                Timely Project Delivery
-                            </div>
-                        </div>
-
-                        <!-- Bottom Section: Founder or CTA -->
-                        <?php if ($index === 0): ?>
-                            <div class="flex items-center justify-between flex-wrap gap-4 mt-6">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-16 h-16 rounded-xl border-2 border-primary border-dashed p-1">
-                                        <div
-                                            class="w-full h-full bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center">
-                                            <i class="fa-solid fa-user-tie text-2xl text-slate-400"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-black text-gray-900 text-lg tracking-tight">Shri Uddyami</h4>
-                                        <p class="text-xs text-gray-500 uppercase tracking-widest font-bold">Founder,
-                                            <?php echo htmlspecialchars(getSetting('store_name')); ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- Unified Card: Exact viewport height -->
+            <div class="sticky top-[72px] w-full h-[calc(100vh-72px)] flex flex-col md:flex-row overflow-hidden <?php echo $bgColor . ' ' . $mbClass; ?> border-t border-gray-200">
+                 
+                <!-- Image Side -->
+                <div class="w-full md:w-1/2 h-[45%] md:h-full p-4 md:p-8 lg:p-12 flex items-center justify-center order-1 md:order-2">
+                    <div class="w-full h-full rounded-2xl overflow-hidden <?php echo ($index % 2 === 0) ? 'bg-gray-100 border border-gray-200' : 'bg-white border border-gray-100'; ?>">
+                        <?php if ($imagePath): ?>
+                            <img src="/<?php echo htmlspecialchars($imagePath); ?>" class="w-full h-full object-cover" alt="<?php echo htmlspecialchars($strip['category']['name']); ?>">
                         <?php else: ?>
-                            <div class="flex items-center gap-4 mt-6">
-                                <a href="/category/<?php echo urlencode($strip['category']['slug']); ?>" data-turbo="false"
-                                    class="bg-white border border-slate-200 text-gray-900 hover:border-primary hover:text-primary font-bold px-8 py-3.5 rounded-xl flex items-center gap-2 shadow-sm transition-colors relative">
-                                    Explore All <?php echo htmlspecialchars($strip['category']['name']); ?> <i
-                                        class="fa-solid fa-arrow-right text-sm"></i>
-                                </a>
+                            <div class="w-full h-full flex items-center justify-center">
+                                <i class="fa-solid fa-image text-6xl text-slate-300"></i>
                             </div>
                         <?php endif; ?>
-
                     </div>
                 </div>
+
+                <!-- Text Side -->
+                <div class="w-full md:w-1/2 h-[55%] md:h-full flex flex-col order-2 md:order-1 relative z-10 overflow-y-auto hide-scrollbar">
+                    
+                    <!-- Text Content -->
+                    <div class="p-6 md:p-12 lg:p-16 flex flex-col flex-1">
+                        <div class="flex items-center gap-3 mb-4 md:mb-6 mt-auto md:mt-0 pt-2 md:pt-0">
+                            <span class="w-8 h-[2px] bg-primary"></span>
+                            <span class="text-primary font-bold text-xs tracking-[0.2em] uppercase">
+                                0<?php echo $index + 1; ?>
+                            </span>
+                        </div>
+                        
+                        <h3 class="text-3xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-4 leading-tight tracking-tight">
+                            <?php echo htmlspecialchars($strip['category']['name']); ?>
+                        </h3>
+                        
+                        <p class="text-slate-600 text-sm md:text-lg leading-relaxed mb-6 font-medium">
+                            <?php echo htmlspecialchars($strip['products'][0]['short_description'] ?? 'Discover state-of-the-art ' . $strip['category']['name'] . ' engineered for maximum productivity, reliability, and superior performance.'); ?>
+                        </p>
+                    </div>
+
+                    <!-- Button (BottomNav Style on Mobile) -->
+                    <div class="sticky bottom-0 left-0 w-full p-4 pb-6 md:p-0 md:w-auto md:static md:px-12 lg:px-16 md:pb-12 lg:pb-16 mt-auto <?php echo $bgColor; ?> md:bg-transparent z-20">
+                        <a href="/products?category=<?php echo urlencode($strip['category']['slug']); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-xl md:rounded-lg transition-colors w-full md:w-max group/btn">
+                            <span class="tracking-widest uppercase text-sm">Explore Details</span>
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
+                        </a>
+                    </div>
+
+                </div>
+                
             </div>
-        </div>
-    <?php endforeach; ?>
-</div>
-
-<style>
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-
-    /* Hide scrollbar for IE, Edge and Firefox */
-    .hide-scrollbar {
-        -ms-overflow-style: none;
-        /* IE and Edge */
-        scrollbar-width: none;
-        /* Firefox */
-    }
-</style>
-
-
-
-
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 <?php include __DIR__ . '/includes/footer.php'; ?>

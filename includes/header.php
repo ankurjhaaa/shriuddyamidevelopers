@@ -157,7 +157,7 @@
     <script src="/assets/js/bottom-sheet.js?v=<?php echo time(); ?>" defer></script>
 </head>
 
-<body class="bg-slate-50 text-gray-800 antialiased font-sans pb-16 md:pb-0">
+<body class="bg-slate-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen">
 
     <!-- Top Contact Bar (Orange) -->
     <div class="bg-primary text-white py-2 px-4 hidden md:block">
@@ -240,7 +240,7 @@
 
             <!-- Right Actions -->
             <div class="flex items-center gap-4 flex-shrink-0">
-                <button onclick="document.getElementById('desktop-search').classList.toggle('hidden')" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-gray-600">
+                <button onclick="openSidebarWithSearch()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-gray-600">
                     <i class="fa-solid fa-search"></i>
                 </button>
                 <a href="/favorites.php" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-gray-600">
@@ -306,14 +306,16 @@
                     </a>
                 </div>
                 <div class="flex items-center gap-5">
-                    <button onclick="document.getElementById('mobile-search').classList.toggle('hidden')"
+                    <button onclick="openSidebarWithSearch()"
                         class="text-gray-700 hover:text-primary transition">
                         <i class="fa-solid fa-search text-[19px]"></i>
                     </button>
                     <a href="/favorites.php" class="text-gray-700 hover:text-primary transition"><i
                             class="fa-regular fa-heart text-[19px]"></i></a>
-                    <a href="#" class="text-gray-700 hover:text-primary transition"><i
-                            class="fa-regular fa-user text-[19px]"></i></a>
+
+                    <button onclick="toggleSidebar()" class="text-gray-800 hover:text-primary transition ml-1">
+                        <i class="fa-solid fa-bars text-[22px]"></i>
+                    </button>
                 </div>
             </div>
 
@@ -331,7 +333,239 @@
                 </form>
             </div>
         </div>
+        <!-- Premium Full-Screen Mobile Menu Sidebar Overlay -->
+        <div id="full-screen-sidebar" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] opacity-0 transition-opacity duration-300 ease-out flex justify-end" onclick="if(event.target === this) toggleSidebar();">
+            <div id="sidebar-panel" class="w-full md:w-[450px] lg:w-[480px] h-full bg-white flex flex-col shadow-2xl overflow-hidden relative transform translate-x-full transition-transform duration-300 ease-out">
+                
+                <!-- Sidebar Top Header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white">
+                    <a href="/" class="flex items-center gap-2">
+                        <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?>" class="h-9 w-auto object-contain">
+                    </a>
+                    <button onclick="toggleSidebar()" class="w-10 h-10 rounded-md bg-gray-100 text-slate-600 hover:bg-gray-200 transition flex items-center justify-center">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Scrollable Sidebar Body -->
+                <div class="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-6 hide-scrollbar">
+                    
+                    <!-- Search Box in Sidebar -->
+                    <div class="relative">
+                        <form action="/search.php" method="GET" class="relative">
+                            <input type="text" id="sidebar-search-input" name="q" placeholder="Search machines, tools..." autocomplete="off" class="w-full bg-gray-50 border border-gray-200 rounded-md py-3 pl-11 pr-4 text-sm text-slate-800 placeholder-gray-400 focus:outline-none focus:border-primary focus:bg-white transition">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        </form>
+                    </div>
+
+                    <!-- Search Results Area (Hidden by Default, replaces menu when searching) -->
+                    <div id="sidebar-search-results" class="hidden flex-1 flex flex-col gap-3"></div>
+
+                    <!-- Main Navigation Links (Visible by default) -->
+                    <div id="sidebar-menu-links" class="flex flex-col gap-6">
+                        
+                        <div class="flex flex-col gap-2">
+                            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-1">Menu</span>
+                            
+                            <div class="grid grid-cols-1 gap-2">
+                                <a href="/" class="flex items-center justify-between p-3.5 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-600 group-hover:text-primary border border-gray-100 transition">
+                                            <i class="fa-solid fa-house text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-800 group-hover:text-primary transition text-sm block">Home</span>
+                                            <span class="text-[11px] text-gray-400 block">Main Landing Page</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                </a>
+
+                                <a href="/search.php" class="flex items-center justify-between p-3.5 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-600 group-hover:text-primary border border-gray-100 transition">
+                                            <i class="fa-solid fa-border-all text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-800 group-hover:text-primary transition text-sm block">Shop Machinery</span>
+                                            <span class="text-[11px] text-gray-400 block">Browse All Products</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                </a>
+
+                                <a href="/categories.php" class="flex items-center justify-between p-3.5 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-600 group-hover:text-primary border border-gray-100 transition">
+                                            <i class="fa-solid fa-layer-group text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-800 group-hover:text-primary transition text-sm block">Categories</span>
+                                            <span class="text-[11px] text-gray-400 block">Explore by Industry</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                </a>
+
+                                <a href="/gallery.php" class="flex items-center justify-between p-3.5 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-600 group-hover:text-primary border border-gray-100 transition">
+                                            <i class="fa-solid fa-images text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-800 group-hover:text-primary transition text-sm block">Gallery</span>
+                                            <span class="text-[11px] text-gray-400 block">Photos & Videos</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                </a>
+
+                                <a href="/favorites.php" class="flex items-center justify-between p-3.5 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-600 group-hover:text-primary border border-gray-100 transition">
+                                            <i class="fa-solid fa-heart text-sm text-red-500"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-800 group-hover:text-primary transition text-sm block">Favorites</span>
+                                            <span class="text-[11px] text-gray-400 block">Saved Machines</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                </a>
+
+                                <a href="/contact.php" class="flex items-center justify-between p-3.5 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-600 group-hover:text-primary border border-gray-100 transition">
+                                            <i class="fa-solid fa-headset text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-slate-800 group-hover:text-primary transition text-sm block">Contact & Support</span>
+                                            <span class="text-[11px] text-gray-400 block">Get Instant Quote</span>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Support Card -->
+                        <div class="mt-auto bg-slate-900 text-white rounded-md p-5 relative overflow-hidden">
+                            <div class="relative z-10">
+                                <span class="text-[10px] font-bold text-primary uppercase tracking-widest block mb-1">Need Quick Help?</span>
+                                <h4 class="font-bold text-base mb-3">Speak to Machinery Experts</h4>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <a href="tel:<?php echo htmlspecialchars(getSetting('phone') ?? ''); ?>" class="flex items-center justify-center gap-2 bg-primary hover:bg-[#e66f00] text-white py-2.5 px-3 rounded-md text-xs font-bold transition">
+                                        <i class="fa-solid fa-phone"></i> Call Support
+                                    </a>
+                                    <a href="<?php echo getWhatsappLink('Hi, I need help'); ?>" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-2.5 px-3 rounded-md text-xs font-bold transition">
+                                        <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function toggleSidebar(focusSearch = false) {
+                const sidebar = document.getElementById('full-screen-sidebar');
+                const panel = document.getElementById('sidebar-panel');
+                const searchInput = document.getElementById('sidebar-search-input');
+
+                if (sidebar.classList.contains('hidden')) {
+                    sidebar.classList.remove('hidden');
+                    setTimeout(() => {
+                        sidebar.classList.remove('opacity-0');
+                        sidebar.classList.add('opacity-100');
+                        panel.classList.remove('translate-x-full');
+                        panel.classList.add('translate-x-0');
+
+                        if (focusSearch && searchInput) {
+                            setTimeout(() => {
+                                searchInput.focus();
+                                searchInput.select();
+                            }, 150);
+                        }
+                    }, 10);
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    sidebar.classList.remove('opacity-100');
+                    sidebar.classList.add('opacity-0');
+                    panel.classList.remove('translate-x-0');
+                    panel.classList.add('translate-x-full');
+
+                    setTimeout(() => {
+                        sidebar.classList.add('hidden');
+                    }, 300);
+                    document.body.style.overflow = '';
+                }
+            }
+
+            function openSidebarWithSearch() {
+                toggleSidebar(true);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const input = document.getElementById('sidebar-search-input');
+                const results = document.getElementById('sidebar-search-results');
+                const menuLinks = document.getElementById('sidebar-menu-links');
+                let debounceTimer;
+
+                if (input && results && menuLinks) {
+                    input.addEventListener('input', function() {
+                        clearTimeout(debounceTimer);
+                        const query = this.value.trim();
+                        if (query.length < 1) {
+                            results.classList.add('hidden');
+                            results.innerHTML = '';
+                            menuLinks.classList.remove('hidden');
+                            return;
+                        }
+
+                        debounceTimer = setTimeout(() => {
+                            fetch('/ajax/search.php?q=' + encodeURIComponent(query))
+                                .then(res => res.json())
+                                .then(data => {
+                                    menuLinks.classList.add('hidden');
+                                    if (data.success && data.data.length > 0) {
+                                        let html = '<div class="flex flex-col gap-2"><span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-1">Found ' + data.data.length + ' Machines</span>';
+                                        data.data.forEach(product => {
+                                            const img = product.primary_image ? '/' + product.primary_image : '/assets/images/placeholder.jpg';
+                                            const price = product.formatted_price ? `<span class="text-xs font-bold text-primary block mt-0.5">${product.formatted_price}</span>` : '';
+                                            html += `
+                                                <a href="/product.php?slug=${encodeURIComponent(product.slug)}" class="flex items-center gap-3.5 p-3 rounded-md bg-gray-50 hover:bg-orange-50 border border-gray-100 transition group">
+                                                    <img src="${img}" class="w-14 h-14 object-cover rounded-md bg-white border border-gray-200 flex-shrink-0" alt="${product.name}">
+                                                    <div class="flex-1 min-w-0">
+                                                        <h5 class="text-sm font-bold text-slate-800 group-hover:text-primary transition truncate">${product.name}</h5>
+                                                        <span class="text-[11px] text-gray-400 block">${product.category_name || ''}</span>
+                                                        ${price}
+                                                    </div>
+                                                    <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-primary transition"></i>
+                                                </a>
+                                            `;
+                                        });
+                                        html += '</div>';
+                                        results.innerHTML = html;
+                                        results.classList.remove('hidden');
+                                    } else {
+                                        results.innerHTML = '<div class="p-8 text-center text-sm text-gray-500 font-medium bg-gray-50 border border-gray-100 rounded-md">No machinery found matching "<span class="font-bold text-slate-800">' + query + '</span>"</div>';
+                                        results.classList.remove('hidden');
+                                    }
+                                })
+                                .catch(() => {
+                                    results.classList.add('hidden');
+                                    menuLinks.classList.remove('hidden');
+                                });
+                        }, 200);
+                    });
+                }
+            });
+        </script>
     </header>
 
     <!-- Main Content Area -->
-    <main class="w-full bg-white min-h-screen relative">
+    <main class="w-full flex-1 relative bg-slate-50">
