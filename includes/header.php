@@ -184,7 +184,7 @@
     </div>
 
     <!-- Main Navigation Bar (Solid White) -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm transition-all duration-300">
+    <header id="main-header" class="bg-white sticky top-0 z-50 transition-all duration-300">
         <!-- Desktop Header -->
         <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[70px] items-center justify-between gap-8">
             <!-- Logo -->
@@ -568,8 +568,25 @@
                 }
             }
 
-            document.addEventListener('DOMContentLoaded', initSidebarSearch);
-            document.addEventListener('turbo:load', initSidebarSearch);
+            function handleHeaderScroll() {
+                const header = document.getElementById('main-header');
+                if (!header) return;
+                if (window.scrollY > 15) {
+                    header.classList.add('shadow-md', 'border-b', 'border-gray-200');
+                } else {
+                    header.classList.remove('shadow-md', 'border-b', 'border-gray-200');
+                }
+            }
+
+            window.addEventListener('scroll', handleHeaderScroll);
+            document.addEventListener('DOMContentLoaded', function() {
+                initSidebarSearch();
+                handleHeaderScroll();
+            });
+            document.addEventListener('turbo:load', function() {
+                initSidebarSearch();
+                handleHeaderScroll();
+            });
         </script>
     </header>
 
