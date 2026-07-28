@@ -186,7 +186,7 @@
     <!-- Main Navigation Bar (Solid White) -->
     <header id="main-header" class="bg-white sticky top-0 z-50 transition-all duration-300">
         <!-- Desktop Header -->
-        <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[70px] items-center justify-between gap-8">
+        <div class="hidden md:flex max-w-[1440px] mx-auto px-4 h-[72px] items-center justify-between gap-8">
             <!-- Logo -->
             <a href="/" class="flex-shrink-0">
                 <img src="/assets/images/logo.png" alt="<?php echo htmlspecialchars(getSetting('store_name')); ?> Logo"
@@ -298,7 +298,7 @@
         <!-- Mobile Header -->
         <div class="md:hidden relative">
             <!-- Top Row: Logo, Actions -->
-            <div class="flex items-center justify-between px-4 h-16 bg-white relative z-50">
+            <div class="flex items-center justify-between px-4 h-[72px] bg-white relative z-50">
                 <div class="flex items-center">
                     <a href="/" class="flex items-center py-2">
                         <!-- Much larger logo for mobile -->
@@ -321,7 +321,7 @@
 
             <!-- Toggled Search Bar (Hidden by default) -->
             <div id="mobile-search"
-                class="hidden p-3 bg-gray-50 border-b border-gray-200 absolute w-full left-0 z-40 shadow-lg top-16">
+                class="hidden p-3 bg-gray-50 border-b border-gray-200 absolute w-full left-0 z-40 shadow-lg top-[72px]">
                 <form action="/search.php" method="GET"
                     class="flex w-full bg-white border border-gray-300 rounded-md h-11 overflow-hidden focus-within:border-primary shadow-sm">
                     <input type="text" name="q" placeholder="Search products..."
