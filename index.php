@@ -312,7 +312,7 @@ foreach ($categoriesWithProducts as $cat) {
 
                                     <!-- Button (BottomNav Style on Mobile) -->
                                     <div class="sticky bottom-0 left-0 w-full p-4 pb-6 md:p-0 md:w-auto md:static md:px-12 lg:px-16 md:pb-12 lg:pb-16 mt-auto <?php echo $bgColor; ?> md:bg-transparent z-20">
-                                        <a href="/products?category=<?php echo urlencode($strip['category']['slug']); ?>&product=<?php echo urlencode($product['slug'] ?? ''); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-md md:rounded-lg transition-colors w-full md:w-max group/btn">
+                                        <a href="/products/<?php echo urlencode($product['slug'] ?? ''); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-md md:rounded-lg transition-colors w-full md:w-max group/btn">
                                             <span class="tracking-widest uppercase text-sm">Explore Product</span>
                                             <i class="fa-solid fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
                                         </a>
