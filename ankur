@@ -1,0 +1,67 @@
+<?php
+
+// ANSI Colors
+$cReset = "\033[0m";
+$cRed = "\033[31m";
+$cGreen = "\033[32m";
+$cYellow = "\033[33m";
+$cBlue = "\033[34m";
+$cMagenta = "\033[35m";
+$cCyan = "\033[36m";
+$cBold = "\033[1m";
+
+if ($argc < 2 || $argv[1] !== 'serve') {
+    echo "\n{$cRed}{$cBold}[!] Oops! You forgot the magic spell.{$cReset}\n";
+    echo "Usage: {$cGreen}{$cBold} php ankur serve{$cReset}\n\n";
+    exit(1);
+}
+
+$host = 'localhost';
+$port = 8000;
+$maxPort = 8100;
+
+// Cool ASCII Art
+$banner = "
+{$cCyan}{$cBold}
+   ___   _   _  _  __  _   _  ____  
+  / _ \ | \ | || |/ / | | | ||  _ \ 
+ | |_| ||  \| || ' /  | | | || |_) |
+ |  _  || |\  || . \  | |_| ||  _ < 
+ |_| |_||_| \_||_|\_\  \___/ |_| \_\
+                                    
+ {$cYellow}       [ ANKUR'S MAGIC DEV SERVER 🚀 ]{$cReset}
+";
+
+echo $banner;
+echo "{$cMagenta}{$cBold}>>> Summoning the code spirits...{$cReset}\n\n";
+
+function isPortAvailable($host, $port) {
+    $connection = @fsockopen($host, $port, $errno, $errstr, 1);
+    if (is_resource($connection)) {
+        fclose($connection);
+        return false; // Port is in use
+    }
+    return true; // Port is available
+}
+
+echo "{$cCyan}[*] Hunting for an empty portal (port)...{$cReset}\n";
+
+while ($port <= $maxPort) {
+    if (isPortAvailable($host, $port)) {
+        echo "{$cGreen}{$cBold}[✔] Portal found at port {$port}!{$cReset}\n\n";
+        echo "{$cYellow}===================================================={$cReset}\n";
+        echo " 🚀 {$cGreen}{$cBold} Server is LIVE and kicking!{$cReset}\n";
+        echo " 🌍 {$cBlue}{$cBold} URL: http://{$host}:{$port}{$cReset}\n";
+        echo " 🛑 {$cRed}{$cBold} Press Ctrl+C when you're done coding.{$cReset}\n";
+        echo "{$cYellow}===================================================={$cReset}\n\n";
+        
+        $command = sprintf("php -S %s:%d", $host, $port);
+        passthru($command, $return_var);
+        exit($return_var);
+    }
+    echo "{$cRed}[X] Port {$port} is busy doing other stuff, trying next...{$cReset}\n";
+    $port++;
+}
+
+echo "\n{$cRed}{$cBold}[!] ALL PORTS ARE BUSY! Did you open a portal to another dimension?{$cReset}\n";
+exit(1);

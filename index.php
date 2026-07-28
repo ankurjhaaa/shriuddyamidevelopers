@@ -172,25 +172,32 @@ foreach ($categoriesWithProducts as $cat) {
                 });
             }
 
-            // Category Product Flip Swipers
+            // Category Product Swipers
             const categorySwipers = document.querySelectorAll('.categorySwiper');
+            const swiperInstances = [];
+
             categorySwipers.forEach(swiperEl => {
                 if (!swiperEl.swiper) {
                     const sw = new Swiper(swiperEl, {
-                        effect: 'flip',
-                        flipEffect: {
-                            slideShadows: false,
-                        },
                         grabCursor: true,
                         loop: true,
                         autoplay: {
                             delay: 3500,
                             disableOnInteraction: false,
                         },
-                        speed: 800,
+                        speed: 400, // Tighter and faster snap
+                        threshold: 20, // Must drag 20px before slide starts (ignores tiny wiggles)
+                        longSwipesRatio: 0.3, // Must drag at least 30% to change slide, else snaps back
+                        resistanceRatio: 0.65, // Tighter bounce-back resistance
+                        navigation: {
+                            nextEl: swiperEl.querySelector('.swiper-button-next'),
+                            prevEl: swiperEl.querySelector('.swiper-button-prev'),
+                        },
                         preventClicks: false,
                         preventClicksPropagation: false,
                     });
+
+                    swiperInstances.push({ el: swiperEl, sw: sw });
 
                     // Allow clicking the container to change the slide
                     swiperEl.addEventListener('click', function (e) {
@@ -200,6 +207,49 @@ foreach ($categoriesWithProducts as $cat) {
                     });
                 }
             });
+
+            // Pause all swipers on scroll, resume when stopped
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                swiperInstances.forEach(item => {
+                    if (item.sw && item.sw.autoplay && item.sw.autoplay.running) {
+                        item.sw.autoplay.stop();
+                    }
+                });
+
+                window.clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    swiperInstances.forEach(item => {
+                        // Only resume if it's currently in the viewport
+                        const rect = item.el.getBoundingClientRect();
+                        const isVisible = (
+                            rect.top >= -rect.height/2 &&
+                            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + rect.height/2
+                        );
+                        if (isVisible && item.sw && item.sw.autoplay && !item.sw.autoplay.running) {
+                            item.sw.autoplay.start();
+                        }
+                    });
+                }, 250);
+            }, { passive: true });
+
+            // Use IntersectionObserver to stop autoplay when not in view
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const swiperObj = swiperInstances.find(item => item.el === entry.target);
+                        if (swiperObj && swiperObj.sw && swiperObj.sw.autoplay) {
+                            if (entry.isIntersecting) {
+                                swiperObj.sw.autoplay.start();
+                            } else {
+                                swiperObj.sw.autoplay.stop();
+                            }
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                categorySwipers.forEach(el => observer.observe(el));
+            }
         }
 
         document.addEventListener('DOMContentLoaded', initIndexSwipers);
@@ -219,52 +269,64 @@ foreach ($categoriesWithProducts as $cat) {
             $mbClass = 'mb-0';
         ?>
             <!-- Unified Card: Exact viewport height -->
-            <div class="sticky top-[72px] w-full h-[calc(100vh-72px)] flex flex-col md:flex-row overflow-hidden <?php echo $bgColor . ' ' . $mbClass; ?> border-t border-gray-200">
-                 
-                <!-- Image Side -->
-                <div class="w-full md:w-1/2 h-[45%] md:h-full p-4 md:p-8 lg:p-12 flex items-center justify-center order-1 md:order-2">
-                    <div class="w-full h-full rounded-lg overflow-hidden <?php echo ($index % 2 === 0) ? 'bg-gray-100 border border-gray-200' : 'bg-white border border-gray-100'; ?>">
-                        <?php if ($imagePath): ?>
-                            <img src="/<?php echo htmlspecialchars($imagePath); ?>" class="w-full h-full object-cover" alt="<?php echo htmlspecialchars($strip['category']['name']); ?>">
-                        <?php else: ?>
-                            <div class="w-full h-full flex items-center justify-center">
-                                <i class="fa-solid fa-image text-6xl text-slate-300"></i>
+            <div class="sticky top-[72px] w-full h-[calc(100vh-72px)] overflow-hidden <?php echo $bgColor . ' ' . $mbClass; ?> border-t border-gray-200">
+                <div class="swiper categorySwiper w-full h-full relative group">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($strip['products'] as $pIndex => $product): 
+                            $imagePath = $product['primary_image'] ?? null;
+                        ?>
+                        <div class="swiper-slide w-full h-full bg-transparent">
+                            <div class="w-full h-full flex flex-col md:flex-row">
+                                <!-- Image Side -->
+                                <div class="w-full md:w-1/2 h-[45%] md:h-full p-4 md:p-8 lg:p-12 flex items-center justify-center order-1 md:order-2 relative">
+                                    <div class="w-full h-full rounded-lg overflow-hidden <?php echo ($index % 2 === 0) ? 'bg-gray-100 border border-gray-200' : 'bg-white border border-gray-100'; ?>">
+                                        <?php if ($imagePath): ?>
+                                            <img src="/<?php echo htmlspecialchars($imagePath); ?>" class="w-full h-full object-cover" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                                        <?php else: ?>
+                                            <div class="w-full h-full flex items-center justify-center">
+                                                <i class="fa-solid fa-image text-6xl text-slate-300"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <!-- Text Side -->
+                                <div class="w-full md:w-1/2 h-[55%] md:h-full flex flex-col order-2 md:order-1 relative z-10 overflow-y-auto hide-scrollbar">
+                                    <!-- Text Content -->
+                                    <div class="p-6 md:p-12 lg:p-16 flex flex-col flex-1">
+                                        <div class="flex items-center gap-3 mb-4 md:mb-6 mt-auto md:mt-0 pt-2 md:pt-0">
+                                            <span class="w-8 h-[2px] bg-primary"></span>
+                                            <span class="text-primary font-bold text-xs tracking-[0.2em] uppercase">
+                                                0<?php echo $index + 1; ?> &nbsp;|&nbsp; <?php echo htmlspecialchars($strip['category']['name']); ?>
+                                            </span>
+                                        </div>
+
+                                        <h3 class="text-3xl md:text-5xl lg:text-5xl font-black text-slate-900 mb-4 leading-tight tracking-tight">
+                                            <?php echo htmlspecialchars($product['name']); ?>
+                                        </h3>
+
+                                        <p class="text-slate-600 text-sm md:text-lg leading-relaxed mb-6 font-medium line-clamp-4">
+                                            <?php echo htmlspecialchars($product['short_description'] ?? 'Discover state-of-the-art ' . $strip['category']['name'] . ' engineered for maximum productivity, reliability, and superior performance.'); ?>
+                                        </p>
+                                    </div>
+
+                                    <!-- Button (BottomNav Style on Mobile) -->
+                                    <div class="sticky bottom-0 left-0 w-full p-4 pb-6 md:p-0 md:w-auto md:static md:px-12 lg:px-16 md:pb-12 lg:pb-16 mt-auto <?php echo $bgColor; ?> md:bg-transparent z-20">
+                                        <a href="/products?category=<?php echo urlencode($strip['category']['slug']); ?>&product=<?php echo urlencode($product['slug'] ?? ''); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-md md:rounded-lg transition-colors w-full md:w-max group/btn">
+                                            <span class="tracking-widest uppercase text-sm">Explore Product</span>
+                                            <i class="fa-solid fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Text Side -->
-                <div class="w-full md:w-1/2 h-[55%] md:h-full flex flex-col order-2 md:order-1 relative z-10 overflow-y-auto hide-scrollbar">
-                    
-                    <!-- Text Content -->
-                    <div class="p-6 md:p-12 lg:p-16 flex flex-col flex-1">
-                        <div class="flex items-center gap-3 mb-4 md:mb-6 mt-auto md:mt-0 pt-2 md:pt-0">
-                            <span class="w-8 h-[2px] bg-primary"></span>
-                            <span class="text-primary font-bold text-xs tracking-[0.2em] uppercase">
-                                0<?php echo $index + 1; ?>
-                            </span>
                         </div>
-                        
-                        <h3 class="text-3xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-4 leading-tight tracking-tight">
-                            <?php echo htmlspecialchars($strip['category']['name']); ?>
-                        </h3>
-                        
-                        <p class="text-slate-600 text-sm md:text-lg leading-relaxed mb-6 font-medium">
-                            <?php echo htmlspecialchars($strip['products'][0]['short_description'] ?? 'Discover state-of-the-art ' . $strip['category']['name'] . ' engineered for maximum productivity, reliability, and superior performance.'); ?>
-                        </p>
+                        <?php endforeach; ?>
                     </div>
-
-                    <!-- Button (BottomNav Style on Mobile) -->
-                    <div class="sticky bottom-0 left-0 w-full p-4 pb-6 md:p-0 md:w-auto md:static md:px-12 lg:px-16 md:pb-12 lg:pb-16 mt-auto <?php echo $bgColor; ?> md:bg-transparent z-20">
-                        <a href="/products?category=<?php echo urlencode($strip['category']['slug']); ?>" class="flex items-center justify-center gap-3 bg-primary hover:bg-[#e66f00] text-white font-bold h-[54px] md:h-auto md:py-4 md:px-8 rounded-md md:rounded-lg transition-colors w-full md:w-max group/btn">
-                            <span class="tracking-widest uppercase text-sm">Explore Details</span>
-                            <i class="fa-solid fa-arrow-right transition-transform group-hover/btn:translate-x-1"></i>
-                        </a>
-                    </div>
-
+                    
+                    <!-- Navigation Arrows -->
+                    <div class="swiper-button-next !text-gray-800 drop-shadow-md bg-white/50 hover:bg-white/80 w-10 h-10 md:w-12 md:h-12 rounded-full backdrop-blur-sm transition-all !right-2 md:!right-6 opacity-0 group-hover:opacity-100 z-50"></div>
+                    <div class="swiper-button-prev !text-gray-800 drop-shadow-md bg-white/50 hover:bg-white/80 w-10 h-10 md:w-12 md:h-12 rounded-full backdrop-blur-sm transition-all !left-2 md:!left-6 opacity-0 group-hover:opacity-100 z-50"></div>
                 </div>
-                
             </div>
         <?php endforeach; ?>
     </div>
