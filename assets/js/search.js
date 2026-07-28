@@ -106,7 +106,7 @@
                                 <!-- Content -->
                                 <div class="flex-grow flex flex-col p-4 md:p-5">
                                     <a href="/products/${encodeURIComponent(product.slug)}" class="block mb-3 w-full">
-                                        <h4 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug truncate" title="${escapeHtml(product.name)}">${escapeHtml(product.name)}</h4>
+                                        <h4 class="text-sm md:text-base font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug truncate" title="${escapeHtml(product.name)}">${escapeHtml(product.name)} <span class="text-primary text-xs ml-1">in ${escapeHtml(product.city)}</span></h4>
                                     </a>
                                     
                                     <div class="price-container mb-4" data-product-id="${product.id}" data-price="${product.price}" data-visibility="${product.price_visibility}">
@@ -114,7 +114,7 @@
                                     </div>
 
                                     <div class="mt-auto space-y-3">
-                                        <p class="text-[11px] md:text-xs text-gray-500 truncate flex items-center gap-1.5 font-medium"><i class="fa-solid fa-location-dot text-primary"></i> Purnea, Bihar</p>
+                                        <p class="text-[11px] md:text-xs text-gray-500 truncate flex items-center gap-1.5 font-medium"><i class="fa-solid fa-location-dot text-primary"></i> ${escapeHtml(product.city)}</p>
                                         
                                         <a href="${product.whatsapp_link}" target="_blank" data-turbo="false"
                                             class="w-full flex items-center justify-center gap-2 bg-green-50 text-green-600 border border-green-200 font-bold text-xs md:text-sm py-2.5 rounded-lg hover:bg-green-600 hover:text-white hover:border-green-600 transition-colors">

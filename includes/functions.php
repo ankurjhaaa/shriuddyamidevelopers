@@ -36,3 +36,9 @@ function getWhatsappLink($productName = '') {
     }
     return "https://wa.me/" . $cleanNumber . "?text=" . urlencode($message);
 }
+
+function getSelectedCity() {
+    return isset($_COOKIE['selected_city']) && !empty($_COOKIE['selected_city']) 
+        ? htmlspecialchars(trim($_COOKIE['selected_city'])) 
+        : 'Bihar';
+}

@@ -12,9 +12,10 @@ if (php_sapi_name() === 'cli-server' && !defined('ROUTER_LOADED')) {
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'Home - Agriculture & Industrial Machines in Purnea';
-$pageDescription = 'Purnea Machine Bazaar is the leading provider of agriculture, farming, and industrial machines near you in Purnea, Bihar. Get the best price on tractors, cultivators, and more across Bihar.';
-$pageKeywords = 'purnea machine bazaar, agriculture machines near me, industrial machines bihar, tractors near me, farming equipment bihar, machinery supplier near me';
+$selectedCity = getSelectedCity();
+$pageTitle = 'Home - Agriculture & Industrial Machines in ' . $selectedCity;
+$pageDescription = getSetting('store_name') . ' is the leading provider of agriculture, farming, and industrial machines near you in ' . $selectedCity . ', Bihar. Get the best price on tractors, cultivators, and more.';
+$pageKeywords = strtolower(getSetting('store_name')) . ', agriculture machines near me, industrial machines ' . strtolower($selectedCity) . ', tractors near me, farming equipment ' . strtolower($selectedCity) . ', machinery supplier near me';
 
 include __DIR__ . '/includes/header.php';
 
@@ -302,7 +303,7 @@ foreach ($categoriesWithProducts as $cat) {
                                         </div>
 
                                         <h3 class="text-3xl md:text-5xl lg:text-5xl font-black text-slate-900 mb-4 leading-tight tracking-tight">
-                                            <?php echo htmlspecialchars($product['name']); ?>
+                                            <?php echo htmlspecialchars($product['name']); ?> <span class="text-primary text-3xl md:text-4xl lg:text-4xl">in <?php echo htmlspecialchars($selectedCity); ?></span>
                                         </h3>
 
                                         <p class="text-slate-600 text-sm md:text-lg leading-relaxed mb-6 font-medium line-clamp-4">

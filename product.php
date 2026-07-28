@@ -71,17 +71,18 @@ foreach ($relatedProducts as $rp) {
 }
 
 // Programmatic SEO setup
-$pageTitle = $product['name'] . ' in Purnea - Best Price';
-$baseDesc = $product['short_description'] ? $product['short_description'] : 'Buy ' . $product['name'] . ' near you in Bihar at best prices. High-quality ' . strtolower($product['category_name']) . ' from Purnea Machine Bazaar.';
+$selectedCity = getSelectedCity();
+$pageTitle = $product['name'] . ' in ' . $selectedCity . ' - Best Price';
+$baseDesc = $product['short_description'] ? $product['short_description'] : 'Buy ' . $product['name'] . ' near you in ' . $selectedCity . ' at best prices. High-quality ' . strtolower($product['category_name']) . ' from ' . getSetting('store_name') . '.';
 $pageDescription = $baseDesc . ' Contact us for latest price and specifications.';
-$pageKeywords = strtolower($product['name']) . ' near me, buy ' . strtolower($product['name']) . ' bihar, ' . strtolower($product['category_name']) . ' near me, Purnea Machine Bazaar, agriculture machinery bihar';
+$pageKeywords = strtolower($product['name']) . ' in ' . strtolower($selectedCity) . ', buy ' . strtolower($product['name']) . ' ' . strtolower($selectedCity) . ', ' . strtolower($product['category_name']) . ' near me, ' . strtolower(getSetting('store_name')) . ', agriculture machinery ' . strtolower($selectedCity);
 
 // Product JSON-LD Schema
-$schemaImage = !empty($images) ? 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/' . $images[0] : '';
+$schemaImage = !empty($images) ? 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/' . $images[0] : 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/assets/images/desktop_banner.png';
 $schemaProduct = [
     "@context" => "https://schema.org",
     "@type" => "Product",
-    "name" => $product['name'],
+    "name" => $product['name'] . ' in ' . $selectedCity,
     "image" => $schemaImage,
     "description" => $baseDesc,
     "sku" => "PRD-" . $product['id'],
@@ -180,7 +181,7 @@ include __DIR__ . '/includes/header.php';
                 class="w-full flex-grow bg-white md:rounded-xl md:border md:border-slate-200 md:shadow-sm p-5 md:p-6 lg:p-8">
                 <div class="mb-6">
                     <h1 class="text-xl md:text-3xl font-black text-gray-900 leading-tight mb-4 tracking-tight">
-                        <?php echo htmlspecialchars($product['name']); ?>
+                        <?php echo htmlspecialchars($product['name']); ?> <span class="text-primary text-2xl">in <?php echo htmlspecialchars($selectedCity); ?></span>
                     </h1>
 
                     <!-- Price Block -->
@@ -394,7 +395,7 @@ include __DIR__ . '/includes/header.php';
                                 <div class="mt-auto space-y-3">
                                     <p
                                         class="text-[11px] md:text-xs text-gray-500 truncate flex items-center gap-1.5 font-medium">
-                                        <i class="fa-solid fa-location-dot text-primary"></i> Purnea, Bihar
+                                        <i class="fa-solid fa-location-dot text-primary"></i> <?php echo htmlspecialchars($selectedCity); ?>
                                     </p>
 
                                     <a href="<?php echo getWhatsappLink($product['name']); ?>" target="_blank"

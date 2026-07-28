@@ -240,6 +240,9 @@
 
             <!-- Right Actions -->
             <div class="flex items-center gap-4 flex-shrink-0">
+                <button onclick="openCityModal(true)" class="hidden md:flex items-center gap-2 bg-gray-100 text-gray-700 hover:text-primary hover:bg-orange-50 px-4 py-2 rounded-full transition-colors text-sm font-bold border border-gray-200">
+                    <i class="fa-solid fa-location-dot text-primary"></i> <span id="header-city-name"><?php echo getSelectedCity(); ?></span>
+                </button>
                 <button onclick="openSidebarWithSearch()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-colors text-gray-600">
                     <i class="fa-solid fa-search"></i>
                 </button>
@@ -306,6 +309,9 @@
                     </a>
                 </div>
                 <div class="flex items-center gap-5">
+                    <button onclick="openCityModal(true)" class="text-gray-700 hover:text-primary transition">
+                        <i class="fa-solid fa-location-dot text-[19px]"></i>
+                    </button>
                     <button onclick="openSidebarWithSearch()"
                         class="text-gray-700 hover:text-primary transition">
                         <i class="fa-solid fa-search text-[19px]"></i>
@@ -588,6 +594,99 @@
                 handleHeaderScroll();
             });
         </script>
+
+    <!-- City Selection Modal -->
+    <div id="citySelectionModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[99999] flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-[float_0.3s_ease-out]">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <div>
+                    <h3 class="text-xl font-black text-gray-900">Select Your Location</h3>
+                    <p class="text-sm text-gray-500 mt-1">Choose your city to see machines near you</p>
+                </div>
+                <button onclick="closeCityModal()" id="closeCityModalBtn" class="w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-red-500 hover:bg-red-50 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 border-b border-gray-100">
+                <div class="relative">
+                    <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="citySearchInput" placeholder="Search for your city..." class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3.5 pl-11 pr-4 text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 bg-white">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" id="cityGrid">
+                    <?php
+                    $headerLocations = require __DIR__ . '/locations.php';
+                    $cityNames = array_keys($headerLocations);
+                    sort($cityNames);
+                    foreach ($cityNames as $city): ?>
+                        <button onclick="selectCity('<?php echo htmlspecialchars(addslashes($city)); ?>')" class="city-btn text-left px-4 py-3 border border-gray-200 rounded-lg hover:border-primary hover:bg-orange-50 hover:text-primary transition-all text-sm font-medium text-gray-700 flex items-center gap-2 group">
+                            <i class="fa-solid fa-location-dot text-gray-300 group-hover:text-primary transition-colors"></i>
+                            <span class="city-name truncate"><?php echo htmlspecialchars($city); ?></span>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+                <div id="noCityFound" class="hidden text-center py-8 text-gray-500">
+                    No cities found matching your search.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCityModal(force = true) {
+            document.getElementById('citySelectionModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            if(force) {
+                document.getElementById('closeCityModalBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('closeCityModalBtn').classList.add('hidden');
+            }
+        }
+
+        function closeCityModal() {
+            document.getElementById('citySelectionModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function selectCity(cityName) {
+            document.cookie = "selected_city=" + encodeURIComponent(cityName) + "; path=/; max-age=" + (30*24*60*60);
+            window.location.reload();
+        }
+
+        document.getElementById('citySearchInput')?.addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const btns = document.querySelectorAll('.city-btn');
+            let count = 0;
+            
+            btns.forEach(btn => {
+                const name = btn.querySelector('.city-name').textContent.toLowerCase();
+                if (name.includes(term)) {
+                    btn.style.display = 'flex';
+                    count++;
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+            
+            if (count === 0) {
+                document.getElementById('noCityFound').classList.remove('hidden');
+            } else {
+                document.getElementById('noCityFound').classList.add('hidden');
+            }
+        });
+
+        function checkCitySelection() {
+            if (!document.cookie.includes('selected_city=')) {
+                openCityModal(false); // Force selection on first visit
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkCitySelection);
+        document.addEventListener('turbo:load', checkCitySelection);
+    </script>
     </header>
 
     <!-- Main Content Area -->

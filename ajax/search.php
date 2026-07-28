@@ -56,8 +56,10 @@ try {
     $products = $stmt->fetchAll();
     
     // Add WhatsApp links and format prices for the JSON response
+    $selectedCity = getSelectedCity();
     foreach ($products as &$product) {
         $product['whatsapp_link'] = getWhatsappLink($product['name']);
+        $product['city'] = htmlspecialchars($selectedCity);
         if ($product['price_visibility'] === 'public') {
             $product['formatted_price'] = formatPrice($product['price']);
         } else {
