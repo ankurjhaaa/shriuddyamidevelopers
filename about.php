@@ -60,7 +60,7 @@ include __DIR__ . '/includes/header.php';
             </div>
             <div class="relative h-full w-full">
                 <div class="aspect-video md:aspect-square md:h-[400px] w-full bg-slate-100 rounded-lg overflow-hidden relative border border-slate-200">
-                    <img src="https://images.unsplash.com/photo-1592982537447-6f296d1931eb?auto=format&fit=crop&q=80&w=1000" alt="Agriculture field" class="w-full h-full object-cover">
+                    <img src="assets/images/products/Medical Equipment/Bioline Automatic Electrolyte Analyzer.jpeg" alt="Agriculture field" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     <div class="absolute bottom-6 left-6">
                         <div class="text-white font-bold text-xl uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-tractor text-primary"></i> Premium Machinery</div>

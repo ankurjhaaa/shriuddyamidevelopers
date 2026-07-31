@@ -7,7 +7,7 @@
     </style>
 
     <!-- Premium Ultra-Compact Dark Theme Footer -->
-    <footer class="bg-slate-900 text-slate-300 border-t-4 border-primary pt-8 pb-6 md:pb-8 mt-auto w-full relative z-10">
+    <footer class="snap-end bg-slate-900 text-slate-300 border-t-4 border-primary pt-8 pb-6 md:pb-8 mt-auto w-full relative z-10">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Main Grid: Brand Info + Links (3-Column Layout) -->

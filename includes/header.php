@@ -608,11 +608,14 @@
                 </button>
             </div>
             
-            <div class="p-6 border-b border-gray-100">
-                <div class="relative">
+            <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row gap-4">
+                <div class="relative flex-1">
                     <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     <input type="text" id="citySearchInput" placeholder="Search for your city..." class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3.5 pl-11 pr-4 text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
                 </div>
+                <button onclick="autoDetectLocation()" id="autoDetectBtn" class="flex items-center justify-center gap-2 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-3.5 rounded-xl font-bold transition-colors whitespace-nowrap border border-blue-200 hover:border-blue-600">
+                    <i class="fa-solid fa-location-crosshairs"></i> Auto Detect
+                </button>
             </div>
 
             <div class="flex-1 overflow-y-auto p-6 bg-white">
@@ -681,6 +684,74 @@
         function checkCitySelection() {
             if (!document.cookie.includes('selected_city=')) {
                 openCityModal(false); // Force selection on first visit
+            }
+        }
+
+        // Location Auto-Detect Logic
+        const cityLocations = <?php echo json_encode($headerLocations); ?>;
+
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  
+            var dLon = deg2rad(lon2-lon1); 
+            var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            var d = R * c; 
+            return d;
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI/180)
+        }
+
+        function autoDetectLocation() {
+            const btn = document.getElementById('autoDetectBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Detecting...';
+            btn.disabled = true;
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+                        
+                        let closestCity = '';
+                        let minDistance = Infinity;
+
+                        for (const [cityName, coords] of Object.entries(cityLocations)) {
+                            if (coords.lat && coords.lng) {
+                                const dist = getDistanceFromLatLonInKm(userLat, userLng, coords.lat, coords.lng);
+                                if (dist < minDistance) {
+                                    minDistance = dist;
+                                    closestCity = cityName;
+                                }
+                            }
+                        }
+
+                        if (closestCity) {
+                            selectCity(closestCity);
+                        } else {
+                            alert("Could not determine closest city.");
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        }
+                    },
+                    function(error) {
+                        alert("Location access denied or failed. Please select your city manually.");
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    },
+                    { timeout: 10000, enableHighAccuracy: true }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         }
 

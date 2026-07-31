@@ -22,40 +22,41 @@ $companyProducts = $productsStmt->fetchAll();
         <!-- Company Banner -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-8">
             <!-- Cover/Top color bar -->
-            <div class="h-32 md:h-48 bg-slate-900 relative">
+            <div class="h-32 md:h-48 bg-primary relative overflow-hidden flex items-start md:items-end justify-end p-4 md:p-6">
                 <!-- Cover background pattern -->
-                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#f97316 1px, transparent 1px); background-size: 30px 30px;"></div>
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(white 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
             </div>
             
             <div class="px-6 md:px-10 pb-8 relative">
                 <div class="flex flex-col md:flex-row gap-6 md:items-end -mt-16 md:-mt-20 mb-6 relative z-10">
-                    <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-xl border-4 border-white shadow-sm flex items-center justify-center overflow-hidden flex-shrink-0 z-10">
+                    <div class="w-24 h-24 md:w-32 md:h-32 bg-white rounded-2xl border-4 border-white shadow-md flex items-center justify-center overflow-hidden flex-shrink-0 z-10">
                         <img src="/assets/images/logo.png" alt="Company Logo" class="max-w-full max-h-full object-contain p-2">
                     </div>
                     
                     <div class="flex-grow">
-                        <div class="flex items-center gap-2 mb-2">
+                        <div class="flex items-center gap-2 mb-1.5">
                             <h1 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight">Shri Uddyami Developers</h1>
                             <i class="fa-solid fa-circle-check text-blue-500 text-xl" title="Verified Seller"></i>
                         </div>
-                        <p class="text-gray-500 text-sm flex items-center gap-2 mb-3 font-medium">
-                            <i class="fa-solid fa-location-dot text-primary"></i> <?php echo htmlspecialchars(getSetting('address')); ?>
+                        <p class="text-gray-600 text-sm flex items-start gap-2 mb-4 font-medium max-w-2xl bg-gray-50 border border-gray-100 p-2.5 rounded-lg">
+                            <i class="fa-solid fa-location-dot text-primary mt-0.5"></i> 
+                            <span><?php echo htmlspecialchars(getSetting('address')); ?></span>
                         </p>
-                        <div class="flex flex-wrap gap-2 md:gap-4 mt-2">
+                        <div class="flex flex-wrap gap-2 md:gap-3 mt-2">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-50 text-green-700 text-xs font-bold border border-green-200">
                                 <i class="fa-solid fa-shield-check"></i> TrustSEAL Verified
                             </span>
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-bold border border-blue-100">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-primary text-xs font-bold border border-blue-200">
                                 <i class="fa-solid fa-industry"></i> Manufacturer & Wholesaler
                             </span>
                         </div>
                     </div>
                     
                     <div class="flex-shrink-0 flex flex-col gap-3 w-full md:w-auto mt-4 md:mt-0">
-                        <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl text-sm font-bold transition text-center flex items-center justify-center gap-2">
+                        <a href="<?php echo getWhatsappLink('I have a requirement'); ?>" target="_blank" class="bg-primary hover:bg-[#0a2c5a] text-white px-6 py-3.5 rounded-xl text-sm font-bold transition-all text-center flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(12,53,106,0.3)] hover:-translate-y-0.5">
                             <i class="fa-solid fa-paper-plane"></i> Contact Supplier
                         </a>
-                        <button class="bg-white border border-slate-200 hover:border-primary hover:text-primary text-gray-800 px-6 py-3 rounded-xl text-sm font-bold transition text-center flex items-center justify-center gap-2">
+                        <button class="bg-white border border-gray-200 text-gray-800 px-6 py-3.5 rounded-xl text-sm font-bold transition-all text-center flex items-center justify-center gap-2 hover:border-primary hover:text-primary hover:bg-blue-50">
                             <i class="fa-solid fa-phone"></i> <?php echo htmlspecialchars(getSetting('whatsapp')); ?>
                         </button>
                     </div>
