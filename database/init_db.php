@@ -76,9 +76,9 @@ $defaultSettings = [
     'store_name' => 'Shri Uddyami Developers',
     'logo' => '',
     'banner' => '',
-    'phone' => '+919304939879',
-    'whatsapp' => '+919304939879',
-    'address' => 'Ram Avtar market, Gandhi nagar, Near Dog hospital madhubani, Purnea, Bihar',
+    'phone' => '+919234586019',
+    'whatsapp' => '+919234586019',
+    'address' => 'रंगभूमि मैदान रोड थाना Chowk, Near कावेरी केक घर, पूर्णिया',
     'gst' => '10MQUPK4180R1ZV',
     'social_links' => '{"facebook": "https://facebook.com/shriuddyami", "instagram": "https://instagram.com/shriuddyami", "twitter": "https://twitter.com/shriuddyami"}'
 ];

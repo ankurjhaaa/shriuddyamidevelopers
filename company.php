@@ -66,48 +66,79 @@ $companyProducts = $productsStmt->fetchAll();
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             
-            <!-- Left Sidebar: About & Contact -->
+            <!-- Left Content Area -->
             <div class="w-full lg:col-span-2 flex flex-col gap-6 md:gap-8">
                 <!-- About Box -->
-                <div class="bg-white border border-slate-200 shadow-sm rounded-xl">
-                    <h2 class="bg-slate-50 px-6 py-4 border-b border-slate-100 font-bold text-gray-900 text-lg rounded-t-xl">About Company</h2>
-                    <div class="p-6 md:p-8 text-sm md:text-base text-gray-600 font-medium leading-relaxed space-y-4">
-                        <p>Welcome to <strong class="text-gray-900">Shri Uddyami Developers</strong>, a premium enterprise. We are a leading manufacturer, wholesaler, and trader of high-quality agricultural and industrial machinery based in Purnea, Bihar.</p>
+                <div class="bg-white border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-2xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-slate-50 to-white px-6 md:px-8 py-5 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h2 class="font-black text-slate-800 text-xl tracking-tight">About Company</h2>
+                    </div>
+                    <div class="p-6 md:p-8 text-[15px] md:text-base text-slate-600 font-medium leading-loose space-y-5">
+                        <p class="first-letter:text-5xl first-letter:font-black first-letter:text-primary first-letter:mr-1 first-letter:float-left">Welcome to <strong class="text-slate-900">Shri Uddyami Developers</strong>, a premium enterprise. We are a leading manufacturer, wholesaler, and trader of high-quality agricultural and industrial machinery based in Purnea, Bihar.</p>
                         
                         <p>With years of experience in the industry, we specialize in providing robust, durable, and highly efficient machines tailored to meet the dynamic needs of modern agriculture and industrial processing. Our extensive product range includes Commercial Atta Chakki, Domestic Flour Mills, Rice Mill Machines, Destoner Machines, and much more.</p>
 
-                        <p>Our commitment is to deliver technological excellence and unparalleled customer service. Every machine we offer undergoes stringent quality checks to ensure optimal performance, low maintenance, and long service life. We aim to empower farmers and small businesses with the best tools to enhance their productivity and profitability.</p>
+                        <div class="bg-blue-50/50 border-l-4 border-blue-500 p-5 rounded-r-xl italic text-slate-700">
+                            "Our commitment is to deliver technological excellence and unparalleled customer service. Every machine we offer undergoes stringent quality checks to ensure optimal performance, low maintenance, and long service life."
+                        </div>
                     </div>
                 </div>
 
                 <!-- Company Highlights -->
-                <div class="bg-white border border-slate-200 shadow-sm rounded-xl overflow-hidden">
-                    <h2 class="bg-slate-50 px-6 py-4 border-b border-slate-100 font-bold text-gray-900 text-lg">Factsheet</h2>
-                    <div class="p-0 md:p-4">
-                        <table class="w-full text-sm md:text-base text-left border-collapse">
-                            <tbody>
-                                <tr class="border-b border-slate-100">
-                                    <td class="py-4 px-6 text-gray-500 w-1/3 bg-slate-50 border-r border-slate-100 font-medium">Nature of Business</td>
-                                    <td class="py-4 px-6 text-gray-900 font-bold">Manufacturer & Wholesaler</td>
-                                </tr>
-                                <tr class="border-b border-slate-100">
-                                    <td class="py-4 px-6 text-gray-500 w-1/3 bg-slate-50 border-r border-slate-100 font-medium">Company CEO</td>
-                                    <td class="py-4 px-6 text-gray-900 font-bold">Authorized Representative</td>
-                                </tr>
-                                <tr class="border-b border-slate-100">
-                                    <td class="py-4 px-6 text-gray-500 w-1/3 bg-slate-50 border-r border-slate-100 font-medium">Registered Address</td>
-                                    <td class="py-4 px-6 text-gray-900 font-bold"><?php echo htmlspecialchars(getSetting('address')); ?></td>
-                                </tr>
-                                <tr class="border-b border-slate-100">
-                                    <td class="py-4 px-6 text-gray-500 w-1/3 bg-slate-50 border-r border-slate-100 font-medium">Industry</td>
-                                    <td class="py-4 px-6 text-gray-900 font-bold">Agriculture & Industrial Machinery</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-6 text-gray-500 w-1/3 bg-slate-50 border-r border-slate-100 font-medium">GST No.</td>
-                                    <td class="py-4 px-6 text-gray-900 font-bold">10AXXXX1234X1Z5 <span class="text-green-600 text-xs ml-1"><i class="fa-solid fa-circle-check"></i> Verified</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="bg-white border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-2xl overflow-hidden">
+                    <div class="bg-gradient-to-r from-slate-50 to-white px-6 md:px-8 py-5 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-600">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <h2 class="font-black text-slate-800 text-xl tracking-tight">Factsheet</h2>
+                    </div>
+                    <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <!-- Fact Item -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm flex-shrink-0">
+                                <i class="fa-solid fa-industry"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Nature of Business</p>
+                                <p class="font-bold text-slate-800">Manufacturer & Wholesaler</p>
+                            </div>
+                        </div>
+                        <!-- Fact Item -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm flex-shrink-0">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Company CEO</p>
+                                <p class="font-bold text-slate-800">Authorized Representative</p>
+                            </div>
+                        </div>
+                        <!-- Fact Item -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm flex-shrink-0">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Registered Address</p>
+                                <p class="font-bold text-slate-800 text-sm"><?php echo htmlspecialchars(getSetting('address')); ?></p>
+                            </div>
+                        </div>
+                        <!-- Fact Item -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <div class="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm flex-shrink-0">
+                                <i class="fa-solid fa-file-invoice"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">GST No.</p>
+                                <p class="font-bold text-slate-800 flex items-center gap-2">
+                                    <?php echo htmlspecialchars(getSetting('gst')); ?>
+                                    <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full"><i class="fa-solid fa-check"></i> Verified</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,25 +146,28 @@ $companyProducts = $productsStmt->fetchAll();
             <!-- Right Column: Sidebar -->
             <div class="space-y-6 md:space-y-8">
                 <!-- Our Products Grid (Mini) -->
-                <div class="bg-white border border-slate-200 shadow-sm rounded-xl overflow-hidden">
-                    <div class="flex justify-between items-center bg-slate-50 px-6 py-4 border-b border-slate-100">
-                        <h2 class="font-bold text-gray-900 text-lg">Top Products</h2>
-                        <a href="/search.php" class="text-xs text-primary font-bold hover:underline">View All</a>
+                <div class="bg-white border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-2xl overflow-hidden">
+                    <div class="flex justify-between items-center bg-gradient-to-r from-slate-50 to-white px-6 py-5 border-b border-slate-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-star text-yellow-400"></i>
+                            <h2 class="font-black text-slate-800 text-lg">Top Products</h2>
+                        </div>
+                        <a href="/search.php" class="text-[11px] uppercase tracking-wider text-primary font-bold hover:underline bg-primary/5 px-2.5 py-1 rounded-md">View All</a>
                     </div>
-                    <div class="p-4">
-                        <div class="flex flex-col gap-4">
+                    <div class="p-5">
+                        <div class="flex flex-col gap-3">
                             <?php foreach(array_slice($companyProducts, 0, 4) as $cp): ?>
-                                <a href="/product.php?slug=<?php echo urlencode($cp['slug']); ?>" class="flex gap-4 items-center group border border-slate-100 hover:border-primary p-3 rounded-lg transition-colors">
-                                    <div class="w-16 h-16 bg-slate-50 flex-shrink-0 flex items-center justify-center rounded-lg border border-slate-100 p-2">
+                                <a href="/product.php?slug=<?php echo urlencode($cp['slug']); ?>" class="flex gap-4 items-center group border border-slate-100 hover:border-primary/30 hover:bg-slate-50/50 p-3 rounded-xl transition-all">
+                                    <div class="w-16 h-16 bg-white flex-shrink-0 flex items-center justify-center rounded-lg border border-slate-100 shadow-sm p-1.5 overflow-hidden">
                                         <?php if ($cp['primary_image']): ?>
-                                            <img src="/<?php echo htmlspecialchars($cp['primary_image']); ?>" alt="Img" class="max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300">
+                                            <img src="/<?php echo htmlspecialchars($cp['primary_image']); ?>" alt="Img" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300">
                                         <?php else: ?>
-                                            <i class="fa-solid fa-image text-slate-300 text-xl"></i>
+                                            <i class="fa-solid fa-image text-slate-200 text-xl"></i>
                                         <?php endif; ?>
                                     </div>
                                     <div class="flex-grow">
-                                        <h4 class="text-sm font-bold text-gray-900 group-hover:text-primary transition-colors line-clamp-2 leading-snug mb-1.5"><?php echo htmlspecialchars($cp['name']); ?></h4>
-                                        <span class="text-sm font-black text-gray-900"><?php echo $cp['price'] > 0 ? formatPrice($cp['price']) : 'Ask Price'; ?></span>
+                                        <h4 class="text-sm font-bold text-slate-700 group-hover:text-primary transition-colors line-clamp-2 leading-snug mb-1.5"><?php echo htmlspecialchars($cp['name']); ?></h4>
+                                        <span class="text-sm font-black text-slate-900"><?php echo $cp['price'] > 0 ? formatPrice($cp['price']) : 'Ask Price'; ?></span>
                                     </div>
                                 </a>
                             <?php endforeach; ?>
@@ -141,26 +175,36 @@ $companyProducts = $productsStmt->fetchAll();
                     </div>
                 </div>
 
-                <!-- Contact Box -->
-                <div class="bg-white border border-slate-200 shadow-sm rounded-xl">
-                    <h2 class="bg-slate-50 px-6 py-4 border-b border-slate-100 font-bold text-gray-900 text-lg rounded-t-xl">Contact Us</h2>
-                    <div class="p-6 md:p-8">
-                        <p class="font-black text-gray-900 mb-2 text-lg">Shri Uddyami Developers</p>
-                        <div class="flex items-start gap-3 text-sm text-gray-600 mb-5 mt-4 font-medium">
-                            <div class="w-8 h-8 rounded-lg bg-primary/5 text-primary flex items-center justify-center flex-shrink-0">
+                <!-- Contact Box (Highlighted) -->
+                <div class="bg-gradient-to-br from-primary to-[#c24100] rounded-2xl shadow-lg border border-primary/20 overflow-hidden relative text-white">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+                    
+                    <div class="px-6 py-5 border-b border-white/10 flex items-center gap-3 relative z-10">
+                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                            <i class="fa-solid fa-headset text-white"></i>
+                        </div>
+                        <h2 class="font-black text-xl tracking-tight">Contact Us</h2>
+                    </div>
+                    
+                    <div class="p-6 md:p-8 relative z-10">
+                        <p class="font-black mb-6 text-xl tracking-wide opacity-90">Shri Uddyami Developers</p>
+                        
+                        <div class="flex items-start gap-4 text-sm mb-5 font-medium">
+                            <div class="w-10 h-10 rounded-xl bg-black/20 flex items-center justify-center flex-shrink-0 shadow-inner">
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
-                            <span class="pt-1"><?php echo htmlspecialchars(getSetting('address')); ?></span>
-                        </div>
-                        <div class="flex items-center gap-3 text-sm text-gray-600 mb-6 font-medium">
-                            <div class="w-8 h-8 rounded-lg bg-primary/5 text-primary flex items-center justify-center flex-shrink-0">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <span class="font-bold text-gray-900 text-base"><?php echo htmlspecialchars(getSetting('whatsapp')); ?></span>
+                            <span class="pt-1.5 text-white/90 leading-relaxed"><?php echo htmlspecialchars(getSetting('address')); ?></span>
                         </div>
                         
-                        <a href="<?php echo getWhatsappLink('Hi, I want to know more about your company.'); ?>" target="_blank" class="w-full bg-green-50 text-green-600 border border-green-200 hover:bg-green-600 hover:border-green-600 hover:text-white py-3 rounded-xl text-sm font-bold transition-colors flex justify-center items-center gap-2">
-                            <i class="fa-brands fa-whatsapp text-lg"></i> Chat on WhatsApp
+                        <div class="flex items-center gap-4 text-sm mb-8 font-medium">
+                            <div class="w-10 h-10 rounded-xl bg-black/20 flex items-center justify-center flex-shrink-0 shadow-inner">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <span class="font-black text-xl tracking-wide"><?php echo htmlspecialchars(getSetting('whatsapp')); ?></span>
+                        </div>
+                        
+                        <a href="<?php echo getWhatsappLink('Hi, I want to know more about your company.'); ?>" target="_blank" class="w-full bg-white text-primary hover:bg-slate-50 py-4 rounded-xl text-base font-black transition-all flex justify-center items-center gap-2 shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] hover:-translate-y-0.5">
+                            <i class="fa-brands fa-whatsapp text-green-500 text-xl"></i> Chat on WhatsApp
                         </a>
                     </div>
                 </div>

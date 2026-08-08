@@ -106,7 +106,49 @@ foreach ($categoriesWithProducts as $cat) {
             <div class="swiper-pagination !bottom-4"></div>
 
         </div>
+    </div>
 
+    <!-- Special Subsidy Announcement Section -->
+    <div class="max-w-[1440px] mx-auto px-4 mt-6 md:mt-10 mb-4 animate-fade-in-up relative z-20">
+        <div class="bg-gradient-to-r from-red-600 via-red-500 to-red-700 rounded-2xl shadow-xl overflow-hidden relative border border-red-700">
+            <!-- Decorative elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-yellow-400 opacity-10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            
+            <div class="relative p-4 md:p-8 flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                <!-- Icon -->
+                <div class="flex-shrink-0 w-12 h-12 md:w-20 md:h-20 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30 flex items-center justify-center shadow-inner relative group cursor-pointer hover:bg-white/30 transition-colors">
+                    <i class="fa-solid fa-bullhorn text-2xl md:text-4xl text-yellow-300 group-hover:scale-110 transition-transform"></i>
+                    <!-- Animated rings -->
+                    <div class="absolute inset-0 rounded-2xl border-2 border-yellow-300/30 animate-ping"></div>
+                </div>
+                
+                <!-- Text Content -->
+                <div class="text-white text-center md:text-left flex-grow">
+                    <h3 class="text-lg md:text-2xl font-black mb-1 md:mb-2 text-yellow-300 drop-shadow-md">श्री उद्यमी डेवलपर्स - पूर्णिया मशीन बाजार के बैनर तले</h3>
+                    <p class="text-sm md:text-lg font-medium text-red-50 mb-3 md:mb-4">किसी भी प्रकार का घरेलु एवं उद्योग मशीन के लिए संपर्क करें।</p>
+                    
+                    <div class="bg-black/20 backdrop-blur-sm border border-white/20 rounded-xl p-3 md:p-4 inline-block mb-3 md:mb-4 shadow-sm w-full md:w-auto hover:bg-black/30 transition-colors">
+                        <p class="text-[13px] md:text-base font-bold text-yellow-200 flex items-start gap-2 md:gap-3 leading-tight md:leading-normal">
+                            <i class="fa-solid fa-bolt mt-0.5 md:mt-1 text-yellow-400 flex-shrink-0 text-base md:text-lg animate-pulse"></i>
+                            <span><strong>NOTE:</strong> अगर आप के पास उद्योग लगाने के लिए पूंजी की कमी है तो PMFME, PMEGP योजना के तहत 35% सब्सिडी लोन की संपूर्ण जानकारी भी दी जाएगी।</span>
+                        </p>
+                    </div>
+                    
+                    <p class="text-xs md:text-sm text-red-100 flex items-center justify-center md:justify-start gap-1.5 md:gap-2 font-medium">
+                        <i class="fa-solid fa-location-dot text-yellow-400"></i>
+                        <span><strong>पता:</strong> <?php echo htmlspecialchars(getSetting('address')); ?></span>
+                    </p>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="flex-shrink-0 w-full md:w-auto mt-1 md:mt-0">
+                    <a href="tel:<?php echo htmlspecialchars(getSetting('phone')); ?>" class="block w-full text-center bg-yellow-400 hover:bg-yellow-300 text-red-900 font-black px-6 py-3 md:px-8 md:py-4 rounded-xl shadow-[0_8px_20px_rgba(250,204,21,0.3)] hover:shadow-[0_12px_25px_rgba(250,204,21,0.4)] transition-all hover:-translate-y-1 border border-yellow-300 border-b-4 active:translate-y-0 active:border-b active:mt-[3px] text-base md:text-lg">
+                        <i class="fa-solid fa-phone-volume mr-2"></i> अभी कॉल करें
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Animated Trust Badges Section -->
